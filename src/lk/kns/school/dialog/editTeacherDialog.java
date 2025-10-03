@@ -241,6 +241,19 @@ public class editTeacherDialog extends javax.swing.JDialog {
         knslogo.setIcon(new ImageIcon(image));
     }
 
+    public void setTeacherData(String id, String fname, String lname, String nic, String email, String password, String mobile,
+            String cls , String empType , String status){
+        
+//        fnameInput.setText(fname);
+//        lnameInput.setText(lname);
+//        nicInput.setText(id);
+//        emailInput.setText(id);
+//        passwordInput.setText(id);
+//        mobileInput.setText(id);
+//        classSelect.setSelectedItem(cls);
+//        statusSelect.setSelectedItem(status);
+    }
+    
     private void loadstatus() {
         try {
             ResultSet rs = MySQL.execute("SELECT * FROM `status`");
@@ -254,6 +267,7 @@ public class editTeacherDialog extends javax.swing.JDialog {
             e.printStackTrace();
         }
     }
+
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         String fname = fnameInput.getText().trim();
         String lname = lnameInput.getText().trim();

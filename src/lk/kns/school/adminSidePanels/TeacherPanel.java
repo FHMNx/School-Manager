@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.Vector;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.dialog.addTeacherDialog;
@@ -233,7 +234,13 @@ public class TeacherPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_refreshLabelMouseClicked
 
     private void editLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editLabelMouseClicked
+        if (selectedId == null) {
+            JOptionPane.showMessageDialog(this, "Please select a row first.");
+            return;
+        }
+
         editTeacherDialog dialog = new editTeacherDialog(new JFrame(), true, this);
+        dialog.setTeacherData(selectedId, selectedFname, selectedLname, selectedNic, selectedEmail, selectedPassword, selectedMobile, selectedClass, selectedEmpType, selectedStatus);
         dialog.setVisible(true);
     }//GEN-LAST:event_editLabelMouseClicked
 
