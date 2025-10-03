@@ -16,9 +16,10 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
     private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
     private HashMap<String, Integer> classMap = new HashMap();
 
-    public deleteTeacherDialog(java.awt.Frame parent, boolean modal) {
+    public deleteTeacherDialog(java.awt.Frame parent, boolean modal, TeacherPanel panel) {
         super(parent, modal);
         initComponents();
+        this.parntPanel = panel;
     }
 
     @SuppressWarnings("unchecked")
@@ -341,7 +342,7 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                deleteTeacherDialog dialog = new deleteTeacherDialog(new javax.swing.JFrame(), true);
+                deleteTeacherDialog dialog = new deleteTeacherDialog(new javax.swing.JFrame(), true,null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

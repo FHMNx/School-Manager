@@ -317,7 +317,7 @@ public class addTeacherDialog extends javax.swing.JDialog {
 
                 if (selectedEmpType.equalsIgnoreCase("Permenent")) {
                     empTypeId = 1;
-                } else if(selectedEmpType.equalsIgnoreCase("Temporary")) {
+                } else if (selectedEmpType.equalsIgnoreCase("Temporary")) {
                     empTypeId = 2;
                 }
                 break;
@@ -330,7 +330,7 @@ public class addTeacherDialog extends javax.swing.JDialog {
         }
 
         try {
-            
+
             int statusId = 1;
             ResultSet statusRs = MySQL.execute("SELECT * FROM `status`");
             if (statusRs.next()) {
