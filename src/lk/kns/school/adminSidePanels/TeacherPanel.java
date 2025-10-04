@@ -42,18 +42,18 @@ public class TeacherPanel extends javax.swing.JPanel {
         editLabel.setIcon(new FlatSVGIcon("lk/kns/school/image/edit.svg", 20, 20));
         deleteLabel.setIcon(new FlatSVGIcon("lk/kns/school/image/delete.svg", 20, 20));
 
-        searchText.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        searchTextInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         searchBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         reportBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
 
-        searchText.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "search by teacher name or assigned class");
+        searchTextInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search By Teacher Id or Teacher Name");
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        searchText = new javax.swing.JTextField();
+        searchTextInput = new javax.swing.JTextField();
         searchBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         teacherTable = new javax.swing.JTable();
@@ -66,10 +66,15 @@ public class TeacherPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(43, 43, 43));
         setPreferredSize(new java.awt.Dimension(1213, 606));
 
-        searchText.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchTextInput.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         searchBtn.setText("Search");
         searchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
 
         teacherTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,7 +141,7 @@ public class TeacherPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(searchText, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchTextInput, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -161,7 +166,7 @@ public class TeacherPanel extends javax.swing.JPanel {
                     .addComponent(addLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(editLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(refreshLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchText)
+                    .addComponent(searchTextInput)
                     .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,9 +255,66 @@ public class TeacherPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_editLabelMouseClicked
 
     private void deleteLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabelMouseClicked
+        if (selectedUserId == 0) {
+            JOptionPane.showMessageDialog(this, "please select a row first");
+            return;
+        }
+
         deleteTeacherDialog dialog = new deleteTeacherDialog(new JFrame(), true, this);
+        dialog.setManagerData(selectedUserId, selectedTeacherId, selectedFname, selectedLname, selectedNic, selectedEmail, selectedPassword, selectedMobile, selectedClass, selectedEmpType, selectedStatus);
         dialog.setVisible(true);
     }//GEN-LAST:event_deleteLabelMouseClicked
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        String searchText = searchTextInput.getText().trim();
+
+        try {
+            String query;
+            if (searchText.isEmpty()) {
+                query = "SELECT * FROM `user` "
+                        + "INNER JOIN `teacher` ON `teacher`.`user_id` = `user`.`user_id` "
+                        + "INNER JOIN `class` ON `teacher`.`class_id` = `class`.`class_id` "
+                        + "INNER JOIN `employment_type` ON `teacher`.`empType_id` = `employment_type`.`empType_id` "
+                        + "INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id`";
+            } else {
+                query = "SELECT * FROM `user` "
+                        + "INNER JOIN `teacher` ON `teacher`.`user_id` = `user`.`user_id` "
+                        + "INNER JOIN `class` ON `teacher`.`class_id` = `class`.`class_id` "
+                        + "INNER JOIN `employment_type` ON `teacher`.`empType_id` = `employment_type`.`empType_id` "
+                        + "INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id` "
+                        + "WHERE (`teacher`.`teacher_id` = '" + searchText + "' "
+                        + "OR `teacher`.`f_name` LIKE '%" + searchText + "%' "
+                        + "OR `teacher`.`l_name` LIKE '%" + searchText + "%')";
+            }
+
+            ResultSet rs = MySQL.execute(query);
+            DefaultTableModel dtm = (DefaultTableModel) teacherTable.getModel();
+            dtm.setRowCount(0);
+
+            int rowCount = 1;
+            while (rs.next()) {
+                Vector<String> v = new Vector();
+                v.add(String.valueOf(rowCount));
+                v.add(rs.getString("user.user_id"));
+                v.add(rs.getString("teacher.teacher_id"));
+                v.add(rs.getString("f_name"));
+                v.add(rs.getString("l_name"));
+                v.add(rs.getString("nic"));
+                v.add(rs.getString("teacher.email"));
+                v.add(rs.getString("teacher.password"));
+                v.add(rs.getString("teacher.mobile"));
+                v.add(rs.getString("class.class_name"));
+                v.add(rs.getString("employment_type.type_name"));
+                v.add(rs.getString("status.status_name"));
+
+                dtm.addRow(v);
+                rowCount++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -263,7 +325,7 @@ public class TeacherPanel extends javax.swing.JPanel {
     private javax.swing.JLabel refreshLabel;
     private javax.swing.JButton reportBtn;
     private javax.swing.JButton searchBtn;
-    private javax.swing.JTextField searchText;
+    private javax.swing.JTextField searchTextInput;
     private javax.swing.JTable teacherTable;
     // End of variables declaration//GEN-END:variables
 }

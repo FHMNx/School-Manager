@@ -10,7 +10,6 @@ import raven.toast.Notifications;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -18,10 +17,8 @@ import lk.kns.school.adminSidePanels.TeacherPanel;
 
 public class editTeacherDialog extends javax.swing.JDialog {
 
-    private TeacherPanel parntPanel;
+    private final TeacherPanel parntPanel;
     private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
-    private HashMap<String, Integer> classMap = new HashMap();
-    private HashMap<String, Integer> statusMap = new HashMap();
     private int userId;
     private int teacherId;
 
