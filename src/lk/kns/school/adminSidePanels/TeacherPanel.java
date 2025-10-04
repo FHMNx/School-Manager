@@ -17,7 +17,8 @@ import lk.kns.school.dialog.editTeacherDialog;
 
 public class TeacherPanel extends javax.swing.JPanel {
 
-    private String selectedId;
+    private int selectedUserId;
+    private int selectedTeacherId;
     private String selectedFname;
     private String selectedLname;
     private String selectedNic;
@@ -75,14 +76,14 @@ public class TeacherPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Teacher Name", "Teacher NIC", "Email", "Portal Password", "Mobile Number", "Assigned Class", "Employment Type", "Status"
+                "No", "User ID", "Teacher ID", "First Name", "Last Name", "NIC", "Email", "Portal Password", "Mobile Number", "Assigned Class", "Employment Type", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -184,7 +185,10 @@ public class TeacherPanel extends javax.swing.JPanel {
             while (rs.next()) {
                 Vector<String> vData = new Vector();
                 vData.add(String.valueOf(rowCount));
-                vData.add(rs.getString("f_name") + " " + rs.getString("l_name"));
+                vData.add(rs.getString("user.user_id"));
+                vData.add(rs.getString("teacher.teacher_id"));
+                vData.add(rs.getString("f_name"));
+                vData.add(rs.getString("l_name"));
                 vData.add(rs.getString("nic"));
                 vData.add(rs.getString("teacher.email"));
                 vData.add(rs.getString("teacher.password"));
@@ -208,16 +212,17 @@ public class TeacherPanel extends javax.swing.JPanel {
             public void mouseClicked(MouseEvent e) {
                 int row = teacherTable.getSelectedRow();
                 if (row != -1) {
-                    selectedId = teacherTable.getValueAt(row, 1).toString();
-                    selectedFname = teacherTable.getValueAt(row, 2).toString();
-                    selectedLname = teacherTable.getValueAt(row, 3).toString();
-                    selectedNic = teacherTable.getValueAt(row, 4).toString();
-                    selectedEmail = teacherTable.getValueAt(row, 5).toString();
-                    selectedPassword = teacherTable.getValueAt(row, 6).toString();
-                    selectedMobile = teacherTable.getValueAt(row, 7).toString();
-                    selectedClass = teacherTable.getValueAt(row, 8).toString();
-                    selectedEmpType = teacherTable.getValueAt(row, 9).toString();
-                    selectedStatus = teacherTable.getValueAt(row, 10).toString();
+                    selectedUserId = Integer.parseInt(teacherTable.getValueAt(row, 1).toString());
+                    selectedTeacherId = Integer.parseInt(teacherTable.getValueAt(row, 2).toString());
+                    selectedFname = teacherTable.getValueAt(row, 3).toString();
+                    selectedLname = teacherTable.getValueAt(row, 4).toString();
+                    selectedNic = teacherTable.getValueAt(row, 5).toString();
+                    selectedEmail = teacherTable.getValueAt(row, 6).toString();
+                    selectedPassword = teacherTable.getValueAt(row, 7).toString();
+                    selectedMobile = teacherTable.getValueAt(row, 8).toString();
+                    selectedClass = teacherTable.getValueAt(row, 9).toString();
+                    selectedEmpType = teacherTable.getValueAt(row, 10).toString();
+                    selectedStatus = teacherTable.getValueAt(row, 11).toString();
                 }
             }
 
@@ -234,13 +239,13 @@ public class TeacherPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_refreshLabelMouseClicked
 
     private void editLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editLabelMouseClicked
-        if (selectedId == null) {
+        if (selectedUserId == 0) {
             JOptionPane.showMessageDialog(this, "Please select a row first.");
             return;
         }
 
         editTeacherDialog dialog = new editTeacherDialog(new JFrame(), true, this);
-        dialog.setTeacherData(selectedId, selectedFname, selectedLname, selectedNic, selectedEmail, selectedPassword, selectedMobile, selectedClass, selectedEmpType, selectedStatus);
+        dialog.setTeacherData(selectedUserId, selectedTeacherId, selectedFname, selectedLname, selectedNic, selectedEmail, selectedPassword, selectedMobile, selectedClass, selectedEmpType, selectedStatus);
         dialog.setVisible(true);
     }//GEN-LAST:event_editLabelMouseClicked
 

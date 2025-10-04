@@ -1,6 +1,8 @@
 package lk.kns.school.dialog;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.validation.Validator;
@@ -9,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import lk.kns.school.adminSidePanels.TeacherPanel;
 
@@ -18,12 +22,16 @@ public class editTeacherDialog extends javax.swing.JDialog {
     private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
     private HashMap<String, Integer> classMap = new HashMap();
     private HashMap<String, Integer> statusMap = new HashMap();
+    private int userId;
+    private int teacherId;
 
     public editTeacherDialog(java.awt.Frame parent, boolean modal, TeacherPanel panel) {
         super(parent, modal);
         initComponents();
         this.parntPanel = panel;
         init();
+        employmentTypeCheckBox();
+        loadClass();
         loadstatus();
     }
 
@@ -54,6 +62,10 @@ public class editTeacherDialog extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         statusSelect = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
+        userIdInput = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        teacherIdInput = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -110,6 +122,16 @@ public class editTeacherDialog extends javax.swing.JDialog {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Status");
 
+        userIdInput.setEnabled(false);
+
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("User ID");
+
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Teacher ID");
+
+        teacherIdInput.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -159,7 +181,15 @@ public class editTeacherDialog extends javax.swing.JDialog {
                             .addComponent(temporaryBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(permenentBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(userIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(teacherIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,6 +199,16 @@ public class editTeacherDialog extends javax.swing.JDialog {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(knslogo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(userIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(teacherIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -209,7 +249,7 @@ public class editTeacherDialog extends javax.swing.JDialog {
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(statusSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(permenentBox)
@@ -241,28 +281,91 @@ public class editTeacherDialog extends javax.swing.JDialog {
         knslogo.setIcon(new ImageIcon(image));
     }
 
-    public void setTeacherData(String id, String fname, String lname, String nic, String email, String password, String mobile,
-            String cls , String empType , String status){
-        
-//        fnameInput.setText(fname);
-//        lnameInput.setText(lname);
-//        nicInput.setText(id);
-//        emailInput.setText(id);
-//        passwordInput.setText(id);
-//        mobileInput.setText(id);
-//        classSelect.setSelectedItem(cls);
-//        statusSelect.setSelectedItem(status);
+    private void employmentTypeCheckBox() {
+        empCheckBox.add(permenentBox);
+        empCheckBox.add(temporaryBox);
+
+        for (int i = 0; i < empCheckBox.size(); i++) {
+            JCheckBox selectedCheckBox = empCheckBox.get(i);
+            final int selectedIndex = i;
+            selectedCheckBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (selectedCheckBox.isSelected()) {
+                        for (int x = 0; x < empCheckBox.size(); x++) {
+                            if (x != selectedIndex) {
+                                empCheckBox.get(x).setSelected(false);
+                            }
+                        }
+                    }
+                }
+            });
+        }
     }
-    
+
+    public void setTeacherData(int userId, int teacherId, String fname, String lname, String nic, String email, String password, String mobile,
+            String cls, String empType, String status) {
+
+        this.userId = userId;
+        this.teacherId = teacherId;
+        
+        userIdInput.setText(String.valueOf(userId));
+        teacherIdInput.setText(String.valueOf(teacherId));
+        fnameInput.setText(fname);
+        lnameInput.setText(lname);
+        nicInput.setText(nic);
+        emailInput.setText(email);
+        passwordInput.setText(password);
+        mobileInput.setText(mobile);
+        classSelect.setSelectedItem(cls);
+        statusSelect.setSelectedItem(status);
+
+        if (empType.equalsIgnoreCase("Permenent")) {
+            permenentBox.setSelected(true);
+            temporaryBox.setSelected(false);
+        } else if (empType.equalsIgnoreCase("Temporary")) {
+            temporaryBox.setSelected(true);
+            permenentBox.setSelected(false);
+        }
+
+    }
+
+    private void loadClass() {
+        try {
+            ResultSet rs = MySQL.execute("SELECT * FROM `class`");
+
+            Vector<String> vData = new Vector();
+            vData.add("select a class");
+
+            while (rs.next()) {
+                String name = rs.getString("class_name");
+                vData.add(name);
+            }
+
+            DefaultComboBoxModel<String> dcm = new DefaultComboBoxModel(vData);
+            classSelect.setModel(dcm);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void loadstatus() {
         try {
             ResultSet rs = MySQL.execute("SELECT * FROM `status`");
+
+            Vector<String> vData = new Vector<>();
+            vData.add("select a status");
+
             while (rs.next()) {
-                int id = rs.getInt("status_id");
                 String name = rs.getString("status_name");
 
-                statusMap.putIfAbsent(name, id);
+                vData.add(name);
             }
+
+            DefaultComboBoxModel<String> dcm = new DefaultComboBoxModel(vData);
+            statusSelect.setModel(dcm);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -276,6 +379,7 @@ public class editTeacherDialog extends javax.swing.JDialog {
         String password = passwordInput.getText().trim();
         String mobile = mobileInput.getText().trim();
         int cls = classSelect.getSelectedIndex();
+        int status = statusSelect.getSelectedIndex();
 
         if (!Validator.isInputFieldsValid(fname, lname, nic, email, password)) {
             return;
@@ -295,22 +399,28 @@ public class editTeacherDialog extends javax.swing.JDialog {
                     2000,
                     "please select a class");
             return;
+        }else if (status == 0) {
+            Notifications.getInstance().show(Notifications.Type.WARNING,
+                    Notifications.Location.TOP_RIGHT,
+                    2000,
+                    "please select a status");
+            return;
         }
 
         String selectedEmpType = null;
         int empTypeId = 0;
-//        for (JCheckBox checkBox : empCheckBox) {
-//            if (checkBox.isSelected()) {
-//                selectedEmpType = checkBox.getText().trim();
-//
-//                if (selectedEmpType.equalsIgnoreCase("Permenent")) {
-//                    empTypeId = 1;
-//                } else if(selectedEmpType.equalsIgnoreCase("Temporary")) {
-//                    empTypeId = 2;
-//                }
-//                break;
-//            }
-//        }
+        for (JCheckBox checkBox : empCheckBox) {
+            if (checkBox.isSelected()) {
+                selectedEmpType = checkBox.getText().trim();
+
+                if (selectedEmpType.equalsIgnoreCase("Permenent")) {
+                    empTypeId = 1;
+                } else if (selectedEmpType.equalsIgnoreCase("Temporary")) {
+                    empTypeId = 2;
+                }
+                break;
+            }
+        }
 
         if (selectedEmpType == null) {
             Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT, 2000, "Please select a Employment Type");
@@ -318,21 +428,6 @@ public class editTeacherDialog extends javax.swing.JDialog {
         }
 
         try {
-
-            int statusId = 1;
-            ResultSet statusRs = MySQL.execute("SELECT * FROM `status`");
-            if (statusRs.next()) {
-                statusId = statusRs.getInt("status_id");
-            }
-
-            ResultSet userRs = MySQL.execute("SELECT * FROM `user` WHERE `email` = '" + email + "'");
-            if (userRs.next()) {
-                Notifications.getInstance().show(Notifications.Type.WARNING,
-                        Notifications.Location.TOP_RIGHT,
-                        2000,
-                        "Email Already Exists");
-                return;
-            }
 
             ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Teachers'");
             int roleId = 0;
@@ -346,18 +441,12 @@ public class editTeacherDialog extends javax.swing.JDialog {
                 return;
             }
 
-            MySQL.execute("INSERT INTO `user`(`email`,`password`,`role_Id`)VALUES('" + email + "','" + password + "','" + roleId + "')");
+            MySQL.execute("UPDATE `user` SET `email` = '" + email + "' , `password` = '" + password + "', `role_Id` ='" + roleId + "' WHERE `user_id` = '" + userId + "'");
 
-            ResultSet rsId = MySQL.execute("SELECT LAST_INSERT_ID() AS id");
-            int userId = 0;
-            if (rsId.next()) {
-                userId = rsId.getInt("id");
-            }
+            MySQL.execute("UPDATE `teacher` SET `f_name` = '" + fname + "',  `l_name` = '" + lname + "', `email` = '" + email + "', `password` = '" + password + "',`nic` = '" + nic + "' ,"
+                    + " `mobile` = '" + mobile + "', `class_id` = '" + cls + "' , `empType_id` = '" + empTypeId + "' , `status_id` = '" + status + "' WHERE `teacher_id` = '" + teacherId + "'");
 
-            MySQL.execute("INSERT INTO `teacher`(`f_name`,`l_name`,`email`,`password`,`nic`,`mobile`,`class_id`,`empType_id`,`user_id`,`status_id`)"
-                    + "VALUES ('" + fname + "','" + lname + "','" + email + "','" + password + "','" + nic + "','" + mobile + "','" + cls + "' ,'" + empTypeId + "' , '" + userId + "' ,'" + statusId + "')");
-
-            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher created successfully");
+            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher account updated successfully");
             parntPanel.loadTeacherTable();
             this.dispose();
 
@@ -388,6 +477,8 @@ public class editTeacherDialog extends javax.swing.JDialog {
     private javax.swing.JTextField fnameInput;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -404,7 +495,9 @@ public class editTeacherDialog extends javax.swing.JDialog {
     private javax.swing.JTextField passwordInput;
     private javax.swing.JCheckBox permenentBox;
     private javax.swing.JComboBox<String> statusSelect;
+    private javax.swing.JTextField teacherIdInput;
     private javax.swing.JCheckBox temporaryBox;
     private javax.swing.JButton updateBtn;
+    private javax.swing.JTextField userIdInput;
     // End of variables declaration//GEN-END:variables
 }
