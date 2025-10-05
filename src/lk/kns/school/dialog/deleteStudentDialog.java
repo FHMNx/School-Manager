@@ -1,30 +1,16 @@
 package lk.kns.school.dialog;
 
-import java.awt.Image;
-import lk.kns.school.connection.MySQL;
-import raven.toast.Notifications;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
-import lk.kns.school.adminSidePanels.TeacherPanel;
+import lk.kns.school.connection.MySQL;
+import raven.toast.Notifications;
 
-public class deleteTeacherDialog extends javax.swing.JDialog {
+public class deleteStudentDialog extends javax.swing.JDialog {
 
-    private final TeacherPanel parntPanel;
-    private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
-    private HashMap<String, Integer> classMap = new HashMap();
-    private int userId;
-    private int teacherId;
-
-    public deleteTeacherDialog(java.awt.Frame parent, boolean modal, TeacherPanel panel) {
+    public deleteStudentDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.parntPanel = panel;
-        init();
     }
 
     @SuppressWarnings("unchecked")
@@ -64,7 +50,7 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Delete Existing Teacher Account");
+        jLabel1.setText("Delete Existing Student Account");
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("First Name");
@@ -218,7 +204,7 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(teacherIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -279,40 +265,7 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void init() {
-        ImageIcon icon = new ImageIcon(getClass().getResource("/lk/kns/school/image/knslogo.png"));
-        Image image = icon.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH);
-        knslogo.setIcon(new ImageIcon(image));
-    }
-
-    public void setManagerData(int userId, int teacherId, String fname, String lname, String nic, String email, String password, String mobile,
-            String cls, String empType, String status) {
-
-        this.userId = userId;
-        this.teacherId = teacherId;
-
-        userIdInput.setText(String.valueOf(userId));
-        teacherIdInput.setText(String.valueOf(teacherId));
-        fnameInput.setText(fname);
-        lnameInput.setText(lname);
-        nicInput.setText(nic);
-        emailInput.setText(email);
-        passwordInput.setText(password);
-        mobileInput.setText(mobile);
-        clsInput.setText(cls);
-        statusInput.setText(status);
-
-        if (empType.equalsIgnoreCase("Permenent")) {
-            permenentBox.setSelected(true);
-            temporaryBox.setSelected(false);
-        } else if (empType.equalsIgnoreCase("Temporary")) {
-            temporaryBox.setSelected(true);
-            permenentBox.setSelected(false);
-        }
-    }
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         String userId = userIdInput.getText().trim();
@@ -333,7 +286,6 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
                 ResultSet rs = MySQL.execute(query);
 
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher account deleted successfully");
-                parntPanel.loadTeacherTable();
                 this.dispose();
 
             } catch (SQLException e) {
@@ -347,14 +299,13 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
             }
         }
 
-
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                deleteTeacherDialog dialog = new deleteTeacherDialog(new javax.swing.JFrame(), true, null);
+                deleteStudentDialog dialog = new deleteStudentDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

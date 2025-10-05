@@ -26,7 +26,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="searchText" min="-2" pref="573" max="-2" attributes="0"/>
+                      <Component id="searchTextInput" min="-2" pref="573" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="searchBtn" min="-2" pref="169" max="-2" attributes="0"/>
                       <EmptySpace pref="210" max="32767" attributes="0"/>
@@ -56,7 +56,7 @@
                   <Component id="addLabel" alignment="0" max="32767" attributes="0"/>
                   <Component id="editLabel" alignment="0" max="32767" attributes="0"/>
                   <Component id="refreshLabel" alignment="0" max="32767" attributes="0"/>
-                  <Component id="searchText" alignment="0" max="32767" attributes="0"/>
+                  <Component id="searchTextInput" alignment="0" max="32767" attributes="0"/>
                   <Component id="searchBtn" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -69,7 +69,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="searchText">
+    <Component class="javax.swing.JTextField" name="searchTextInput">
       <Properties>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
           <Color id="Hand Cursor"/>
@@ -90,6 +90,9 @@
           <Color id="Hand Cursor"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="refreshLabelMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="addLabel">
       <Properties>
@@ -97,6 +100,9 @@
           <Color id="Hand Cursor"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addLabelMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="editLabel">
       <Properties>
@@ -104,6 +110,9 @@
           <Color id="Hand Cursor"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="editLabelMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="deleteLabel">
       <Properties>
@@ -111,6 +120,9 @@
           <Color id="Hand Cursor"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="deleteLabelMouseClicked"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -119,23 +131,35 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="teacherTable">
+        <Component class="javax.swing.JTable" name="studentTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="9" rowCount="0">
+              <Table columnCount="11" rowCount="0">
                 <Column editable="false" title="No" type="java.lang.String"/>
-                <Column editable="false" title="Student Name" type="java.lang.String"/>
-                <Column editable="false" title="Admission Number" type="java.lang.String"/>
-                <Column editable="false" title="Student NIC" type="java.lang.String"/>
+                <Column editable="false" title="User ID" type="java.lang.String"/>
+                <Column editable="false" title="Student ID" type="java.lang.String"/>
+                <Column editable="false" title="First Name" type="java.lang.String"/>
+                <Column editable="false" title="Last Name" type="java.lang.String"/>
+                <Column editable="false" title="Admission No" type="java.lang.String"/>
                 <Column editable="false" title="Email" type="java.lang.String"/>
-                <Column editable="false" title="Portal Password" type="java.lang.String"/>
-                <Column editable="false" title="Mobile Number" type="java.lang.String"/>
-                <Column editable="false" title="Class" type="java.lang.String"/>
-                <Column editable="false" title="Status" type="java.lang.String"/>
+                <Column editable="false" title="Password" type="java.lang.String"/>
+                <Column editable="false" title="Mobile" type="java.lang.String"/>
+                <Column editable="true" title="Class" type="java.lang.String"/>
+                <Column editable="true" title="Status" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
