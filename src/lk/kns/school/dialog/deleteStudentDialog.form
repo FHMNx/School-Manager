@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -62,7 +62,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
-                              <Component id="nicInput" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
+                              <Component id="admissionInput" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -98,16 +98,8 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel12" alignment="0" max="32767" attributes="0"/>
-                              <Component id="teacherIdInput" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
+                              <Component id="studentIdInput" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="temporaryBox" alignment="0" max="32767" attributes="0"/>
-                              <Component id="permenentBox" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel7" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="clsInput" min="-2" pref="226" max="-2" attributes="0"/>
@@ -136,7 +128,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel12" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="teacherIdInput" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="studentIdInput" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -162,7 +154,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel3" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="nicInput" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="admissionInput" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -188,15 +180,9 @@
                       <Component id="clsInput" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="statusInput" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jLabel7" min="-2" pref="22" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="permenentBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="temporaryBox" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="deleteBtn" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -232,10 +218,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="NIC"/>
+            <Property name="text" type="java.lang.String" value="Admission Number"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nicInput">
+        <Component class="javax.swing.JTextField" name="admissionInput">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
@@ -271,20 +257,12 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Assigned Class"/>
+            <Property name="text" type="java.lang.String" value="Class"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="mobileInput">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel7">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Employment Type"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
@@ -293,24 +271,6 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Contact Number"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="permenentBox">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Permenent"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="temporaryBox">
-          <Properties>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Temporary"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="deleteBtn">
@@ -361,7 +321,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="teacherIdInput">
+        <Component class="javax.swing.JTextField" name="studentIdInput">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
@@ -371,7 +331,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Teacher ID"/>
+            <Property name="text" type="java.lang.String" value="Student  ID"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11">

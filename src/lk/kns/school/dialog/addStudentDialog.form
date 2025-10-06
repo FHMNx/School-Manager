@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -41,12 +41,12 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="createBtn2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="createBtn" alignment="0" max="32767" attributes="0"/>
                       <Component id="jLabel17" alignment="0" pref="470" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel18" alignment="0" max="32767" attributes="0"/>
-                              <Component id="fnameInput2" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
+                              <Component id="fnameInput" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -57,30 +57,30 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel22" alignment="0" pref="226" max="32767" attributes="0"/>
-                              <Component id="classSelect2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="classSelect" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="244" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel21" alignment="0" max="32767" attributes="0"/>
-                              <Component id="passwordInput2" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
+                              <Component id="passwordInput" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="mobileInput2" alignment="0" max="32767" attributes="0"/>
+                              <Component id="mobileInput" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel24" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel19" alignment="0" max="32767" attributes="0"/>
-                              <Component id="nicInput2" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
+                              <Component id="admissionInput" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel20" alignment="0" max="32767" attributes="0"/>
-                              <Component id="emailInput2" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
+                              <Component id="emailInput" alignment="0" min="-2" pref="226" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -105,7 +105,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel18" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="fnameInput2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="fnameInput" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel25" min="-2" pref="22" max="-2" attributes="0"/>
@@ -118,12 +118,12 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel20" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="emailInput2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="emailInput" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel19" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="nicInput2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="admissionInput" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -131,20 +131,20 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel24" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="mobileInput2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="mobileInput" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel21" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="passwordInput2" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="passwordInput" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel22" min="-2" pref="22" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="classSelect2" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="classSelect" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace pref="69" max="32767" attributes="0"/>
-                  <Component id="createBtn2" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="createBtn" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -171,17 +171,17 @@
             <Property name="text" type="java.lang.String" value="First Name"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="fnameInput2">
+        <Component class="javax.swing.JTextField" name="fnameInput">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel19">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="NIC"/>
+            <Property name="text" type="java.lang.String" value="Admission Number"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nicInput2">
+        <Component class="javax.swing.JTextField" name="admissionInput">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel20">
           <Properties>
@@ -191,7 +191,7 @@
             <Property name="text" type="java.lang.String" value="Email Address"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="emailInput2">
+        <Component class="javax.swing.JTextField" name="emailInput">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel21">
           <Properties>
@@ -201,19 +201,19 @@
             <Property name="text" type="java.lang.String" value="Portal Password"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="passwordInput2">
+        <Component class="javax.swing.JTextField" name="passwordInput">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel22">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Assigned Class"/>
+            <Property name="text" type="java.lang.String" value="Class"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="mobileInput2">
+        <Component class="javax.swing.JTextField" name="mobileInput">
         </Component>
-        <Component class="javax.swing.JComboBox" name="classSelect2">
+        <Component class="javax.swing.JComboBox" name="classSelect">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -234,7 +234,7 @@
             <Property name="text" type="java.lang.String" value="Contact Number"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="createBtn2">
+        <Component class="javax.swing.JButton" name="createBtn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="98" green="59" red="3b" type="rgb"/>
@@ -251,7 +251,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createBtn2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="createBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="knslogo">
