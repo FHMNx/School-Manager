@@ -3,6 +3,7 @@ package lk.kns.school.dialog;
 import java.awt.Image;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -14,6 +15,8 @@ import raven.toast.Notifications;
 public class editStudentDialog extends javax.swing.JDialog {
 
     private StudentPanel parentPanel;
+    HashMap<String, Integer> classMap = new HashMap<>();
+    HashMap<String, Integer> statusMap = new HashMap<>();
     private int userId;
     private int studentId;
 
@@ -253,10 +256,14 @@ public class editStudentDialog extends javax.swing.JDialog {
             ResultSet rs = MySQL.execute("SELECT * FROM `class`");
 
             Vector<String> v = new Vector();
+            v.add("select a class");
 
             while (rs.next()) {
-                String name = rs.getString("class_name");
-                v.add(name);
+                String className = rs.getString("class_name");
+                int classId = rs.getInt("class_id");
+
+                v.add(className);
+                classMap.put(className, classId);
             }
 
             DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
@@ -272,11 +279,13 @@ public class editStudentDialog extends javax.swing.JDialog {
             ResultSet rs = MySQL.execute("SELECT * FROM `status`");
 
             Vector<String> vData = new Vector<>();
+            vData.add("select a status");
 
             while (rs.next()) {
                 String name = rs.getString("status_name");
-
+                int statusId = rs.getInt("status_id");
                 vData.add(name);
+                classMap.put(name, statusId);
             }
 
             DefaultComboBoxModel<String> dcm = new DefaultComboBoxModel(vData);
@@ -313,7 +322,7 @@ public class editStudentDialog extends javax.swing.JDialog {
         String email = emailInput.getText().trim();
         String password = passwordInput.getText().trim();
         String mobile = mobileInput.getText().trim();
-       int cls = classSelect.getSelectedIndex();
+        int cls = classSelect.getSelectedIndex();
         int status = statusSelect.getSelectedIndex();
 
         if (!Validator.isInputFieldsValid(fname, lname, admission, email, password)) {
@@ -334,7 +343,7 @@ public class editStudentDialog extends javax.swing.JDialog {
                     2000,
                     "please select a class");
             return;
-        } else if (status == 0) {
+        }else if (status == 0) {
             Notifications.getInstance().show(Notifications.Type.WARNING,
                     Notifications.Location.TOP_RIGHT,
                     2000,
@@ -356,12 +365,12 @@ public class editStudentDialog extends javax.swing.JDialog {
                 return;
             }
 
-            MySQL.execute("UPDATE `user` SET `email` = '" + email + "' , `password` = '" + password + "', `role_Id` ='" + roleId + "'");
+            MySQL.execute("UPDATE `user` SET `email` = '" + email + "' , `password` = '" + password + "', `role_Id` ='" + roleId + "' WHERE `user_id` = '" + userId + "'");
 
-            MySQL.execute("UPDATE `student` SET `f_name` = '" + fname + "',  `l_name` = '" + lname + "',`admission_no` = '" + admission + "', `email` = '" + email + "', `password` = '" + password + "' ,"
-                    + " `mobile` = '" + mobile + "', `status_id` = '" + status + "' , `class_id` = '" + cls + "' WHERE `student_id` = '" + studentId + "'");
+            MySQL.execute("UPDATE `student` SET `f_name` = '" + fname + "', `l_name` = '" + lname + "', `admission_no` = '" + admission + "' , `email` = '" + email + "' , `password` = '" + password + "' ,"
+                    + " `mobile` = '" + mobile + "', `class_id` = '" + cls + "' , `status_id` = '" + status + "' WHERE `student_id` = '" + studentId + "'");
 
-            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Student account updated successfully");
+            Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "student account updated successfully");
             parentPanel.loadStudentData();
             this.dispose();
 

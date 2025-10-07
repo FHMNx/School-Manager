@@ -325,12 +325,9 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
 
         if (option == JOptionPane.YES_OPTION) {
             try {
-                String query;
-                query = "DELETE FROM `teacher` WHERE `teacher_id` = '" + teacherId + "'";
+                MySQL.execute("DELETE FROM `teacher` WHERE `teacher_id` = '" + teacherId + "'");
 
-                query = "DELETE FROM `user` WHERE `user`.`user_id` = '" + userId + "'";
-
-                ResultSet rs = MySQL.execute(query);
+                MySQL.execute("DELETE FROM `user` WHERE `user`.`user_id` = '" + userId + "'");
 
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher account deleted successfully");
                 parntPanel.loadTeacherTable();

@@ -223,7 +223,7 @@ public class StudentPanel extends javax.swing.JPanel {
                     selectedPassword = studentTable.getValueAt(row, 7).toString();
                     selectedMobile = studentTable.getValueAt(row, 8).toString();
                     selectedClass = studentTable.getValueAt(row, 9).toString();
-                    selectedStatus = studentTable.getValueAt(row, 11).toString();
+                    selectedStatus = studentTable.getValueAt(row, 10).toString();
                 }
             }
 
