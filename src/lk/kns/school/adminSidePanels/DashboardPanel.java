@@ -1,19 +1,16 @@
 package lk.kns.school.adminSidePanels;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import lk.kns.school.connection.MySQL;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 public class DashboardPanel extends javax.swing.JPanel {
 
     public DashboardPanel() {
         initComponents();
         init();
-    }
-
-    private final void init() {
-        studentLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/student.svg", 65, 65));
-        teacherLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/teacher.svg", 62, 62));
-        clsLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/class.svg", 70, 70));
-        subjectLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/subject.svg", 60, 60));
+        loadDashboardData();
     }
 
     @SuppressWarnings("unchecked")
@@ -23,7 +20,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         studentLogo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        studentCount = new javax.swing.JLabel();
         jLayeredPane5 = new javax.swing.JLayeredPane();
         clsLogo = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -31,7 +28,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         jLayeredPane6 = new javax.swing.JLayeredPane();
         teacherLogo = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        teachersCount = new javax.swing.JLabel();
         jLayeredPane7 = new javax.swing.JLayeredPane();
         subjectLogo = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -49,14 +46,14 @@ public class DashboardPanel extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Total Students");
 
-        jLabel3.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(233, 231, 231));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("2000");
+        studentCount.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
+        studentCount.setForeground(new java.awt.Color(233, 231, 231));
+        studentCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        studentCount.setText("2000");
 
         jLayeredPane1.setLayer(studentLogo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(studentCount, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -67,7 +64,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addComponent(studentLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(studentCount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
@@ -80,7 +77,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(studentCount, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -136,14 +133,14 @@ public class DashboardPanel extends javax.swing.JPanel {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Total Teachers");
 
-        jLabel13.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(233, 231, 231));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("0200");
+        teachersCount.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
+        teachersCount.setForeground(new java.awt.Color(233, 231, 231));
+        teachersCount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        teachersCount.setText("0200");
 
         jLayeredPane6.setLayer(teacherLogo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane6.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane6.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.setLayer(teachersCount, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane6Layout = new javax.swing.GroupLayout(jLayeredPane6);
         jLayeredPane6.setLayout(jLayeredPane6Layout);
@@ -157,7 +154,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                     .addGroup(jLayeredPane6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(teachersCount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35))
         );
         jLayeredPane6Layout.setVerticalGroup(
@@ -169,7 +166,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                     .addGroup(jLayeredPane6Layout.createSequentialGroup()
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(teachersCount, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
@@ -277,25 +274,48 @@ public class DashboardPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private final void init() {
+        studentLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/student.svg", 65, 65));
+        teacherLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/teacher.svg", 62, 62));
+        clsLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/class.svg", 70, 70));
+        subjectLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/subject.svg", 60, 60));
+    }
+
+    private void loadDashboardData() {
+        try {
+            ResultSet studentRs = MySQL.execute("SELECT COUNT(*) FROM `student`");
+            if (studentRs.next()) {
+                studentCount.setText(String.format("%04d", studentRs.getInt(1)));
+            }
+
+            ResultSet teacherRs = MySQL.execute("SELECT COUNT(*) FROM `teacher`");
+            if (teacherRs.next()) {
+                teachersCount.setText(String.format("%04d", teacherRs.getInt(1)));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clsLogo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane5;
     private javax.swing.JLayeredPane jLayeredPane6;
     private javax.swing.JLayeredPane jLayeredPane7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel studentCount;
     private javax.swing.JLabel studentLogo;
     private javax.swing.JLabel subjectLogo;
     private javax.swing.JLabel teacherLogo;
+    private javax.swing.JLabel teachersCount;
     // End of variables declaration//GEN-END:variables
 }
