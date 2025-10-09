@@ -32,7 +32,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="teacherName" min="-2" pref="204" max="-2" attributes="0"/>
+                              <Component id="teacherNameInput" min="-2" pref="204" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -43,9 +43,9 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="statusBtn" max="32767" attributes="0"/>
-                                  <Component id="teacherEmail" max="32767" attributes="0"/>
-                                  <Component id="teacherNic" max="32767" attributes="0"/>
-                                  <Component id="teacherMobile" max="32767" attributes="0"/>
+                                  <Component id="teacherEmailInput" max="32767" attributes="0"/>
+                                  <Component id="teacherNicInput" max="32767" attributes="0"/>
+                                  <Component id="teacherMobileInput" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -66,22 +66,22 @@
                   <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="teacherName" alignment="0" pref="32" max="32767" attributes="0"/>
+                          <Component id="teacherNameInput" alignment="0" pref="32" max="32767" attributes="0"/>
                           <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="teacherMobile" alignment="0" max="32767" attributes="0"/>
+                          <Component id="teacherMobileInput" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel2" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="teacherNic" alignment="0" max="32767" attributes="0"/>
+                          <Component id="teacherNicInput" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel3" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="teacherEmail" alignment="0" max="32767" attributes="0"/>
+                          <Component id="teacherEmailInput" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel4" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -174,32 +174,45 @@
         <Property name="text" type="java.lang.String" value="Teacher Name :"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="teacherName">
+    <Component class="javax.swing.JTextField" name="teacherNameInput">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Teacher Mobile :"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="teacherMobile">
+    <Component class="javax.swing.JTextField" name="teacherMobileInput">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" value="Teacher NIC :"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="teacherNic">
+    <Component class="javax.swing.JTextField" name="teacherNicInput">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" value="Teacher Email :"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="teacherEmail">
+    <Component class="javax.swing.JTextField" name="teacherEmailInput">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="statusBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="status"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="reportBtn">

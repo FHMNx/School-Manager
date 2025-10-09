@@ -281,7 +281,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         subjectLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/subject.svg", 60, 60));
     }
 
-    private void loadDashboardData() {
+    public void loadDashboardData() {
         try {
             ResultSet studentRs = MySQL.execute("SELECT COUNT(*) FROM `student`");
             if (studentRs.next()) {

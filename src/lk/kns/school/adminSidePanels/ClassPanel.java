@@ -21,18 +21,18 @@ public class ClassPanel extends javax.swing.JPanel {
     }
 
     private void init() {
-        teacherName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher name");
-        teacherMobile.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher mobile");
-        teacherNic.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher nic");
-        teacherEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher email");
+        teacherNameInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher name");
+        teacherMobileInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher mobile");
+        teacherNicInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher nic");
+        teacherEmailInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher email");
 
         classSelect.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         reportBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         statusBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-        teacherName.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-        teacherMobile.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-        teacherNic.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-        teacherEmail.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        teacherNameInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        teacherMobileInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        teacherNicInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        teacherEmailInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
     }
 
     private void classLoad() {
@@ -66,13 +66,13 @@ public class ClassPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        teacherName = new javax.swing.JTextField();
+        teacherNameInput = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        teacherMobile = new javax.swing.JTextField();
+        teacherMobileInput = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        teacherNic = new javax.swing.JTextField();
+        teacherNicInput = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        teacherEmail = new javax.swing.JTextField();
+        teacherEmailInput = new javax.swing.JTextField();
         statusBtn = new javax.swing.JButton();
         reportBtn = new javax.swing.JButton();
 
@@ -111,13 +111,22 @@ public class ClassPanel extends javax.swing.JPanel {
 
         jLabel1.setText("Teacher Name :");
 
+        teacherNameInput.setEnabled(false);
+
         jLabel2.setText("Teacher Mobile :");
+
+        teacherMobileInput.setEnabled(false);
 
         jLabel3.setText("Teacher NIC :");
 
+        teacherNicInput.setEnabled(false);
+
         jLabel4.setText("Teacher Email :");
 
+        teacherEmailInput.setEnabled(false);
+
         statusBtn.setText("status");
+        statusBtn.setEnabled(false);
 
         reportBtn.setText("Generate Report");
 
@@ -136,7 +145,7 @@ public class ClassPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(teacherName, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(teacherNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -145,9 +154,9 @@ public class ClassPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(statusBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(teacherEmail)
-                                    .addComponent(teacherNic)
-                                    .addComponent(teacherMobile)))))
+                                    .addComponent(teacherEmailInput)
+                                    .addComponent(teacherNicInput)
+                                    .addComponent(teacherMobileInput)))))
                     .addComponent(reportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -161,19 +170,19 @@ public class ClassPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(teacherName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                            .addComponent(teacherNameInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(teacherMobile, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(teacherMobileInput, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(teacherNic, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(teacherNicInput, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(teacherEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(teacherEmailInput, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(statusBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -219,6 +228,17 @@ public class ClassPanel extends javax.swing.JPanel {
                 rowCount++;
             }
 
+            ResultSet teacherRs = MySQL.execute("SELECT `f_name` , `l_name` , `mobile` , `nic` , `email` FROM `teacher` "
+                    + "INNER JOIN `class` ON `class`.`class_id` = `teacher`.`class_id` "
+                    + "WHERE `teacher`.`class_id` = '" + clsId + "'");
+
+            if (teacherRs.next()) {
+                String teacherName = teacherRs.getString("f_name") + " " + teacherRs.getString("l_name");
+                teacherNameInput.setText(teacherName);
+                teacherMobileInput.setText(teacherRs.getString("mobile"));
+                teacherNicInput.setText(teacherRs.getString("nic"));
+                teacherEmailInput.setText(teacherRs.getString("email"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -235,9 +255,9 @@ public class ClassPanel extends javax.swing.JPanel {
     private javax.swing.JButton reportBtn;
     private javax.swing.JButton statusBtn;
     private javax.swing.JTable studentTable;
-    private javax.swing.JTextField teacherEmail;
-    private javax.swing.JTextField teacherMobile;
-    private javax.swing.JTextField teacherName;
-    private javax.swing.JTextField teacherNic;
+    private javax.swing.JTextField teacherEmailInput;
+    private javax.swing.JTextField teacherMobileInput;
+    private javax.swing.JTextField teacherNameInput;
+    private javax.swing.JTextField teacherNicInput;
     // End of variables declaration//GEN-END:variables
 }
