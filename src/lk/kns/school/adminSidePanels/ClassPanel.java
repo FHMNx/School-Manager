@@ -1,20 +1,31 @@
 package lk.kns.school.adminSidePanels;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import lk.kns.school.connection.MySQL;
+import raven.toast.Notifications;
 
 public class ClassPanel extends javax.swing.JPanel {
+
+    HashMap<String, Integer> classMap = new HashMap();
 
     public ClassPanel() {
         initComponents();
         init();
+        classLoad();
     }
-    
-    private void init(){
+
+    private void init() {
         teacherName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher name");
         teacherMobile.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher mobile");
         teacherNic.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher nic");
         teacherEmail.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher email");
-        
+
         classSelect.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         reportBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         statusBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
@@ -24,13 +35,36 @@ public class ClassPanel extends javax.swing.JPanel {
         teacherEmail.putClientProperty(FlatClientProperties.STYLE, "arc:20");
     }
 
+    private void classLoad() {
+        try {
+            ResultSet rs = MySQL.execute("SELECT * FROM `class`");
+
+            classMap.clear();
+            Vector<String> v = new Vector();
+            v.add("select a class");
+
+            while (rs.next()) {
+                int id = rs.getInt("class_id");
+                String name = rs.getString("class_name");
+
+                v.add(name);
+                classMap.put(name, id);
+            }
+            DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
+            classSelect.setModel(dcm);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         classSelect = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        studentTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         teacherName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -44,14 +78,18 @@ public class ClassPanel extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(43, 43, 43));
 
-        classSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        classSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classSelectActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        studentTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No", "First Name", "Last Name", "Admission Number", "Email ", "Class"
+                "No", "Student Id", "Full Name", "Admission Number", "Contact No ", "Class"
             }
         ) {
             Class[] types = new Class [] {
@@ -69,7 +107,7 @@ public class ClassPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(studentTable);
 
         jLabel1.setText("Teacher Name :");
 
@@ -145,6 +183,47 @@ public class ClassPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void classSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classSelectActionPerformed
+        String selectedCls = (String) classSelect.getSelectedItem();
+
+        if (selectedCls != null && !selectedCls.equals("select a class")) {
+            Integer clsId = classMap.get(selectedCls);
+            if (clsId != null) {
+                loadStudentByClass(clsId);
+            } else {
+                Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_LEFT, 2000, "class data not found");
+            }
+        }
+    }//GEN-LAST:event_classSelectActionPerformed
+
+    private void loadStudentByClass(int clsId) {
+        try {
+            ResultSet rs = MySQL.execute("SELECT `student_id` , `f_name` , `l_name` , `admission_no` , `mobile` , `class_name` "
+                    + "FROM `student` INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id` "
+                    + "WHERE `student`.`class_id` = '" + clsId + "'");
+
+            DefaultTableModel dtm = (DefaultTableModel) studentTable.getModel();
+            dtm.setRowCount(0);
+
+            int rowCount = 1;
+            while (rs.next()) {
+                Vector<String> v = new Vector();
+                v.add(String.valueOf(rowCount));
+                v.add(rs.getString("student_id"));
+                v.add(rs.getString("f_name") + " " + rs.getString("l_name"));
+                v.add(rs.getString("admission_no"));
+                v.add(rs.getString("mobile"));
+                v.add(rs.getString("class_name"));
+
+                dtm.addRow(v);
+                rowCount++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> classSelect;
@@ -153,9 +232,9 @@ public class ClassPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton reportBtn;
     private javax.swing.JButton statusBtn;
+    private javax.swing.JTable studentTable;
     private javax.swing.JTextField teacherEmail;
     private javax.swing.JTextField teacherMobile;
     private javax.swing.JTextField teacherName;
