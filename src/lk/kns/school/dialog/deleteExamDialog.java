@@ -228,21 +228,18 @@ public class deleteExamDialog extends javax.swing.JDialog {
     }
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        String userId = examIdInput.getText().trim();
-        String studentId = classInput.getText().trim();
+        String examId = examIdInput.getText().trim();
 
         int option = JOptionPane.showConfirmDialog(this,
-                "Are you sure you want to delete this student account?",
+                "Are you sure you want to delete this Examination?",
                 "Confirm Delete",
                 JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION) {
             try {
-                MySQL.execute("DELETE FROM `student` WHERE `student_id` = '" + studentId + "'");
+                MySQL.execute("DELETE FROM `exam` WHERE `exam_id` = '" + examId + "'");
 
-                MySQL.execute("DELETE FROM `user` WHERE `user_id` = '" + userId + "'");
-
-                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Student account deleted successfully");
+                Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "exam deleted successfully");
                 this.dispose();
 
             } catch (SQLException e) {
@@ -258,30 +255,6 @@ public class deleteExamDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(deleteExamDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(deleteExamDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(deleteExamDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(deleteExamDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 deleteExamDialog dialog = new deleteExamDialog(new javax.swing.JFrame(), true);
