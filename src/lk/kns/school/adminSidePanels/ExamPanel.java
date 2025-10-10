@@ -1,5 +1,6 @@
 package lk.kns.school.adminSidePanels;
 
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -34,6 +35,7 @@ public class ExamPanel extends javax.swing.JPanel {
     
     public ExamPanel() {
         initComponents();
+        init();
         classLoad();
         subjectLoad();
         termLoad();
@@ -368,6 +370,10 @@ public class ExamPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void init(){
+        deleteLabel.setIcon(new FlatSVGIcon("lk/kns/school/image/delete.svg", 20, 20));
+    }
+    
     public void loadExamTable() {
         try {
             ResultSet rs = MySQL.execute("SELECT * FROM `exam` INNER JOIN `class` ON `exam`.`class_id` = `class`.`class_id` "
