@@ -228,8 +228,9 @@ public class ClassPanel extends javax.swing.JPanel {
                 rowCount++;
             }
 
-            ResultSet teacherRs = MySQL.execute("SELECT `f_name` , `l_name` , `mobile` , `nic` , `email` FROM `teacher` "
+            ResultSet teacherRs = MySQL.execute("SELECT `f_name` , `l_name` , `mobile` , `nic` , `email` , `status_name` FROM `teacher` "
                     + "INNER JOIN `class` ON `class`.`class_id` = `teacher`.`class_id` "
+                    + "INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id`"
                     + "WHERE `teacher`.`class_id` = '" + clsId + "'");
 
             if (teacherRs.next()) {
@@ -238,6 +239,7 @@ public class ClassPanel extends javax.swing.JPanel {
                 teacherMobileInput.setText(teacherRs.getString("mobile"));
                 teacherNicInput.setText(teacherRs.getString("nic"));
                 teacherEmailInput.setText(teacherRs.getString("email"));
+                statusBtn.setText(teacherRs.getString("status_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
