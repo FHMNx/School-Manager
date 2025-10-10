@@ -22,7 +22,7 @@ public class ExamPanel extends javax.swing.JPanel {
     HashMap<String, Integer> classMap = new HashMap();
     HashMap<String, Integer> subjectMap = new HashMap();
     HashMap<String, Integer> termMap = new HashMap();
-    
+
     private int selectedExamId;
     private String selectedCls;
     private String selectedSubject;
@@ -31,8 +31,7 @@ public class ExamPanel extends javax.swing.JPanel {
     private String selectedStartTime;
     private String selectedEndTime;
     private String selectedVanue;
-    
-    
+
     public ExamPanel() {
         initComponents();
         init();
@@ -112,14 +111,14 @@ public class ExamPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Class", "Subject", "Term", "Date", "Start Time", "End Time", "Vanue"
+                "No", "Exam ID", "Class", "Subject", "Term", "Date", "Start Time", "End Time", "Vanue"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -240,9 +239,9 @@ public class ExamPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(deleteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
         );
 
         jTabbedPane1.addTab("Shedule Exams", jPanel1);
@@ -370,10 +369,10 @@ public class ExamPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void init(){
+    private void init() {
         deleteLabel.setIcon(new FlatSVGIcon("lk/kns/school/image/delete.svg", 20, 20));
     }
-    
+
     public void loadExamTable() {
         try {
             ResultSet rs = MySQL.execute("SELECT * FROM `exam` INNER JOIN `class` ON `exam`.`class_id` = `class`.`class_id` "
@@ -387,6 +386,7 @@ public class ExamPanel extends javax.swing.JPanel {
             while (rs.next()) {
                 Vector<String> v = new Vector();
                 v.add(String.valueOf(rowCount));
+                v.add(rs.getString("exam_id"));
                 v.add(rs.getString("class_name"));
                 v.add(rs.getString("subject_name"));
                 v.add(rs.getString("term_name"));
@@ -519,7 +519,7 @@ public class ExamPanel extends javax.swing.JPanel {
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Exam scheduled successfully");
             loadExamTable();
-            
+
             classSelect.setSelectedIndex(0);
             subjectSelect.setSelectedIndex(0);
             termSelect.setSelectedIndex(0);
@@ -535,13 +535,13 @@ public class ExamPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_sheduleExmBtnActionPerformed
 
-    private void getTableRow(){
+    private void getTableRow() {
         examTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int row = examTable.getSelectedRow();
-                if(row != -1){
-                    selectedExamId = Integer.parseInt(examTable.getValueAt(row, 1).toString());
+                if (row != -1) {
+                    selectedExamId = Integer.parseInt(examTable.getValueAt(row, 0).toString());
                     selectedCls = examTable.getValueAt(row, 2).toString();
                     selectedSubject = examTable.getValueAt(row, 3).toString();
                     selectedTerm = examTable.getValueAt(row, 4).toString();
@@ -551,17 +551,17 @@ public class ExamPanel extends javax.swing.JPanel {
                     selectedVanue = examTable.getValueAt(row, 8).toString();
                 }
             }
-            
+
         });
     }
-    
+
     private void deleteLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabelMouseClicked
         if (selectedExamId == 0) {
             JOptionPane.showMessageDialog(this, "Please select a row first.");
             return;
         }
-        deleteExamDialog dialog = new deleteExamDialog(new JFrame(), true);
-        dialog.setExamData(selectedExamId, selectedCls, selectedSubject, selectedTerm,selectedDate, selectedStartTime, selectedEndTime, selectedVanue);
+        deleteExamDialog dialog = new deleteExamDialog(new JFrame(), true , this);
+        dialog.setExamData(selectedExamId, selectedCls, selectedSubject, selectedTerm, selectedDate, selectedStartTime, selectedEndTime, selectedVanue);
         dialog.setVisible(true);
     }//GEN-LAST:event_deleteLabelMouseClicked
 

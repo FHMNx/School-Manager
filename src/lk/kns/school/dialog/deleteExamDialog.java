@@ -1,17 +1,23 @@
 package lk.kns.school.dialog;
 
+import java.awt.Image;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import lk.kns.school.adminSidePanels.ExamPanel;
 import lk.kns.school.connection.MySQL;
 import raven.toast.Notifications;
 
 public class deleteExamDialog extends javax.swing.JDialog {
 
     private int examId;
+    private ExamPanel parentPanel;
 
-    public deleteExamDialog(java.awt.Frame parent, boolean modal) {
+    public deleteExamDialog(java.awt.Frame parent, boolean modal , ExamPanel panel) {
         super(parent, modal);
+        this.parentPanel = panel;
         initComponents();
+        init();
     }
 
     @SuppressWarnings("unchecked")
@@ -209,7 +215,14 @@ public class deleteExamDialog extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void init() {
+        ImageIcon icon = new ImageIcon(getClass().getResource("/lk/kns/school/image/knslogo.png"));
+        Image image = icon.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH);
+        knslogo.setIcon(new ImageIcon(image));
+    }
 
     public void setExamData(int examId, String cls, String subject, String term, String date, String startTime, String endTime,
             String vanue) {
@@ -240,6 +253,7 @@ public class deleteExamDialog extends javax.swing.JDialog {
                 MySQL.execute("DELETE FROM `exam` WHERE `exam_id` = '" + examId + "'");
 
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "exam deleted successfully");
+                parentPanel.loadExamTable();
                 this.dispose();
 
             } catch (SQLException e) {
@@ -257,7 +271,7 @@ public class deleteExamDialog extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                deleteExamDialog dialog = new deleteExamDialog(new javax.swing.JFrame(), true);
+                deleteExamDialog dialog = new deleteExamDialog(new javax.swing.JFrame(), true , null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
