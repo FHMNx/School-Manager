@@ -1,13 +1,18 @@
 package lk.kns.school.adminSidePanels;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
+import lk.kns.school.dialog.deleteExamDialog;
 import lk.kns.school.validation.Validator;
 import raven.toast.Notifications;
 
@@ -16,13 +21,24 @@ public class ExamPanel extends javax.swing.JPanel {
     HashMap<String, Integer> classMap = new HashMap();
     HashMap<String, Integer> subjectMap = new HashMap();
     HashMap<String, Integer> termMap = new HashMap();
-
+    
+    private int selectedExamId;
+    private String selectedCls;
+    private String selectedSubject;
+    private String selectedTerm;
+    private String selectedDate;
+    private String selectedStartTime;
+    private String selectedEndTime;
+    private String selectedVanue;
+    
+    
     public ExamPanel() {
         initComponents();
         classLoad();
         subjectLoad();
         termLoad();
         loadExamTable();
+        getTableRow();
     }
 
     @SuppressWarnings("unchecked")
@@ -48,6 +64,7 @@ public class ExamPanel extends javax.swing.JPanel {
         examTable = new javax.swing.JTable();
         endTimeInput = new javax.swing.JFormattedTextField();
         startTimeInput = new javax.swing.JFormattedTextField();
+        deleteLabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         searchStudent = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
@@ -125,6 +142,13 @@ public class ExamPanel extends javax.swing.JPanel {
             ex.printStackTrace();
         }
 
+        deleteLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deleteLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -164,7 +188,8 @@ public class ExamPanel extends javax.swing.JPanel {
                                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(venueInput))))
                             .addComponent(sheduleExmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 144, Short.MAX_VALUE))
+                        .addGap(103, 103, 103)
+                        .addComponent(deleteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -206,9 +231,14 @@ public class ExamPanel extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(endTimeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(venueInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(24, 24, 24)
-                .addComponent(sheduleExmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(sheduleExmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(deleteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );
@@ -499,10 +529,41 @@ public class ExamPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_sheduleExmBtnActionPerformed
 
+    private void getTableRow(){
+        examTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = examTable.getSelectedRow();
+                if(row != -1){
+                    selectedExamId = Integer.parseInt(examTable.getValueAt(row, 1).toString());
+                    selectedCls = examTable.getValueAt(row, 2).toString();
+                    selectedSubject = examTable.getValueAt(row, 3).toString();
+                    selectedTerm = examTable.getValueAt(row, 4).toString();
+                    selectedDate = examTable.getValueAt(row, 5).toString();
+                    selectedStartTime = examTable.getValueAt(row, 6).toString();
+                    selectedEndTime = examTable.getValueAt(row, 7).toString();
+                    selectedVanue = examTable.getValueAt(row, 8).toString();
+                }
+            }
+            
+        });
+    }
+    
+    private void deleteLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteLabelMouseClicked
+        if (selectedExamId == 0) {
+            JOptionPane.showMessageDialog(this, "Please select a row first.");
+            return;
+        }
+        deleteExamDialog dialog = new deleteExamDialog(new JFrame(), true);
+        dialog.setExamData(selectedExamId, selectedCls, selectedSubject, selectedTerm,selectedDate, selectedStartTime, selectedEndTime, selectedVanue);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_deleteLabelMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> classSelect;
     private com.toedter.calendar.JDateChooser dateChoose;
+    private javax.swing.JLabel deleteLabel;
     private javax.swing.JFormattedTextField endTimeInput;
     private javax.swing.JTable examTable;
     private javax.swing.JButton jButton2;
