@@ -69,6 +69,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         knsLogo.setIcon(new ImageIcon(image));
         messageLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/message.svg", 20, 20));
         notifyLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/notification.svg", 20, 20));
+        userBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 40, 40));
 
         dashboardBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/dashboard.svg", 20, 20));
         teacherBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/teacher_1.svg", 20, 20));
@@ -77,6 +78,21 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         examBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/exam.svg", 20, 20));
         settingBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/settings.svg", 20, 20));
         logOutBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/logOut.svg", 20, 20));
+
+        dashboardBtn.putClientProperty(FlatClientProperties.STYLE,
+                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
+        teacherBtn.putClientProperty(FlatClientProperties.STYLE,
+                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
+        studentBtn.putClientProperty(FlatClientProperties.STYLE,
+                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
+        classBtn.putClientProperty(FlatClientProperties.STYLE,
+                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
+        examBtn.putClientProperty(FlatClientProperties.STYLE,
+                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
+        settingBtn.putClientProperty(FlatClientProperties.STYLE,
+                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
+        logOutBtn.putClientProperty(FlatClientProperties.STYLE,
+                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
 
         dashboardBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         teacherBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
@@ -109,9 +125,10 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         settingBtn = new javax.swing.JButton();
         headerPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        adminLogo = new javax.swing.JLabel();
         messageLogo = new javax.swing.JLabel();
         notifyLogo = new javax.swing.JLabel();
+        userBtn = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         contentPanel = new javax.swing.JPanel();
 
@@ -273,34 +290,56 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Kekunagolla National School");
 
+        userBtn.setText("Admin");
+        userBtn.setBorder(null);
+        userBtn.setBorderPainted(false);
+        userBtn.setContentAreaFilled(false);
+        userBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        userBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        userBtn.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        userBtn.setIconTextGap(8);
+
+        jSeparator2.setForeground(new java.awt.Color(50, 54, 60));
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(messageLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(notifyLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(adminLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)))
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(userBtn)
                 .addContainerGap())
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(adminLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(messageLogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(notifyLogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(userBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(messageLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(notifyLogo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jSeparator2)))
                 .addContainerGap())
         );
 
@@ -375,8 +414,9 @@ public class AdminHomeScreen extends javax.swing.JFrame {
 
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
-        if(result == JOptionPane.YES_OPTION ){
+        if (result == JOptionPane.YES_OPTION) {
             this.dispose();
+            new LoginScreen().setVisible(true);
         }
     }//GEN-LAST:event_logOutBtnActionPerformed
 
@@ -391,7 +431,6 @@ public class AdminHomeScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel adminLogo;
     private javax.swing.JButton classBtn;
     private javax.swing.JPanel contentPanel;
     private javax.swing.JButton dashboardBtn;
@@ -399,6 +438,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
     private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel knsLogo;
     private javax.swing.JButton logOutBtn;
     private javax.swing.JPanel logoPanel;
@@ -408,5 +448,6 @@ public class AdminHomeScreen extends javax.swing.JFrame {
     private javax.swing.JButton settingBtn;
     private javax.swing.JButton studentBtn;
     private javax.swing.JButton teacherBtn;
+    private javax.swing.JButton userBtn;
     // End of variables declaration//GEN-END:variables
 }
