@@ -77,22 +77,8 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         classBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/class.svg", 20, 20));
         examBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/exam.svg", 20, 20));
         settingBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/settings.svg", 20, 20));
+        profileSettingBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/user1.svg", 20, 20));
         logOutBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/logOut.svg", 20, 20));
-
-        dashboardBtn.putClientProperty(FlatClientProperties.STYLE,
-                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
-        teacherBtn.putClientProperty(FlatClientProperties.STYLE,
-                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
-        studentBtn.putClientProperty(FlatClientProperties.STYLE,
-                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
-        classBtn.putClientProperty(FlatClientProperties.STYLE,
-                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
-        examBtn.putClientProperty(FlatClientProperties.STYLE,
-                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
-        settingBtn.putClientProperty(FlatClientProperties.STYLE,
-                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
-        logOutBtn.putClientProperty(FlatClientProperties.STYLE,
-                "arc:100; hoverBackground:#e63939; borderColor:#b30000; focusedBackground:#cc3333; pressedBackground:#cc3333;");
 
         dashboardBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         teacherBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
@@ -100,6 +86,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         classBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         examBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         settingBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
+        profileSettingBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         logOutBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
 
         logoPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
@@ -116,13 +103,14 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         logoPanel = new javax.swing.JPanel();
         knsLogo = new javax.swing.JLabel();
         menuItemPanel = new javax.swing.JPanel();
-        logOutBtn = new javax.swing.JButton();
+        profileSettingBtn = new javax.swing.JButton();
         dashboardBtn = new javax.swing.JButton();
         teacherBtn = new javax.swing.JButton();
         studentBtn = new javax.swing.JButton();
         classBtn = new javax.swing.JButton();
         examBtn = new javax.swing.JButton();
         settingBtn = new javax.swing.JButton();
+        logOutBtn = new javax.swing.JButton();
         headerPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         messageLogo = new javax.swing.JLabel();
@@ -163,15 +151,15 @@ public class AdminHomeScreen extends javax.swing.JFrame {
 
         menuItemPanel.setBackground(new java.awt.Color(43, 43, 43));
 
-        logOutBtn.setBackground(new java.awt.Color(60, 63, 65));
-        logOutBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        logOutBtn.setForeground(new java.awt.Color(246, 246, 246));
-        logOutBtn.setText(" LogOut");
-        logOutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        logOutBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        logOutBtn.addActionListener(new java.awt.event.ActionListener() {
+        profileSettingBtn.setBackground(new java.awt.Color(60, 63, 65));
+        profileSettingBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        profileSettingBtn.setForeground(new java.awt.Color(246, 246, 246));
+        profileSettingBtn.setText("Profile Settings");
+        profileSettingBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        profileSettingBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        profileSettingBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logOutBtnActionPerformed(evt);
+                profileSettingBtnActionPerformed(evt);
             }
         });
 
@@ -238,12 +226,24 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         settingBtn.setBackground(new java.awt.Color(60, 63, 65));
         settingBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         settingBtn.setForeground(new java.awt.Color(246, 246, 246));
-        settingBtn.setText(" Settings");
+        settingBtn.setText("System Settings");
         settingBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         settingBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         settingBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 settingBtnActionPerformed(evt);
+            }
+        });
+
+        logOutBtn.setBackground(new java.awt.Color(60, 63, 65));
+        logOutBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        logOutBtn.setForeground(new java.awt.Color(246, 246, 246));
+        logOutBtn.setText(" LogOut");
+        logOutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logOutBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        logOutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutBtnActionPerformed(evt);
             }
         });
 
@@ -255,12 +255,13 @@ public class AdminHomeScreen extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(menuItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(studentBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(logOutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(profileSettingBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(classBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dashboardBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(teacherBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                     .addComponent(examBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(settingBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(settingBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logOutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuItemPanelLayout.setVerticalGroup(
@@ -279,8 +280,10 @@ public class AdminHomeScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(settingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(profileSettingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(logOutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         headerPanel.setBackground(new java.awt.Color(43, 43, 43));
@@ -412,6 +415,10 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         this.contentPanelLayout.show(contentPanel, "settings_panel");
     }//GEN-LAST:event_settingBtnActionPerformed
 
+    private void profileSettingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileSettingBtnActionPerformed
+
+    }//GEN-LAST:event_profileSettingBtnActionPerformed
+
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
         int result = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
@@ -445,6 +452,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
     private javax.swing.JPanel menuItemPanel;
     private javax.swing.JLabel messageLogo;
     private javax.swing.JLabel notifyLogo;
+    private javax.swing.JButton profileSettingBtn;
     private javax.swing.JButton settingBtn;
     private javax.swing.JButton studentBtn;
     private javax.swing.JButton teacherBtn;
