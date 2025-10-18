@@ -11,21 +11,11 @@ import lk.kns.school.util.Session;
 
 public class StudentPanel extends javax.swing.JPanel {
 
-
     public StudentPanel() {
         initComponents();
         init();
         loadStudentData();
-    }
-
-    private void init() {
-        refreshLabel.setIcon(new FlatSVGIcon("lk/kns/school/image/refresh.svg", 20, 20));
-        
-        searchTextInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-        searchBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-        reportBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-
-        searchTextInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "search by student name or admission number");
+        loadClassName();
     }
 
     @SuppressWarnings("unchecked")
@@ -87,6 +77,8 @@ public class StudentPanel extends javax.swing.JPanel {
         reportBtn.setText("Generate Report");
         reportBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        gradeLabel.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
+        gradeLabel.setForeground(new java.awt.Color(170, 170, 160));
         gradeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -101,8 +93,8 @@ public class StudentPanel extends javax.swing.JPanel {
                         .addComponent(searchTextInput, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(searchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
-                        .addComponent(gradeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                        .addComponent(gradeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(refreshLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -127,16 +119,37 @@ public class StudentPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void init() {
+        refreshLabel.setIcon(new FlatSVGIcon("lk/kns/school/image/refresh.svg", 20, 20));
+
+        searchTextInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        searchBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        reportBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+
+        searchTextInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "search by student name or admission number");
+    }
+    
+    private void loadClassName(){
+        try {
+            ResultSet rs = MySQL.execute("SELECT `class_name` FROM `class` WHERE `class_id` = '"+Session.classId+"'");
+            if(rs.next()){
+                gradeLabel.setText(rs.getString("class_name"));
+            }
+                
+        } catch (SQLException e) {
+        }
+    }
+
     public void loadStudentData() {
         try {
             int classId = Session.classId;
-            
+
             ResultSet rs = MySQL.execute("SELECT * FROM `student` INNER JOIN `user` ON `student`.`user_id` = `user`.`user_id` "
-                    + "INNER JOIN `teacher` ON `student`.`class_id` = `teacher`.`class_id` "
                     + "INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id`"
                     + "INNER JOIN `status` ON `student`.`status_id` = `status`.`status_id` "
-                    + "WHERE `class`.`class_id` = '"+classId+"'");
+                    + "WHERE `student`.`class_id` = '" + classId + "'");
 
+            gradeLabel.setText("");
             DefaultTableModel dtm = (DefaultTableModel) studentTable.getModel();
             dtm.setRowCount(0);
 
@@ -164,9 +177,10 @@ public class StudentPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-    
+
     private void refreshLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshLabelMouseClicked
         loadStudentData();
+        loadClassName();
     }//GEN-LAST:event_refreshLabelMouseClicked
 
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
@@ -175,10 +189,10 @@ public class StudentPanel extends javax.swing.JPanel {
         try {
             String query;
             if (searchText.isEmpty()) {
-                query = "SELECT * FROM `user` "
-                        + "INNER JOIN `student` ON `student`.`user_id` = `user`.`user_id` "
-                        + "INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id` "
-                        + "INNER JOIN `status` ON `student`.`status_id` = `status`.`status_id`";
+                query = "SELECT * FROM `student` INNER JOIN `user` ON `student`.`user_id` = `user`.`user_id` "
+                    + "INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id`"
+                    + "INNER JOIN `status` ON `student`.`status_id` = `status`.`status_id` "
+                    + "WHERE `student`.`class_id` = '" + Session.classId + "'";
             } else {
                 query = "SELECT * FROM `user` "
                         + "INNER JOIN `student` ON `student`.`user_id` = `user`.`user_id` "
@@ -186,7 +200,7 @@ public class StudentPanel extends javax.swing.JPanel {
                         + "INNER JOIN `status` ON `student`.`status_id` = `status`.`status_id` "
                         + "WHERE (`student`.`admission_no` = '" + searchText + "' "
                         + "OR `student`.`f_name` LIKE '%" + searchText + "%' "
-                        + "OR `student`.`l_name` LIKE '%" + searchText + "%')";
+                        + "OR `student`.`l_name` LIKE '%" + searchText + "%') AND`student`.`class_id` = '" + Session.classId + "'";
             }
 
             ResultSet rs = MySQL.execute(query);

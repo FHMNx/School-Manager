@@ -178,7 +178,7 @@ public class TeacherLoginPanel extends javax.swing.JPanel {
                 ResultSet rs = MySQL.execute(
                         "SELECT * FROM `user` "
                         + "INNER JOIN `role` ON `user`.`role_id` = `role`.`role_id` "
-                        + "LEFT JOIN `teacher` ON `user`.`user_id` = `teacher`.`teacher_id` "
+                        + "LEFT JOIN `teacher` ON `user`.`user_id` = `teacher`.`user_id` "
                         + "WHERE `user`.`email` = '" + email + "' "
                         + "AND `user`.`password` = '" + password + "' "
                         + "AND (`user`.`role_id` = '2')"
@@ -187,7 +187,7 @@ public class TeacherLoginPanel extends javax.swing.JPanel {
                 if (rs.next()) {
 
                     int roleId = rs.getInt("role.role_id");
-                    
+
                     Session.userId = rs.getInt("user.user_id");
                     Session.email = rs.getString("user.email");
                     Session.roleId = roleId;
