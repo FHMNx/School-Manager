@@ -1,4 +1,4 @@
-package lk.kns.school.dialog;
+package lk.kns.school.adminDialog;
 
 import java.awt.Image;
 import java.sql.SQLException;

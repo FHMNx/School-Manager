@@ -11,9 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
-import lk.kns.school.dialog.addTeacherDialog;
-import lk.kns.school.dialog.deleteTeacherDialog;
-import lk.kns.school.dialog.editTeacherDialog;
+import lk.kns.school.adminDialog.addTeacherDialog;
+import lk.kns.school.adminDialog.deleteTeacherDialog;
+import lk.kns.school.adminDialog.editTeacherDialog;
 
 public class TeacherPanel extends javax.swing.JPanel {
 

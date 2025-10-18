@@ -8,6 +8,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -67,35 +70,44 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel1" alignment="0" pref="694" max="32767" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabel1" alignment="0" pref="603" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="messageLogo" min="-2" pref="38" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="notifyLogo" min="-2" pref="38" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="adminLogo" min="-2" pref="38" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSeparator2" min="-2" pref="3" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="userBtn" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="47" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                          <Component id="adminLogo" alignment="0" min="-2" pref="39" max="-2" attributes="0"/>
-                          <Component id="messageLogo" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                          <Component id="userBtn" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="notifyLogo" alignment="1" min="-2" pref="39" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="47" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jSeparator2" max="32767" attributes="0"/>
+                              <Component id="messageLogo" pref="39" max="32767" attributes="0"/>
+                              <Component id="notifyLogo" pref="39" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -115,11 +127,36 @@
             <Property name="text" type="java.lang.String" value="Kekunagolla National School"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="adminLogo">
-        </Component>
         <Component class="javax.swing.JLabel" name="messageLogo">
         </Component>
         <Component class="javax.swing.JLabel" name="notifyLogo">
+        </Component>
+        <Component class="javax.swing.JButton" name="userBtn">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Teacher"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="horizontalTextPosition" type="int" value="2"/>
+            <Property name="iconTextGap" type="int" value="8"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userBtnActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator2">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="3c" green="36" red="32" type="rgb"/>
+            </Property>
+            <Property name="orientation" type="int" value="1"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -133,16 +170,16 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="studentBtn" alignment="0" max="32767" attributes="0"/>
+                      <Component id="studentBtn" alignment="0" pref="212" max="32767" attributes="0"/>
                       <Component id="logOutBtn" alignment="0" max="32767" attributes="0"/>
                       <Component id="classBtn" alignment="0" max="32767" attributes="0"/>
                       <Component id="dashboardBtn" alignment="1" max="32767" attributes="0"/>
-                      <Component id="teacherBtn" alignment="0" pref="212" max="32767" attributes="0"/>
                       <Component id="examBtn" alignment="0" max="32767" attributes="0"/>
                       <Component id="settingBtn" alignment="1" max="32767" attributes="0"/>
+                      <Component id="noticeBtn" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -154,11 +191,11 @@
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Component id="dashboardBtn" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="teacherBtn" min="-2" pref="42" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="studentBtn" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="classBtn" min="-2" pref="42" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="noticeBtn" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="examBtn" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -211,27 +248,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dashboardBtnActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="teacherBtn">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="41" green="3f" red="3c" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f6" green="f6" red="f6" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value=" Teacher Management"/>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Hand Cursor"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="2"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="teacherBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="studentBtn">
@@ -287,7 +303,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value=" Exams &amp; Results"/>
+            <Property name="text" type="java.lang.String" value="Exam Results"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
@@ -308,7 +324,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value=" Settings"/>
+            <Property name="text" type="java.lang.String" value="Profile Settings"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
             </Property>
@@ -316,6 +332,27 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingBtnActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="noticeBtn">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="41" green="3f" red="3c" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f6" green="f6" red="f6" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Notice Board"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="noticeBtnActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

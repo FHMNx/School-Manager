@@ -13,7 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
-import lk.kns.school.dialog.deleteExamDialog;
+import lk.kns.school.adminDialog.deleteExamDialog;
 import lk.kns.school.validation.Validator;
 import raven.toast.Notifications;
 

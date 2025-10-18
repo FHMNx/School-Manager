@@ -174,7 +174,7 @@ public class AdminLoginPanel extends javax.swing.JPanel {
 
             try {
                 ResultSet rs = MySQL.execute("SELECT * FROM `user` INNER JOIN `role` ON `user`.`role_id` = `role`.`role_id` "
-                        + "WHERE `user`.`email` = '" + email + "' AND `user`.`password` = '" + password + "'");
+                        + "WHERE `user`.`email` = '" + email + "' AND `user`.`password` = '" + password + "' AND `user`.`role_id` = '1'");
 
                 if (rs.next()) {
                     new AdminHomeScreen().setVisible(true);
