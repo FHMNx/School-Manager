@@ -1,15 +1,26 @@
 package lk.kns.school.adminSidePanels;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import lk.kns.school.connection.MySQL;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.swing.UIManager;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
 
 public class DashboardPanel extends javax.swing.JPanel {
 
     public DashboardPanel() {
         initComponents();
         init();
+        initCharts();
         loadDashboardData();
     }
 
@@ -33,8 +44,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         subjectLogo = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        barChartPanel = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(43, 43, 43));
 
@@ -214,39 +224,25 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 796, Short.MAX_VALUE)
+        javax.swing.GroupLayout barChartPanelLayout = new javax.swing.GroupLayout(barChartPanel);
+        barChartPanel.setLayout(barChartPanelLayout);
+        barChartPanelLayout.setHorizontalGroup(
+            barChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        barChartPanelLayout.setVerticalGroup(
+            barChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 304, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(barChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
@@ -267,9 +263,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                     .addComponent(jLayeredPane1)
                     .addComponent(jLayeredPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(barChartPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -279,6 +273,72 @@ public class DashboardPanel extends javax.swing.JPanel {
         teacherLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/teacher.svg", 62, 62));
         clsLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/class.svg", 70, 70));
         subjectLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/subject.svg", 60, 60));
+    }
+
+    private DefaultCategoryDataset loadBarDataset() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        String sql = "SELECT c.class_name, COUNT(s.student_id) AS student_count "
+                + "FROM student s "
+                + "INNER JOIN class c ON s.class_id = c.class_id "
+                + "GROUP BY c.class_name";
+
+        try {
+            ResultSet rs = MySQL.execute(sql);
+            while (rs.next()) {
+                String cls = rs.getString("class_name");
+                int count = rs.getInt("student_count");
+                dataset.addValue(count, "Students", cls);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return dataset;
+    }
+
+    private void initCharts() {
+        DefaultCategoryDataset barDs = loadBarDataset();
+
+        // Create the chart
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "Students per Class",
+                "Class",
+                "Students",
+                barDs
+        );
+
+        // Get colors from current FlatLaf theme
+        Color bg = UIManager.getColor("Panel.background");       // chart background
+        Color fg = UIManager.getColor("Label.foreground");       // labels & titles
+        Color grid = UIManager.getColor("Table.gridColor");      // gridlines
+        Color accent = UIManager.getColor("Component.focusColor"); // accent for bars
+
+        // Set chart background
+        barChart.setBackgroundPaint(bg);
+        barChart.getTitle().setPaint(fg);
+
+        // Customize plot
+        CategoryPlot plot = barChart.getCategoryPlot();
+        plot.setBackgroundPaint(bg);
+        plot.setDomainGridlinePaint(grid);
+        plot.setRangeGridlinePaint(grid);
+
+        // Customize bars
+        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(0, accent);
+
+        // Customize axes
+        plot.getDomainAxis().setTickLabelPaint(fg);
+        plot.getDomainAxis().setLabelPaint(fg);
+        plot.getRangeAxis().setTickLabelPaint(fg);
+        plot.getRangeAxis().setLabelPaint(fg);
+
+        // Add to panel
+        ChartPanel barChartCP = new ChartPanel(barChart);
+        barChartPanel.removeAll();
+        barChartPanel.setLayout(new BorderLayout());
+        barChartPanel.add(barChartCP, BorderLayout.CENTER);
+        barChartPanel.revalidate();
+        barChartPanel.repaint();
     }
 
     public void loadDashboardData() {
@@ -299,6 +359,7 @@ public class DashboardPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel barChartPanel;
     private javax.swing.JLabel clsLogo;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -310,8 +371,6 @@ public class DashboardPanel extends javax.swing.JPanel {
     private javax.swing.JLayeredPane jLayeredPane5;
     private javax.swing.JLayeredPane jLayeredPane6;
     private javax.swing.JLayeredPane jLayeredPane7;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel studentCount;
     private javax.swing.JLabel studentLogo;
     private javax.swing.JLabel subjectLogo;
