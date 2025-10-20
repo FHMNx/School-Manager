@@ -118,7 +118,7 @@
                       <Component id="dashboardBtn" alignment="1" max="32767" attributes="0"/>
                       <Component id="teacherBtn" alignment="0" pref="212" max="32767" attributes="0"/>
                       <Component id="examBtn" alignment="0" max="32767" attributes="0"/>
-                      <Component id="settingBtn" alignment="1" max="32767" attributes="0"/>
+                      <Component id="systemSettingBtn" alignment="1" max="32767" attributes="0"/>
                       <Component id="logOutBtn" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -139,7 +139,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="examBtn" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="settingBtn" min="-2" pref="42" max="-2" attributes="0"/>
+                  <Component id="systemSettingBtn" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="profileSettingBtn" min="-2" pref="42" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -276,7 +276,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="examBtnActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="settingBtn">
+        <Component class="javax.swing.JButton" name="systemSettingBtn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="41" green="3f" red="3c" type="rgb"/>
@@ -294,7 +294,7 @@
             <Property name="horizontalAlignment" type="int" value="2"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingBtnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="systemSettingBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="logOutBtn">

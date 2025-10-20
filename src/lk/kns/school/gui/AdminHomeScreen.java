@@ -12,7 +12,8 @@ import javax.swing.SwingUtilities;
 import lk.kns.school.adminSidePanels.ClassPanel;
 import lk.kns.school.adminSidePanels.DashboardPanel;
 import lk.kns.school.adminSidePanels.ExamPanel;
-import lk.kns.school.adminSidePanels.SettingsPanel;
+import lk.kns.school.adminSidePanels.ProfileSettingsPanel;
+import lk.kns.school.adminSidePanels.SystemSettingsPanel;
 import lk.kns.school.adminSidePanels.StudentPanel;
 import lk.kns.school.adminSidePanels.TeacherPanel;
 import lk.kns.school.appIcon.Icon;
@@ -26,7 +27,8 @@ public class AdminHomeScreen extends javax.swing.JFrame {
     private StudentPanel studentPanel;
     private ClassPanel classPanel;
     private ExamPanel examPanel;
-    private SettingsPanel settingsPanel;
+    private SystemSettingsPanel systemSettingsPanel;
+    private ProfileSettingsPanel profileSettingsPanel;
 
     public AdminHomeScreen() {
         initComponents();
@@ -45,20 +47,24 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         this.studentPanel = new StudentPanel();
         this.classPanel = new ClassPanel();
         this.examPanel = new ExamPanel();
-        this.settingsPanel = new SettingsPanel();
+        this.systemSettingsPanel = new SystemSettingsPanel();
+        this.profileSettingsPanel = new ProfileSettingsPanel();
 
         this.dashboardPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         this.teacherPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         this.studentPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         this.classPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         this.examPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        this.systemSettingsPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        this.profileSettingsPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
 
         this.contentPanel.add(dashboardPanel, "dashboard_panel");
         this.contentPanel.add(teacherPanel, "teacher_panel");
         this.contentPanel.add(studentPanel, "student_panel");
         this.contentPanel.add(classPanel, "class_panel");
         this.contentPanel.add(examPanel, "exam_panel");
-        this.contentPanel.add(settingsPanel, "settings_panel");
+        this.contentPanel.add(systemSettingsPanel, "systemSettings_panel");
+        this.contentPanel.add(profileSettingsPanel, "profileSettings_panel");
 
         SwingUtilities.updateComponentTreeUI(contentPanel);
     }
@@ -76,7 +82,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         studentBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/student_1.svg", 20, 20));
         classBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/class.svg", 20, 20));
         examBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/exam.svg", 20, 20));
-        settingBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/settings.svg", 20, 20));
+        systemSettingBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/settings.svg", 20, 20));
         profileSettingBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/user1.svg", 20, 20));
         logOutBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/logOut.svg", 20, 20));
 
@@ -85,7 +91,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         studentBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         classBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         examBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
-        settingBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
+        systemSettingBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         profileSettingBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         logOutBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
 
@@ -109,7 +115,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         studentBtn = new javax.swing.JButton();
         classBtn = new javax.swing.JButton();
         examBtn = new javax.swing.JButton();
-        settingBtn = new javax.swing.JButton();
+        systemSettingBtn = new javax.swing.JButton();
         logOutBtn = new javax.swing.JButton();
         headerPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -223,15 +229,15 @@ public class AdminHomeScreen extends javax.swing.JFrame {
             }
         });
 
-        settingBtn.setBackground(new java.awt.Color(60, 63, 65));
-        settingBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        settingBtn.setForeground(new java.awt.Color(246, 246, 246));
-        settingBtn.setText("System Settings");
-        settingBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        settingBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        settingBtn.addActionListener(new java.awt.event.ActionListener() {
+        systemSettingBtn.setBackground(new java.awt.Color(60, 63, 65));
+        systemSettingBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        systemSettingBtn.setForeground(new java.awt.Color(246, 246, 246));
+        systemSettingBtn.setText("System Settings");
+        systemSettingBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        systemSettingBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        systemSettingBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                settingBtnActionPerformed(evt);
+                systemSettingBtnActionPerformed(evt);
             }
         });
 
@@ -260,7 +266,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
                     .addComponent(dashboardBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(teacherBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
                     .addComponent(examBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(settingBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(systemSettingBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(logOutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -278,7 +284,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(examBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(settingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(systemSettingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(profileSettingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -411,12 +417,12 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         this.contentPanelLayout.show(contentPanel, "exam_panel");
     }//GEN-LAST:event_examBtnActionPerformed
 
-    private void settingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingBtnActionPerformed
-        this.contentPanelLayout.show(contentPanel, "settings_panel");
-    }//GEN-LAST:event_settingBtnActionPerformed
+    private void systemSettingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_systemSettingBtnActionPerformed
+        this.contentPanelLayout.show(contentPanel, "systemSettings_panel");
+    }//GEN-LAST:event_systemSettingBtnActionPerformed
 
     private void profileSettingBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileSettingBtnActionPerformed
-
+        this.contentPanelLayout.show(contentPanel, "profileSettings_panel");
     }//GEN-LAST:event_profileSettingBtnActionPerformed
 
     private void logOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutBtnActionPerformed
@@ -453,8 +459,8 @@ public class AdminHomeScreen extends javax.swing.JFrame {
     private javax.swing.JLabel messageLogo;
     private javax.swing.JLabel notifyLogo;
     private javax.swing.JButton profileSettingBtn;
-    private javax.swing.JButton settingBtn;
     private javax.swing.JButton studentBtn;
+    private javax.swing.JButton systemSettingBtn;
     private javax.swing.JButton teacherBtn;
     private javax.swing.JButton userBtn;
     // End of variables declaration//GEN-END:variables
