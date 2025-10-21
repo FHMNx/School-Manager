@@ -1,12 +1,25 @@
 package lk.kns.school.adminSidePanels;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import lk.kns.school.connection.MySQL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ProfileSettingsPanel extends javax.swing.JPanel {
 
     public ProfileSettingsPanel() {
         initComponents();
-        init();
+        loadProfileImage();
     }
 
     @SuppressWarnings("unchecked")
@@ -33,6 +46,12 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(43, 43, 43));
 
         profileBtn.setText("Change Profile");
+        profileBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        profileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                profileBtnActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Admin First Name :");
 
@@ -41,12 +60,14 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
         jLabel3.setText("Admin Email Address :");
 
         updateBtn.setText("update");
+        updateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel4.setText("New Password :");
 
         jLabel5.setText("Confirm Password :");
 
         passwordBtn.setText("Change Password");
+        passwordBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -134,8 +155,127 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void init(){
-    adminImage.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 142, 142));
+
+    private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images (.png, .jpeg, .jpg)", "png", "jpeg", "jpg");
+        chooser.setFileFilter(filter);
+
+        int option = chooser.showOpenDialog(this);
+
+        if (option == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = chooser.getSelectedFile();
+
+            try {
+                //create admin_image folder if needed
+                String projectDir = new File("").getAbsolutePath();
+                File imageFolder = new File(projectDir, "admin_image");
+                if (!imageFolder.exists()) {
+                    imageFolder.mkdir();
+                }
+
+                //unique file name & copy
+                String fileName = System.currentTimeMillis() + "_" + selectedFile.getName();
+                File destinationFile = new File(imageFolder, fileName);
+                String relativePath = "admin_image/" + fileName;
+                Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                int userId = -1;
+                ResultSet userRs = MySQL.execute("SELECT * FROM `user` LIMIT 1");
+                if (userRs.next()) {
+                    userId = userRs.getInt("user_id");
+                }
+
+                int roleId = -1;
+                ResultSet roleRs = MySQL.execute("SELECT * FROM `role` WHERE `role_id` = '1' LIMIT 1");
+                if (roleRs.next()) {
+                    roleId = roleRs.getInt("role_id");
+                }
+
+                if (userId == -1 || roleId == -1) {
+                    JOptionPane.showMessageDialog(this, "Could not determine user or role. Aborting.");
+                    return;
+                }
+
+                ResultSet rs = MySQL.execute("SELECT `profile_id` FROM `userProfile` WHERE `user_id` = " + userId + " AND `role_id` = " + roleId);
+                if (rs.next()) {
+                    // update
+                    String updateQuery = "UPDATE `userProfile` SET `image_path` = '" + relativePath
+                            + "' WHERE `user_id` = " + userId + " AND `role_id` = " + roleId;
+                    MySQL.execute(updateQuery);
+                } else {
+                    // insert
+                    String insertQuery = "INSERT INTO `userProfile` (`image_path`, `user_id`, `role_id`) VALUES ('"
+                            + relativePath + "', " + userId + ", " + roleId + ")";
+                    MySQL.execute(insertQuery);
+                }
+
+                setProfileImage(destinationFile.getAbsolutePath());
+                JOptionPane.showMessageDialog(this, "Profile image updated successfully!");
+
+                setProfileImage(destinationFile.getAbsolutePath());
+                JOptionPane.showMessageDialog(this, "Profile image updated successfully!");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error copying image: " + e.getMessage());
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_profileBtnActionPerformed
+
+    private void setProfileImage(String imagePath) {
+        ImageIcon icon = new ImageIcon(imagePath);
+       Image img = icon.getImage().getScaledInstance(142, 142, Image.SCALE_SMOOTH);
+        adminImage.setIcon(new ImageIcon(img));
+    }
+
+    private void loadProfileImage() {
+        try {
+
+            int userId = -1;
+            ResultSet userRs = MySQL.execute("SELECT * FROM `user` LIMIT 1");
+            if (userRs.next()) {
+                userId = userRs.getInt("user_id");
+            }
+
+            int roleId = -1;
+            ResultSet roleRs = MySQL.execute("SELECT * FROM `role` WHERE `role_id` = '1' LIMIT 1");
+            if (roleRs.next()) {
+                roleId = roleRs.getInt("role_id");
+            }
+
+            if (userId == -1 || roleId == -1) {
+                adminImage.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 142, 142));
+                return;
+            }
+
+            ResultSet rs = MySQL.execute("SELECT `image_path` FROM `userProfile` WHERE `user_id` = " + userId + " AND `role_id` = " + roleId);
+            if (rs.next()) {
+                String imagePath = rs.getString("image_path");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    String projectDir = new File("").getAbsolutePath();
+                    File imgFile = new File(projectDir, imagePath);
+
+                    if (imgFile.exists()) {
+                        setProfileImage(imgFile.getAbsolutePath());
+                    } else {
+                        adminImage.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 142, 142));
+                    }
+                } else {
+                    adminImage.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 142, 142));
+                }
+            } else {
+                adminImage.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 142, 142));
+            }
+            rs.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            adminImage.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 142, 142));
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
