@@ -143,7 +143,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel10" pref="153" max="32767" attributes="0"/>
-                      <Component id="jLabel11" max="32767" attributes="0"/>
+                      <Component id="classCount" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="28" max="32767" attributes="0"/>
               </Group>
@@ -158,7 +158,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel10" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabel11" min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="classCount" min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -181,7 +181,7 @@
             <Property name="text" type="java.lang.String" value="Total Classes"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel11">
+        <Component class="javax.swing.JLabel" name="classCount">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="30" style="1"/>
@@ -290,7 +290,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jLabel14" pref="151" max="32767" attributes="0"/>
-                      <Component id="jLabel15" max="32767" attributes="0"/>
+                      <Component id="subjectsCount" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="30" max="32767" attributes="0"/>
               </Group>
@@ -305,7 +305,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel14" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabel15" min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="subjectsCount" min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="57" max="32767" attributes="0"/>
@@ -328,7 +328,7 @@
             <Property name="text" type="java.lang.String" value="Total Subjects"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel15">
+        <Component class="javax.swing.JLabel" name="subjectsCount">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="30" style="1"/>
