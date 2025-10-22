@@ -14,12 +14,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import lk.kns.school.validation.Validator;
 
 public class ProfileSettingsPanel extends javax.swing.JPanel {
 
     public ProfileSettingsPanel() {
         initComponents();
         loadProfileImage();
+        loadAdminData();
     }
 
     @SuppressWarnings("unchecked")
@@ -32,16 +34,18 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         fnameInput = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        lastNameInput = new javax.swing.JTextField();
+        lnameInput = new javax.swing.JTextField();
         emailInput = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         updateBtn = new javax.swing.JButton();
-        newPasswordInput = new javax.swing.JTextField();
+        currentPasswordInput = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        confirmPasswordInput = new javax.swing.JTextField();
+        newPasswordInput = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         passwordBtn = new javax.swing.JButton();
+        confirmPasswordInput = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(43, 43, 43));
 
@@ -61,13 +65,25 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
 
         updateBtn.setText("update");
         updateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setText("New Password :");
+        jLabel4.setText("Current Password :");
 
-        jLabel5.setText("Confirm Password :");
+        jLabel5.setText("New Password :");
 
         passwordBtn.setText("Change Password");
         passwordBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        passwordBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Confirm Password :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -76,41 +92,40 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(passwordBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(newPasswordInput, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(confirmPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(adminImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(profileBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(updateBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(adminImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(profileBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(updateBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(fnameInput)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lastNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(emailInput, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(38, Short.MAX_VALUE))))
+                                .addComponent(fnameInput)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(emailInput, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(passwordBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(currentPasswordInput)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(newPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(14, 14, 14)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                .addComponent(confirmPasswordInput)))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,7 +145,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lastNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -144,9 +159,13 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(newPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(currentPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(newPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(confirmPasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
@@ -155,6 +174,32 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadAdminData() {
+        try {
+            ResultSet rs = MySQL.execute(
+                    "SELECT `admin`.`f_name`, `admin`.`l_name`, `user`.`email` "
+                    + "FROM `admin` "
+                    + "INNER JOIN `user` ON `admin`.`user_id` = `user`.`user_id` "
+                    + "LIMIT 1"
+            );
+
+            if (rs.next()) {
+                String fname = rs.getString("f_name");
+                String lname = rs.getString("l_name");
+                String email = rs.getString("email");
+
+                fnameInput.setText(fname);
+                lnameInput.setText(lname);
+                emailInput.setText(email);
+            } else {
+                JOptionPane.showMessageDialog(this, "No admin record found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading admin data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void profileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileBtnActionPerformed
         JFileChooser chooser = new JFileChooser();
@@ -228,7 +273,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
 
     private void setProfileImage(String imagePath) {
         ImageIcon icon = new ImageIcon(imagePath);
-       Image img = icon.getImage().getScaledInstance(142, 142, Image.SCALE_SMOOTH);
+        Image img = icon.getImage().getScaledInstance(142, 142, Image.SCALE_SMOOTH);
         adminImage.setIcon(new ImageIcon(img));
     }
 
@@ -278,9 +323,86 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
         }
     }
 
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        String fname = fnameInput.getText().trim();
+        String lname = lnameInput.getText().trim();
+        String email = emailInput.getText().trim();
+
+        if (!Validator.isInputFieldsValid(fname, lname)) {
+            return;
+        }
+        if (!Validator.isEmailValid(email)) {
+            return;
+        }
+
+        try {
+            ResultSet userRs = MySQL.execute("SELECT `user_id` FROM `user` LIMIT 1");
+            int userId = -1;
+            if (userRs.next()) {
+                userId = userRs.getInt("user_id");
+            }
+
+            MySQL.execute("UPDATE `user` SET `email` = '" + email + "' WHERE `user_id` = '" + userId + "'");
+
+            MySQL.execute("UPDATE `admin` SET `f_name` = '" + fname + "' , `l_name` = '" + lname + "' , `email` = '" + email + "'"
+                    + " WHERE `user_id` = '" + userId + "'");
+
+            JOptionPane.showMessageDialog(this, "Admin data updated successfully");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void passwordBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordBtnActionPerformed
+        String currentPassword = currentPasswordInput.getText().trim();
+        String newPassword = newPasswordInput.getText().trim();
+        String confirmPassword = confirmPasswordInput.getText().trim();
+
+        if (!Validator.isInputFieldsValid(currentPassword, newPassword, confirmPassword)) {
+            return;
+        }
+
+        try {
+            ResultSet rs = MySQL.execute("SELECT `password`, `user_id` FROM `user` LIMIT 1");
+            if (rs.next()) {
+                String dbPassword = rs.getString("password");
+                int userId = rs.getInt("user_id");
+
+                if (!currentPassword.equals(dbPassword)) {
+                    JOptionPane.showMessageDialog(this, "Your current password is incorrect.");
+                    return;
+                }
+
+                if (!newPassword.equals(confirmPassword)) {
+                    JOptionPane.showMessageDialog(this, "New password and confirm password do not match.");
+                    return;
+                }
+
+                MySQL.execute("UPDATE `user` SET `password` = '" + confirmPassword + "' WHERE `user_id` = '" + userId + "'");
+                MySQL.execute("UPDATE `admin` SET `password` = '" + confirmPassword + "' WHERE `user_id` = '" + userId + "'");
+
+                JOptionPane.showMessageDialog(this, "Admin password updated successfully!");
+
+                currentPasswordInput.setText("");
+                newPasswordInput.setText("");
+                confirmPasswordInput.setText("");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "User not found in database.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_passwordBtnActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adminImage;
     private javax.swing.JTextField confirmPasswordInput;
+    private javax.swing.JTextField currentPasswordInput;
     private javax.swing.JTextField emailInput;
     private javax.swing.JTextField fnameInput;
     private javax.swing.JLabel jLabel1;
@@ -288,9 +410,10 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField lastNameInput;
+    private javax.swing.JTextField lnameInput;
     private javax.swing.JTextField newPasswordInput;
     private javax.swing.JButton passwordBtn;
     private javax.swing.JButton profileBtn;
