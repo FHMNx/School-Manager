@@ -25,7 +25,6 @@ public class TeacherPanel extends javax.swing.JPanel {
     private String selectedEmail;
     private String selectedPassword;
     private String selectedMobile;
-    private String selectedClass;
     private String selectedEmpType;
     private String selectedStatus;
 
@@ -81,14 +80,14 @@ public class TeacherPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "User ID", "Teacher ID", "First Name", "Last Name", "NIC", "Email", "Portal Password", "Mobile Number", "Assigned Class", "Employment Type", "Status"
+                "No", "User ID", "Teacher ID", "First Name", "Last Name", "NIC", "Email", "Portal Password", "Mobile Number", "Employment Type", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -179,7 +178,6 @@ public class TeacherPanel extends javax.swing.JPanel {
     public void loadTeacherTable() {
         try {
             ResultSet rs = MySQL.execute("SELECT * FROM `teacher` INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id`"
-                    + "INNER JOIN `class` ON `teacher`.`class_id` = `class`.`class_id`"
                     + "INNER JOIN `employment_type` ON `teacher`.`empType_id` = `employment_type`.`empType_id`"
                     + "INNER JOIN `user` ON `teacher`.`user_id` = `user`.`user_id`");
 
@@ -198,7 +196,6 @@ public class TeacherPanel extends javax.swing.JPanel {
                 vData.add(rs.getString("teacher.email"));
                 vData.add(rs.getString("teacher.password"));
                 vData.add(rs.getString("teacher.mobile"));
-                vData.add(rs.getString("class.class_name"));
                 vData.add(rs.getString("employment_type.type_name"));
                 vData.add(rs.getString("status.status_name"));
 
@@ -225,9 +222,8 @@ public class TeacherPanel extends javax.swing.JPanel {
                     selectedEmail = teacherTable.getValueAt(row, 6).toString();
                     selectedPassword = teacherTable.getValueAt(row, 7).toString();
                     selectedMobile = teacherTable.getValueAt(row, 8).toString();
-                    selectedClass = teacherTable.getValueAt(row, 9).toString();
-                    selectedEmpType = teacherTable.getValueAt(row, 10).toString();
-                    selectedStatus = teacherTable.getValueAt(row, 11).toString();
+                    selectedEmpType = teacherTable.getValueAt(row, 9).toString();
+                    selectedStatus = teacherTable.getValueAt(row, 10).toString();
                 }
             }
 
@@ -250,7 +246,7 @@ public class TeacherPanel extends javax.swing.JPanel {
         }
 
         editTeacherDialog dialog = new editTeacherDialog(new JFrame(), true, this);
-        dialog.setTeacherData(selectedUserId, selectedTeacherId, selectedFname, selectedLname, selectedNic, selectedEmail, selectedPassword, selectedMobile, selectedClass, selectedEmpType, selectedStatus);
+        dialog.setTeacherData(selectedUserId, selectedTeacherId, selectedFname, selectedLname, selectedNic, selectedEmail, selectedPassword, selectedMobile, selectedEmpType, selectedStatus);
         dialog.setVisible(true);
     }//GEN-LAST:event_editLabelMouseClicked
 
@@ -261,7 +257,7 @@ public class TeacherPanel extends javax.swing.JPanel {
         }
 
         deleteTeacherDialog dialog = new deleteTeacherDialog(new JFrame(), true, this);
-        dialog.setManagerData(selectedUserId, selectedTeacherId, selectedFname, selectedLname, selectedNic, selectedEmail, selectedPassword, selectedMobile, selectedClass, selectedEmpType, selectedStatus);
+        dialog.setManagerData(selectedUserId, selectedTeacherId, selectedFname, selectedLname, selectedNic, selectedEmail, selectedPassword, selectedMobile, selectedEmpType, selectedStatus);
         dialog.setVisible(true);
     }//GEN-LAST:event_deleteLabelMouseClicked
 
@@ -273,13 +269,11 @@ public class TeacherPanel extends javax.swing.JPanel {
             if (searchText.isEmpty()) {
                 query = "SELECT * FROM `user` "
                         + "INNER JOIN `teacher` ON `teacher`.`user_id` = `user`.`user_id` "
-                        + "INNER JOIN `class` ON `teacher`.`class_id` = `class`.`class_id` "
                         + "INNER JOIN `employment_type` ON `teacher`.`empType_id` = `employment_type`.`empType_id` "
                         + "INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id`";
             } else {
                 query = "SELECT * FROM `user` "
                         + "INNER JOIN `teacher` ON `teacher`.`user_id` = `user`.`user_id` "
-                        + "INNER JOIN `class` ON `teacher`.`class_id` = `class`.`class_id` "
                         + "INNER JOIN `employment_type` ON `teacher`.`empType_id` = `employment_type`.`empType_id` "
                         + "INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id` "
                         + "WHERE (`teacher`.`teacher_id` = '" + searchText + "' "
@@ -303,7 +297,6 @@ public class TeacherPanel extends javax.swing.JPanel {
                 v.add(rs.getString("teacher.email"));
                 v.add(rs.getString("teacher.password"));
                 v.add(rs.getString("teacher.mobile"));
-                v.add(rs.getString("class.class_name"));
                 v.add(rs.getString("employment_type.type_name"));
                 v.add(rs.getString("status.status_name"));
 

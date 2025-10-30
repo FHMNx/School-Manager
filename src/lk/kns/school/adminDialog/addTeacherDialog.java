@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -21,7 +20,6 @@ public class addTeacherDialog extends javax.swing.JDialog {
 
     private TeacherPanel parntPanel;
     private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
-    private HashMap<String, Integer> classMap = new HashMap();
 
     public addTeacherDialog(java.awt.Frame parent, boolean modal, TeacherPanel panel) {
         super(parent, modal);
@@ -29,8 +27,6 @@ public class addTeacherDialog extends javax.swing.JDialog {
         this.parntPanel = panel;
         init();
         employmentTypeCheckBox();
-        loadClass();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -47,10 +43,8 @@ public class addTeacherDialog extends javax.swing.JDialog {
         emailInput = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         passwordInput = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         mobileInput = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        classSelect = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         permenentBox = new javax.swing.JCheckBox();
         temporaryBox = new javax.swing.JCheckBox();
@@ -80,13 +74,8 @@ public class addTeacherDialog extends javax.swing.JDialog {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Portal Password");
 
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Assigned Class");
-
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Employment Type");
-
-        classSelect.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Contact Number");
@@ -115,6 +104,10 @@ public class addTeacherDialog extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(knslogo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(191, 191, 191))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,15 +121,6 @@ public class addTeacherDialog extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                            .addComponent(classSelect, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(temporaryBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(permenentBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -152,12 +136,14 @@ public class addTeacherDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(emailInput, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(emailInput, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(temporaryBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(permenentBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(knslogo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(191, 191, 191))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,16 +183,10 @@ public class addTeacherDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(permenentBox))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(classSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(permenentBox)
+                .addGap(16, 16, 16)
                 .addComponent(temporaryBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(createBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -256,29 +236,6 @@ public class addTeacherDialog extends javax.swing.JDialog {
         }
     }
 
-    private void loadClass() {
-        try {
-            ResultSet rs = MySQL.execute("SELECT * FROM `class`");
-
-            Vector<String> v = new Vector();
-            v.add("select a class");
-            classMap.clear();
-
-            while (rs.next()) {
-                int classId = rs.getInt("class_id");
-                String className = rs.getString("class_name");
-
-                classMap.put(className, classId);
-                v.add(className);
-            }
-
-            DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
-            classSelect.setModel(dcm);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void createBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBtnActionPerformed
         String fname = fnameInput.getText().trim();
@@ -287,7 +244,6 @@ public class addTeacherDialog extends javax.swing.JDialog {
         String email = emailInput.getText().trim();
         String password = passwordInput.getText().trim();
         String mobile = mobileInput.getText().trim();
-        int cls = classSelect.getSelectedIndex();
 
         if (!Validator.isInputFieldsValid(fname, lname, nic, email, password)) {
             return;
@@ -300,12 +256,6 @@ public class addTeacherDialog extends javax.swing.JDialog {
                     "create a strong password");
             return;
         } else if (!Validator.isMobileValid(mobile)) {
-            return;
-        } else if (cls == 0) {
-            Notifications.getInstance().show(Notifications.Type.WARNING,
-                    Notifications.Location.TOP_RIGHT,
-                    2000,
-                    "please select a class");
             return;
         }
 
@@ -366,8 +316,8 @@ public class addTeacherDialog extends javax.swing.JDialog {
                 userId = rsId.getInt("id");
             }
 
-            MySQL.execute("INSERT INTO `teacher`(`f_name`,`l_name`,`email`,`password`,`nic`,`mobile`,`class_id`,`empType_id`,`user_id`,`status_id`)"
-                    + "VALUES ('" + fname + "','" + lname + "','" + email + "','" + password + "','" + nic + "','" + mobile + "','" + cls + "' ,'" + empTypeId + "' , '" + userId + "' ,'" + statusId + "')");
+            MySQL.execute("INSERT INTO `teacher`(`f_name`,`l_name`,`email`,`password`,`nic`,`mobile`,`empType_id`,`user_id`,`status_id`)"
+                    + "VALUES ('" + fname + "','" + lname + "','" + email + "','" + password + "','" + nic + "','" + mobile + "' ,'" + empTypeId + "' , '" + userId + "' ,'" + statusId + "')");
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher created successfully");
             parntPanel.loadTeacherTable();
@@ -396,7 +346,6 @@ public class addTeacherDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> classSelect;
     private javax.swing.JButton createBtn;
     private javax.swing.JTextField emailInput;
     private javax.swing.JTextField fnameInput;
@@ -405,7 +354,6 @@ public class addTeacherDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

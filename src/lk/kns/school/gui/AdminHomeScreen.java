@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import lk.kns.school.adminSidePanels.ClassPanel;
+import lk.kns.school.adminSidePanels.ClassInsightsPanel;
 import lk.kns.school.adminSidePanels.DashboardPanel;
 import lk.kns.school.adminSidePanels.ExamPanel;
 import lk.kns.school.adminSidePanels.ProfileSettingsPanel;
@@ -25,7 +25,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
     private DashboardPanel dashboardPanel;
     private TeacherPanel teacherPanel;
     private StudentPanel studentPanel;
-    private ClassPanel classPanel;
+    private ClassInsightsPanel classPanel;
     private ExamPanel examPanel;
     private SystemSettingsPanel systemSettingsPanel;
     private ProfileSettingsPanel profileSettingsPanel;
@@ -45,7 +45,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         this.dashboardPanel = new DashboardPanel();
         this.teacherPanel = new TeacherPanel();
         this.studentPanel = new StudentPanel();
-        this.classPanel = new ClassPanel();
+        this.classPanel = new ClassInsightsPanel();
         this.examPanel = new ExamPanel();
         this.systemSettingsPanel = new SystemSettingsPanel();
         this.profileSettingsPanel = new ProfileSettingsPanel();
@@ -208,7 +208,7 @@ public class AdminHomeScreen extends javax.swing.JFrame {
         classBtn.setBackground(new java.awt.Color(60, 63, 65));
         classBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         classBtn.setForeground(new java.awt.Color(246, 246, 246));
-        classBtn.setText(" Class Management");
+        classBtn.setText("Class Insights");
         classBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         classBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         classBtn.addActionListener(new java.awt.event.ActionListener() {
