@@ -15,10 +15,6 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
     public ClassInsightsPanel() {
         initComponents();
         init();
-        classComboLoad();
-        subjectComboLoad();
-        teacherCombo();
-        loadsubjectTeacherTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -379,6 +375,11 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         teacherMobileInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         teacherNicInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         teacherEmailInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+
+        classComboLoad();
+        subjectComboLoad();
+        teacherCombo();
+        loadsubjectTeacherTable();
     }
 
     private void classComboLoad() {
@@ -441,17 +442,29 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
     private void loadsubjectTeacherTable() {
         try {
-           ResultSet rs = MySQL.execute("SELECT * FROM `subject_has_teacher` INNER JOIN `class` ON `subject_has_teacher`.`class_id` = `class`.`class_id` "
+            ResultSet rs = MySQL.execute("SELECT * FROM `subject_has_teacher` "
+                    + "INNER JOIN `class` ON `subject_has_teacher`.`class_id` = `class`.`class_id` "
                     + "INNER JOIN `subject` ON `subject_has_teacher`.`subject_id` = `subject`.`subject_id` "
-                    + "INNER JOIN `teacher` ON `subject_has_teacher`.`teacher_id` = teacher`.`teacher_id`");
-           
-           
-            while (rs.next()) {                
+                    + "INNER JOIN `teacher` ON `subject_has_teacher`.`teacher_id` = `teacher`.`teacher_id`");
+
+            DefaultTableModel dtm = (DefaultTableModel) subjectTeacherTable.getModel();
+            dtm.setRowCount(0);
+
+            int rowCount = 1;
+
+            while (rs.next()) {
                 Vector<String> vData = new Vector();
+                vData.add(String.valueOf(rowCount));
+                vData.add(rs.getString("class_name"));
+                vData.add(rs.getString("subject_name"));
+                vData.add(rs.getString("teacher.f_name") + " " + rs.getString("teacher.l_name"));
+
+                dtm.addRow(vData);
+                rowCount++;
             }
-            
-            
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -486,6 +499,11 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         try {
             MySQL.execute("INSERT INTO `subject_has_teacher` (`class_id` , `subject_id` , `teacher_id`)VALUES('" + cls + "' , '" + subject + "' , '" + teacher + "')");
             JOptionPane.showMessageDialog(this, "Data inserted successfully");
+            loadsubjectTeacherTable();
+
+            classCombo.setSelectedIndex(0);
+            subjectCombo.setSelectedIndex(0);
+            teacherCombo.setSelectedIndex(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
