@@ -633,32 +633,34 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
     private void loadStudentByClass(int clsId) {
         try {
-            ResultSet rs = MySQL.execute("SELECT `student_id` , `f_name` , `l_name` , `admission_no` , `mobile` , `class_name` "
-                    + "FROM `student` INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id` "
-                    + "WHERE `student`.`class_id` = '" + clsId + "'");
+            ResultSet studentRs = MySQL.execute("SELECT student.student_id, student.f_name, student.l_name, student.admission_no, "
+                    + "student.mobile, class.class_name "
+                    + "FROM student "
+                    + "INNER JOIN class ON student.class_id = class.class_id "
+                    + "WHERE student.class_id = '" + clsId + "'");
 
-            DefaultTableModel dtm = (DefaultTableModel) studentTable.getModel();
-            dtm.setRowCount(0);
+            DefaultTableModel studentTableModel = (DefaultTableModel) studentTable.getModel();
+            studentTableModel.setRowCount(0);
 
             int rowCount = 1;
-            while (rs.next()) {
-                Vector<String> v = new Vector();
+            while (studentRs.next()) {
+                Vector<String> v = new Vector<>();
                 v.add(String.valueOf(rowCount));
-                v.add(rs.getString("student_id"));
-                v.add(rs.getString("f_name") + " " + rs.getString("l_name"));
-                v.add(rs.getString("admission_no"));
-                v.add(rs.getString("mobile"));
-                v.add(rs.getString("class_name"));
+                v.add(studentRs.getString("student_id"));
+                v.add(studentRs.getString("f_name") + " " + studentRs.getString("l_name"));
+                v.add(studentRs.getString("admission_no"));
+                v.add(studentRs.getString("mobile"));
+                v.add(studentRs.getString("class_name"));
 
-                dtm.addRow(v);
+                studentTableModel.addRow(v);
                 rowCount++;
             }
 
-            ResultSet teacherRs = MySQL.execute("SELECT * FROM `teacher` "
-                    + "INNER JOIN `class_has_teacher` ON `class_has_teacher`.`teacher_id` = `teacher`.`teacher_id` "
-                    + "INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id`"
-                    + "INNER JOIN `class` ON `class_has_teacher`.`class_id` = `class`.`class_id`"
-                    + "WHERE `class_has_teacher`.`class_id` = '" + clsId + "'");
+            ResultSet teacherRs = MySQL.execute("SELECT * FROM teacher "
+                    + "INNER JOIN class_has_teacher ON class_has_teacher.teacher_id = teacher.teacher_id "
+                    + "INNER JOIN status ON teacher.status_id = status.status_id "
+                    + "INNER JOIN class ON class_has_teacher.class_id = class.class_id "
+                    + "WHERE class_has_teacher.class_id = '" + clsId + "'");
 
             if (teacherRs.next()) {
                 String teacherName = teacherRs.getString("f_name") + " " + teacherRs.getString("l_name");
@@ -667,7 +669,14 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                 teacherNicInput.setText(teacherRs.getString("nic"));
                 teacherEmailInput.setText(teacherRs.getString("email"));
                 statusBtn.setText(teacherRs.getString("status_name"));
+            } else {
+                teacherNameInput.setText("");
+                teacherMobileInput.setText("");
+                teacherNicInput.setText("");
+                teacherEmailInput.setText("");
+                statusBtn.setText("No Teacher Assigned");
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
