@@ -32,13 +32,13 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         addBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         subjectTeacherTable = new javax.swing.JTable();
-        jComboBox7 = new javax.swing.JComboBox<>();
+        clsSelect = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox8 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        teacherSelect = new javax.swing.JComboBox<>();
+        appointBtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        classTeacherTable = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -105,9 +105,14 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
         jLabel9.setText("Select Teacher");
 
-        jButton1.setText("Appoint");
+        appointBtn.setText("Appoint");
+        appointBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                appointBtnActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        classTeacherTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -133,7 +138,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable1);
+        jScrollPane3.setViewportView(classTeacherTable);
 
         jLabel10.setText("CLASS TEACHER APPOINTMENT");
 
@@ -166,16 +171,16 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clsSelect, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox8, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(teacherSelect, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3)
                     .addComponent(jSeparator3)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(appointBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
         jPanel1Layout.setVerticalGroup(
@@ -207,18 +212,18 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox8))
+                            .addComponent(teacherSelect))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(clsSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(appointBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(4, 4, 4)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -363,6 +368,16 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void init() {
+
+        loadsubjectTeacherTable();
+        loadClassTeacherTable();
+        classComboLoad();
+        subjectComboLoad();
+        teacherCombo();
+        clsLoad();
+        teacherLoad();
+        classSelect();
+
         teacherNameInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher name");
         teacherMobileInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher mobile");
         teacherNicInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "teacher nic");
@@ -376,10 +391,8 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         teacherNicInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         teacherEmailInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
 
-        classComboLoad();
-        subjectComboLoad();
-        teacherCombo();
-        loadsubjectTeacherTable();
+        classSelect.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Filter Stundets and Teachers By class Name");
+
     }
 
     private void classComboLoad() {
@@ -440,6 +453,25 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         }
     }
 
+    private void clsLoad() {
+        try {
+            ResultSet rs = MySQL.execute("SELECT * FROM `class`");
+
+            Vector<String> v = new Vector();
+            v.add("select a class");
+
+            while (rs.next()) {
+                String name = rs.getString("class_name");
+                v.add(name);
+            }
+            DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
+            clsSelect.setModel(dcm);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void loadsubjectTeacherTable() {
         try {
             ResultSet rs = MySQL.execute("SELECT * FROM `subject_has_teacher` "
@@ -468,17 +500,84 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         }
     }
 
+    private void loadClassTeacherTable() {
+        try {
+            ResultSet rs = MySQL.execute("SELECT * FROM `class_has_teacher` "
+                    + "INNER JOIN `class` ON `class_has_teacher`.`class_id` = `class`.`class_id` "
+                    + "INNER JOIN `teacher` ON `class_has_teacher`.`teacher_id` = `teacher`.`teacher_id`");
+
+            DefaultTableModel dtm = (DefaultTableModel) classTeacherTable.getModel();
+            dtm.setRowCount(0);
+
+            int rowCount = 1;
+
+            while (rs.next()) {
+                Vector<String> vData = new Vector();
+                vData.add(String.valueOf(rowCount));
+                vData.add(rs.getString("class_name"));
+                vData.add(rs.getString("teacher.f_name") + " " + rs.getString("teacher.l_name"));
+
+                dtm.addRow(vData);
+                rowCount++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void teacherLoad() {
+        try {
+            ResultSet rs = MySQL.execute("SELECT * FROM `teacher`");
+
+            Vector<String> v = new Vector();
+            v.add("select a teacher");
+
+            while (rs.next()) {
+                String name = rs.getString("f_name") + " " + rs.getString("l_name");
+                v.add(name);
+            }
+            DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
+            teacherSelect.setModel(dcm);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void classSelect() {
+        try {
+            ResultSet rs = MySQL.execute("SELECT * FROM `class`");
+
+            Vector<String> v = new Vector();
+            v.add("select a class");
+
+            while (rs.next()) {
+                String name = rs.getString("class_name");
+                v.add(name);
+            }
+            DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
+            classSelect.setModel(dcm);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void classSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classSelectActionPerformed
-//        String selectedCls = (String) classSelect.getSelectedItem();
-//
-//        if (selectedCls != null && !selectedCls.equals("select a class")) {
-//            Integer clsId = classMap.get(selectedCls);
-//            if (clsId != null) {
-//                loadStudentByClass(clsId);
-//            } else {
-//                Notifications.getInstance().show(Notifications.Type.INFO, Notifications.Location.TOP_LEFT, 2000, "class data not found");
-//            }
-//        }
+        String selectedClass = classSelect.getSelectedItem().toString();
+
+        if (selectedClass != null && !selectedClass.equals("select a class")) {
+            try {
+                ResultSet rs = MySQL.execute("SELECT `class_id` FROM `class` WHERE `class_name` = '" + selectedClass + "'");
+                if (rs.next()) {
+                    int id = rs.getInt("class_id");
+                    loadStudentByClass(id);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_classSelectActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
@@ -509,6 +608,29 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_addBtnActionPerformed
 
+    private void appointBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appointBtnActionPerformed
+        int cls = clsSelect.getSelectedIndex();
+        int teacher = teacherSelect.getSelectedIndex();
+
+        if (!Validator.isSelectedItemValid(cls)) {
+            return;
+        }
+        if (!Validator.isSelectedItemValid(teacher)) {
+            return;
+        }
+
+        try {
+            MySQL.execute("INSERT INTO `class_has_teacher` (`class_id` , `teacher_id`)VALUES('" + cls + "' , '" + teacher + "')");
+            JOptionPane.showMessageDialog(this, "Data inserted successfully");
+            loadClassTeacherTable();
+
+            clsSelect.setSelectedIndex(0);
+            teacherSelect.setSelectedIndex(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_appointBtnActionPerformed
+
     private void loadStudentByClass(int clsId) {
         try {
             ResultSet rs = MySQL.execute("SELECT `student_id` , `f_name` , `l_name` , `admission_no` , `mobile` , `class_name` "
@@ -532,10 +654,11 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                 rowCount++;
             }
 
-            ResultSet teacherRs = MySQL.execute("SELECT `f_name` , `l_name` , `mobile` , `nic` , `email` , `status_name` FROM `teacher` "
-                    + "INNER JOIN `class` ON `class`.`class_id` = `teacher`.`class_id` "
+            ResultSet teacherRs = MySQL.execute("SELECT * FROM `teacher` "
+                    + "INNER JOIN `class_has_teacher` ON `class_has_teacher`.`teacher_id` = `teacher`.`teacher_id` "
                     + "INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id`"
-                    + "WHERE `teacher`.`class_id` = '" + clsId + "'");
+                    + "INNER JOIN `class` ON `class_has_teacher`.`class_id` = `class`.`class_id`"
+                    + "WHERE `class_has_teacher`.`class_id` = '" + clsId + "'");
 
             if (teacherRs.next()) {
                 String teacherName = teacherRs.getString("f_name") + " " + teacherRs.getString("l_name");
@@ -553,11 +676,11 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
+    private javax.swing.JButton appointBtn;
     private javax.swing.JComboBox<String> classCombo;
     private javax.swing.JComboBox<String> classSelect;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox7;
-    private javax.swing.JComboBox<String> jComboBox8;
+    private javax.swing.JTable classTeacherTable;
+    private javax.swing.JComboBox<String> clsSelect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -577,7 +700,6 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton reportBtn;
     private javax.swing.JButton statusBtn;
     private javax.swing.JTable studentTable;
@@ -588,5 +710,6 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField teacherMobileInput;
     private javax.swing.JTextField teacherNameInput;
     private javax.swing.JTextField teacherNicInput;
+    private javax.swing.JComboBox<String> teacherSelect;
     // End of variables declaration//GEN-END:variables
 }
