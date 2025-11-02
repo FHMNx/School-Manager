@@ -75,20 +75,20 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
         subjectTeacherTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "No", "Class", "Subject", "Teacher"
+                "No", "Scope Id", "Class", "Subject", "Teacher"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -97,6 +97,11 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        subjectTeacherTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                subjectTeacherTableMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(subjectTeacherTable);
@@ -114,20 +119,20 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
         classTeacherTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "No", "Class", "Teacher"
+                "No", "Scope Id", "Class", "Teacher"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -136,6 +141,11 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        classTeacherTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                classTeacherTableMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(classTeacherTable);
@@ -487,6 +497,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             while (rs.next()) {
                 Vector<String> vData = new Vector();
                 vData.add(String.valueOf(rowCount));
+                vData.add(rs.getString("subject_has_teacher.id"));
                 vData.add(rs.getString("class_name"));
                 vData.add(rs.getString("subject_name"));
                 vData.add(rs.getString("teacher.f_name") + " " + rs.getString("teacher.l_name"));
@@ -514,6 +525,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             while (rs.next()) {
                 Vector<String> vData = new Vector();
                 vData.add(String.valueOf(rowCount));
+                vData.add(rs.getString("class_has_teacher.id"));
                 vData.add(rs.getString("class_name"));
                 vData.add(rs.getString("teacher.f_name") + " " + rs.getString("teacher.l_name"));
 
@@ -630,6 +642,77 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }//GEN-LAST:event_appointBtnActionPerformed
+
+    //DELETE TABLE RECORD
+    private void classTeacherTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_classTeacherTableMouseClicked
+        if (evt.getClickCount() == 2) {
+            int selectedRow = classTeacherTable.getSelectedRow();
+
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a row to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String id = classTeacherTable.getValueAt(selectedRow, 1).toString();
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to delete this record (ID: " + id + ")?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                try {
+                    MySQL.execute("DELETE FROM `class_has_teacher` WHERE `id` = '" + id + "'");
+
+                    DefaultTableModel model = (DefaultTableModel) classTeacherTable.getModel();
+                    model.removeRow(selectedRow);
+
+                    JOptionPane.showMessageDialog(this, "Record deleted successfully!", "Deleted", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error deleting record.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_classTeacherTableMouseClicked
+
+    private void subjectTeacherTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subjectTeacherTableMouseClicked
+        if (evt.getClickCount() == 2) {
+            int selectedRow = subjectTeacherTable.getSelectedRow();
+
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a row to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            String id = subjectTeacherTable.getValueAt(selectedRow, 1).toString();
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to delete this record (ID: " + id + ")?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                try {
+                    MySQL.execute("DELETE FROM `subject_has_teacher` WHERE `id` = '" + id + "'");
+
+                    DefaultTableModel model = (DefaultTableModel) subjectTeacherTable.getModel();
+                    model.removeRow(selectedRow);
+
+                    JOptionPane.showMessageDialog(this, "Record deleted successfully!", "Deleted", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error deleting record: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_subjectTeacherTableMouseClicked
 
     private void loadStudentByClass(int clsId) {
         try {
