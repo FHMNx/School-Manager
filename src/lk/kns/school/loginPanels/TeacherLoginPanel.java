@@ -185,16 +185,35 @@ public class TeacherLoginPanel extends javax.swing.JPanel {
                 );
 
                 if (rs.next()) {
-
-                    int roleId = rs.getInt("role.role_id");
-
+                    Session.roleId = rs.getInt("role.role_id");
                     Session.userId = rs.getInt("user.user_id");
                     Session.email = rs.getString("user.email");
-                    Session.roleId = roleId;
 
-                    if (roleId == 2) {
+                    if (Session.roleId == 2) {
                         Session.teacherId = rs.getInt("teacher.teacher_id");
-                        Session.classId = rs.getInt("teacher.class_id");
+
+                        try {
+                            ResultSet clsTrRs = MySQL.execute(
+                                    "SELECT `class_has_teacher`.`class_id` "
+                                    + "FROM `class_has_teacher` "
+                                    + "INNER JOIN `class` ON `class_has_teacher`.`class_id` = `class`.`class_id` "
+                                    + "INNER JOIN `teacher` ON `class_has_teacher`.`teacher_id` = `teacher`.`teacher_id` "
+                                    + "WHERE `class_has_teacher`.`teacher_id` = '" + Session.teacherId + "'"
+                            );
+
+                            if (clsTrRs.next()) {
+                                Session.classId = clsTrRs.getInt("class_id");
+                            } else {
+                                Session.classId = 0;
+                                Notifications.getInstance().show(Notifications.Type.INFO,
+                                        Notifications.Location.TOP_RIGHT,
+                                        2000,
+                                        "No class assigned to your account. Contact Admin.");
+                            }
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
 
                         new TeacherHomeScreen().setVisible(true);
                     }
@@ -207,7 +226,7 @@ public class TeacherLoginPanel extends javax.swing.JPanel {
                     Notifications.getInstance().show(Notifications.Type.ERROR,
                             Notifications.Location.TOP_RIGHT,
                             2000,
-                            "Invalid User.Please try again later");
+                            "Invalid User. Please try again later");
                 }
 
             } catch (SQLException e) {
