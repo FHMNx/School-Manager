@@ -285,7 +285,7 @@ public class editStudentDialog extends javax.swing.JDialog {
                 String name = rs.getString("status_name");
                 int statusId = rs.getInt("status_id");
                 vData.add(name);
-                classMap.put(name, statusId);
+                statusMap.put(name, statusId);
             }
 
             DefaultComboBoxModel<String> dcm = new DefaultComboBoxModel(vData);
@@ -322,8 +322,12 @@ public class editStudentDialog extends javax.swing.JDialog {
         String email = emailInput.getText().trim();
         String password = passwordInput.getText().trim();
         String mobile = mobileInput.getText().trim();
-        int cls = classSelect.getSelectedIndex();
-        int status = statusSelect.getSelectedIndex();
+        
+        String selectedClassName = classSelect.getSelectedItem().toString();
+        int cls = classMap.get(selectedClassName);
+
+        String selectedStatusName = statusSelect.getSelectedItem().toString();
+        int status = statusMap.get(selectedStatusName);
 
         if (!Validator.isInputFieldsValid(fname, lname, admission, email, password)) {
             return;
@@ -343,7 +347,7 @@ public class editStudentDialog extends javax.swing.JDialog {
                     2000,
                     "please select a class");
             return;
-        }else if (status == 0) {
+        } else if (status == 0) {
             Notifications.getInstance().show(Notifications.Type.WARNING,
                     Notifications.Location.TOP_RIGHT,
                     2000,
@@ -353,7 +357,7 @@ public class editStudentDialog extends javax.swing.JDialog {
 
         try {
 
-            ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Students'");
+            ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Student'");
             int roleId = 0;
             if (rsRole.next()) {
                 roleId = rsRole.getInt("role_id");
@@ -361,7 +365,7 @@ public class editStudentDialog extends javax.swing.JDialog {
                 Notifications.getInstance().show(Notifications.Type.WARNING,
                         Notifications.Location.TOP_RIGHT,
                         2000,
-                        "Teacher role not found");
+                        "Student role not found");
                 return;
             }
 

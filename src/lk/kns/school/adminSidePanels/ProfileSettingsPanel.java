@@ -179,7 +179,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
             ResultSet rs = MySQL.execute(
                     "SELECT `admin`.`f_name`, `admin`.`l_name`, `user`.`email` "
                     + "FROM `admin` "
-                    + "INNER JOIN `user` ON `admin`.`user_id` = `user`.`user_id` "
+                    + "INNER JOIN `user` ON `admin`.`user_id` = `user`.`user_id` WHERE user.role_id = '1' "
                     + "LIMIT 1"
             );
 
@@ -226,7 +226,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
                 Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                 int userId = -1;
-                ResultSet userRs = MySQL.execute("SELECT * FROM `user` LIMIT 1");
+                ResultSet userRs = MySQL.execute("SELECT * FROM `user` WHERE `role_id` = '1' LIMIT 1");
                 if (userRs.next()) {
                     userId = userRs.getInt("user_id");
                 }
@@ -254,10 +254,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
                             + relativePath + "', " + userId + ", " + roleId + ")";
                     MySQL.execute(insertQuery);
                 }
-
-                setProfileImage(destinationFile.getAbsolutePath());
-                JOptionPane.showMessageDialog(this, "Profile image updated successfully!");
-
+                
                 setProfileImage(destinationFile.getAbsolutePath());
                 JOptionPane.showMessageDialog(this, "Profile image updated successfully!");
 
@@ -281,7 +278,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
         try {
 
             int userId = -1;
-            ResultSet userRs = MySQL.execute("SELECT * FROM `user` LIMIT 1");
+            ResultSet userRs = MySQL.execute("SELECT * FROM `user` WHERE `role_id` = '1' LIMIT 1");
             if (userRs.next()) {
                 userId = userRs.getInt("user_id");
             }

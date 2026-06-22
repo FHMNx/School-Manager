@@ -78,7 +78,7 @@ public class deleteExamDialog extends javax.swing.JDialog {
         deleteBtn.setBackground(new java.awt.Color(59, 89, 152));
         deleteBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         deleteBtn.setForeground(new java.awt.Color(255, 255, 255));
-        deleteBtn.setText("Delete Account");
+        deleteBtn.setText("Delete Exam");
         deleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

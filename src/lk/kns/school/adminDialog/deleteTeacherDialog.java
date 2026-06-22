@@ -12,7 +12,7 @@ import lk.kns.school.adminSidePanels.TeacherPanel;
 
 public class deleteTeacherDialog extends javax.swing.JDialog {
 
-    private final TeacherPanel parntPanel;
+    private final TeacherPanel parentPanel;
     private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
     private int userId;
     private int teacherId;
@@ -20,7 +20,7 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
     public deleteTeacherDialog(java.awt.Frame parent, boolean modal, TeacherPanel panel) {
         super(parent, modal);
         initComponents();
-        this.parntPanel = panel;
+        this.parentPanel = panel;
         init();
     }
 
@@ -285,10 +285,10 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
         mobileInput.setText(mobile);
         statusInput.setText(status);
 
-        if (empType.equalsIgnoreCase("Permenent")) {
+        if (empType.equalsIgnoreCase("Permanent")) {
             permenentBox.setSelected(true);
             temporaryBox.setSelected(false);
-        } else if (empType.equalsIgnoreCase("Temporary")) {
+        } else if (empType.equalsIgnoreCase("Contract")) {
             temporaryBox.setSelected(true);
             permenentBox.setSelected(false);
         }
@@ -305,12 +305,14 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
 
         if (option == JOptionPane.YES_OPTION) {
             try {
+                MySQL.execute("DELETE FROM `class_has_teacher` WHERE `teacher_id` = '" + teacherId + "'");
+                MySQL.execute("DELETE FROM `subject_has_teacher` WHERE `teacher_id` = '" + teacherId + "'");
                 MySQL.execute("DELETE FROM `teacher` WHERE `teacher_id` = '" + teacherId + "'");
 
                 MySQL.execute("DELETE FROM `user` WHERE `user`.`user_id` = '" + userId + "'");
 
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher account deleted successfully");
-                parntPanel.loadTeacherTable();
+                parentPanel.loadTeacherTable();
                 this.dispose();
 
             } catch (SQLException e) {

@@ -176,8 +176,8 @@ public class StudentPanel extends javax.swing.JPanel {
 
     public void loadStudentData() {
         try {
-            ResultSet rs = MySQL.execute("SELECT * FROM `student` INNER JOIN `user` ON `student`.`user_id` = `user`.`user_id`"
-                    + "INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id`"
+            ResultSet rs = MySQL.execute("SELECT * FROM `student` INNER JOIN `user` ON `student`.`user_id` = `user`.`user_id` "
+                    + "INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id` "
                     + "INNER JOIN `status` ON `student`.`status_id` = `status`.`status_id`");
 
             DefaultTableModel dtm = (DefaultTableModel) studentTable.getModel();

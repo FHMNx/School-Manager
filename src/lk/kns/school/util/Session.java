@@ -7,4 +7,6 @@ public class Session {
     public static int roleId;
     public static int classId;
     public static String email;
+    public static int loggedInUserId;
+    public static String loggedInUserEmail;
 }

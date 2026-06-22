@@ -177,8 +177,8 @@ public class TeacherPanel extends javax.swing.JPanel {
 
     public void loadTeacherTable() {
         try {
-            ResultSet rs = MySQL.execute("SELECT * FROM `teacher` INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id`"
-                    + "INNER JOIN `employment_type` ON `teacher`.`empType_id` = `employment_type`.`empType_id`"
+            ResultSet rs = MySQL.execute("SELECT * FROM `teacher` INNER JOIN `status` ON `teacher`.`status_id` = `status`.`status_id` "
+                    + "INNER JOIN `employment_type` ON `teacher`.`empType_id` = `employment_type`.`empType_id` "
                     + "INNER JOIN `user` ON `teacher`.`user_id` = `user`.`user_id`");
 
             DefaultTableModel dtm = (DefaultTableModel) teacherTable.getModel();

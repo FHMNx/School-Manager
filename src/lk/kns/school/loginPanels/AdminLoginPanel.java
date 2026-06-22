@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.SwingUtilities;
 import lk.kns.school.gui.AdminHomeScreen;
+import lk.kns.school.util.Session;
 import lk.kns.school.validation.Validator;
 
 public class AdminLoginPanel extends javax.swing.JPanel {
@@ -164,7 +165,7 @@ public class AdminLoginPanel extends javax.swing.JPanel {
 
         if (!Validator.isEmailValid(email)) {
             return;
-            
+
         } else if (password.isEmpty()) {
             Notifications.getInstance().show(Notifications.Type.INFO,
                     Notifications.Location.TOP_RIGHT,
@@ -177,9 +178,11 @@ public class AdminLoginPanel extends javax.swing.JPanel {
                         + "WHERE `user`.`email` = '" + email + "' AND `user`.`password` = '" + password + "' AND `user`.`role_id` = '1'");
 
                 if (rs.next()) {
+                    Session.loggedInUserId = rs.getInt("user_id");
+                    Session.loggedInUserEmail = rs.getString("email");
                     new AdminHomeScreen().setVisible(true);
                     Window window = SwingUtilities.getWindowAncestor(this);
-                    if(window != null){
+                    if (window != null) {
                         window.dispose();;
                     }
                 } else {

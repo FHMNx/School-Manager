@@ -227,7 +227,7 @@ public class addStudentDialog extends javax.swing.JDialog {
         String mobile = mobileInput.getText().trim();
         int cls = classSelect.getSelectedIndex();
 
-        if (!Validator.isInputFieldsValid(fname, lname, admission, password)) {
+        if (!Validator.isInputFieldsValid(fname, lname, admission, email, password)) {
             return;
         } else if (!Validator.isEmailValid(email)) {
             return;
@@ -264,7 +264,7 @@ public class addStudentDialog extends javax.swing.JDialog {
                 return;
             }
 
-            ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Students'");
+            ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Student'");
             int roleId = 0;
             if (rsRole.next()) {
                 roleId = rsRole.getInt("role_id");

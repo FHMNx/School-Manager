@@ -298,10 +298,10 @@ public class editTeacherDialog extends javax.swing.JDialog {
         mobileInput.setText(mobile);
         statusSelect.setSelectedItem(status);
 
-        if (empType.equalsIgnoreCase("Permenent")) {
+        if (empType.equalsIgnoreCase("Permanent")) {
             permenentBox.setSelected(true);
             temporaryBox.setSelected(false);
-        } else if (empType.equalsIgnoreCase("Temporary")) {
+        } else if (empType.equalsIgnoreCase("Contract")) {
             temporaryBox.setSelected(true);
             permenentBox.setSelected(false);
         }
@@ -380,7 +380,7 @@ public class editTeacherDialog extends javax.swing.JDialog {
 
         try {
 
-            ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Teachers'");
+            ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Teacher'");
             int roleId = 0;
             if (rsRole.next()) {
                 roleId = rsRole.getInt("role_id");

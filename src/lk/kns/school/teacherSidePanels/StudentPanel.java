@@ -54,14 +54,14 @@ public class StudentPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "User ID", "Student ID", "First Name", "Last Name", "Admission No", "Email", "Password", "Mobile", "Class", "Status"
+                "No", "User ID", "Student ID", "First Name", "Last Name", "Admission No", "Email", "Mobile", "Class", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -163,7 +163,6 @@ public class StudentPanel extends javax.swing.JPanel {
                 v.add(rs.getString("l_name"));
                 v.add(rs.getString("admission_no"));
                 v.add(rs.getString("student.email"));
-                v.add(rs.getString("student.password"));
                 v.add(rs.getString("mobile"));
                 v.add(rs.getString("class.class_name"));
                 v.add(rs.getString("status.status_name"));
@@ -217,7 +216,6 @@ public class StudentPanel extends javax.swing.JPanel {
                 v.add(rs.getString("l_name"));
                 v.add(rs.getString("admission_no"));
                 v.add(rs.getString("student.email"));
-                v.add(rs.getString("student.password"));
                 v.add(rs.getString("student.mobile"));
                 v.add(rs.getString("class.class_name"));
                 v.add(rs.getString("status.status_name"));

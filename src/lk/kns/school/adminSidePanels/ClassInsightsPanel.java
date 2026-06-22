@@ -3,6 +3,7 @@ package lk.kns.school.adminSidePanels;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -11,6 +12,10 @@ import lk.kns.school.connection.MySQL;
 import lk.kns.school.validation.Validator;
 
 public class ClassInsightsPanel extends javax.swing.JPanel {
+
+    private HashMap<String, Integer> classMap = new HashMap<>();
+    private HashMap<String, Integer> subjectMap = new HashMap<>();
+    private HashMap<String, Integer> teacherMap = new HashMap<>();
 
     public ClassInsightsPanel() {
         initComponents();
@@ -177,7 +182,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                     .addComponent(addBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
                     .addComponent(jSeparator1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -324,7 +329,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                                     .addComponent(teacherEmailInput)
                                     .addComponent(teacherNicInput)
                                     .addComponent(teacherMobileInput))))))
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,7 +359,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(reportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Class Overview Panel", jPanel2);
@@ -365,13 +370,13 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 562, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
@@ -414,10 +419,14 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
             while (rs.next()) {
                 String name = rs.getString("class_name");
+                int id = rs.getInt("class_id");
                 v.add(name);
+                classMap.put(name, id);
             }
             DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
             classCombo.setModel(dcm);
+            clsSelect.setModel(dcm);
+            classSelect.setModel(dcm);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -433,8 +442,9 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
             while (rs.next()) {
                 String name = rs.getString("subject_name");
-
+                int id = rs.getInt("subject_id");
                 v.add(name);
+                subjectMap.put(name, id);
             }
             DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
             subjectCombo.setModel(dcm);
@@ -453,10 +463,13 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
             while (rs.next()) {
                 String name = rs.getString("f_name") + " " + rs.getString("l_name");
+                int id = rs.getInt("teacher_id");
                 v.add(name);
+                teacherMap.put(name, id);
             }
             DefaultComboBoxModel dcm = new DefaultComboBoxModel(v);
             teacherCombo.setModel(dcm);
+            teacherSelect.setModel(dcm);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -593,22 +606,21 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_classSelectActionPerformed
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
-        int cls = classCombo.getSelectedIndex();
-        int subject = subjectCombo.getSelectedIndex();
-        int teacher = teacherCombo.getSelectedIndex();
+        String selectedClass = classCombo.getSelectedItem().toString();
+        String selectedSubject = subjectCombo.getSelectedItem().toString();
+        String selectedTeacher = teacherCombo.getSelectedItem().toString();
 
-        if (!Validator.isSelectedItemValid(cls)) {
+        if (selectedClass.equals("select a class") || selectedSubject.equals("select a subject") || selectedTeacher.equals("select a teacher")) {
+            JOptionPane.showMessageDialog(this, "Please select valid options.");
             return;
         }
-        if (!Validator.isSelectedItemValid(subject)) {
-            return;
-        }
-        if (!Validator.isSelectedItemValid(teacher)) {
-            return;
-        }
+
+        int clsId = classMap.get(selectedClass);
+        int subjectId = subjectMap.get(selectedSubject);
+        int teacherId = teacherMap.get(selectedTeacher);
 
         try {
-            MySQL.execute("INSERT INTO `subject_has_teacher` (`class_id` , `subject_id` , `teacher_id`)VALUES('" + cls + "' , '" + subject + "' , '" + teacher + "')");
+            MySQL.execute("INSERT INTO `subject_has_teacher` (`class_id` , `subject_id` , `teacher_id`)VALUES('" + clsId + "' , '" + subjectId + "' , '" + teacherId + "')");
             JOptionPane.showMessageDialog(this, "Data inserted successfully");
             loadsubjectTeacherTable();
 
@@ -621,19 +633,36 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void appointBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appointBtnActionPerformed
-        int cls = clsSelect.getSelectedIndex();
-        int teacher = teacherSelect.getSelectedIndex();
+        String selectedClass = clsSelect.getSelectedItem().toString();
+        String selectedTeacher = teacherSelect.getSelectedItem().toString();
 
-        if (!Validator.isSelectedItemValid(cls)) {
+        if (selectedClass.equals("select a class") || selectedTeacher.equals("select a teacher")) {
+            JOptionPane.showMessageDialog(this, "Please select valid options.");
             return;
         }
-        if (!Validator.isSelectedItemValid(teacher)) {
-            return;
-        }
+
+        int clsId = classMap.get(selectedClass);
+        int teacherId = teacherMap.get(selectedTeacher);
 
         try {
-            MySQL.execute("INSERT INTO `class_has_teacher` (`class_id` , `teacher_id`)VALUES('" + cls + "' , '" + teacher + "')");
-            JOptionPane.showMessageDialog(this, "Data inserted successfully");
+            ResultSet classCheck = MySQL.execute("SELECT * FROM `class_has_teacher` WHERE `class_id` = '" + clsId + "'");
+            if (classCheck.next()) {
+                JOptionPane.showMessageDialog(this,
+                        "This class already has an assigned Class Teacher. Delete the existing one first.",
+                        "Validation Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            ResultSet teacherCheck = MySQL.execute("SELECT * FROM `class_has_teacher` WHERE `teacher_id` = '" + teacherId + "'");
+            if (teacherCheck.next()) {
+                JOptionPane.showMessageDialog(this,
+                        "This teacher is already assigned as a Class Teacher to another class.",
+                        "Validation Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            MySQL.execute("INSERT INTO `class_has_teacher` (`class_id` , `teacher_id`)VALUES('" + clsId + "' , '" + teacherId + "')");
+            JOptionPane.showMessageDialog(this, "class teacher appointed successfully");
             loadClassTeacherTable();
 
             clsSelect.setSelectedIndex(0);

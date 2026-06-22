@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Vector;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import lk.kns.school.adminSidePanels.TeacherPanel;
 import lk.kns.school.validation.Validator;
@@ -275,7 +273,7 @@ public class addTeacherDialog extends javax.swing.JDialog {
         }
 
         if (selectedEmpType == null) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT, 2000, "Please select a Employment Type");
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT, 2000, "Please select an Employment Type");
             return;
         }
 
@@ -296,7 +294,7 @@ public class addTeacherDialog extends javax.swing.JDialog {
                 return;
             }
 
-            ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Teachers'");
+            ResultSet rsRole = MySQL.execute("SELECT `role_id` FROM `role` WHERE `role_name` = 'Teacher'");
             int roleId = 0;
             if (rsRole.next()) {
                 roleId = rsRole.getInt("role_id");
