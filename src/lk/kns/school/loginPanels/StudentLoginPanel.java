@@ -5,6 +5,12 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Window;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import lk.kns.school.connection.MySQL;
+import lk.kns.school.util.Session;
+import raven.toast.Notifications;
+import lk.kns.school.gui.StudentHomeScreen;
 
 public class StudentLoginPanel extends javax.swing.JPanel {
 
@@ -24,7 +30,7 @@ public class StudentLoginPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         passwordInput = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        studentLoginBtn = new javax.swing.JButton();
         backBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
 
@@ -52,11 +58,16 @@ public class StudentLoginPanel extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(245, 241, 241));
         jLabel3.setText("Password");
 
-        jButton1.setBackground(new java.awt.Color(1, 116, 220));
-        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("LogIn");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        studentLoginBtn.setBackground(new java.awt.Color(1, 116, 220));
+        studentLoginBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        studentLoginBtn.setForeground(new java.awt.Color(255, 255, 255));
+        studentLoginBtn.setText("LogIn");
+        studentLoginBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        studentLoginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentLoginBtnActionPerformed(evt);
+            }
+        });
 
         backBtn.setBackground(new java.awt.Color(33, 45, 57));
         backBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -88,7 +99,7 @@ public class StudentLoginPanel extends javax.swing.JPanel {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(passwordInput)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(studentLoginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                     .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -116,7 +127,7 @@ public class StudentLoginPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(studentLoginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -129,7 +140,7 @@ public class StudentLoginPanel extends javax.swing.JPanel {
         studentLogo.setIcon(new FlatSVGIcon("lk/kns/school/image/student.svg", 105, 105));
         exitBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/close.svg", 15, 15));
 
-        emailInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "✉️ please enter your student email");
+        emailInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "✉️ email or admission number");
         passwordInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "🔒 please enter your student password");
     }
 
@@ -147,17 +158,70 @@ public class StudentLoginPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_backBtnActionPerformed
 
+    private void studentLoginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentLoginBtnActionPerformed
+        String loginId = emailInput.getText().trim();
+        String password = String.valueOf(passwordInput.getPassword());
+
+        if (loginId.isEmpty()) {
+            Notifications.getInstance().show(Notifications.Type.INFO,
+                    Notifications.Location.TOP_RIGHT,
+                    2000,
+                    "Please enter your email or admission number");
+        } else if (password.isEmpty()) {
+            Notifications.getInstance().show(Notifications.Type.INFO,
+                    Notifications.Location.TOP_RIGHT,
+                    2000,
+                    "Please enter your password");
+        } else {
+            try {
+                ResultSet rs = MySQL.execute(
+                        "SELECT u.user_id, u.role_id, u.email, s.student_id, s.class_id, s.f_name, s.l_name "
+                        + "FROM `user` u "
+                        + "INNER JOIN `student` s ON u.user_id = s.user_id "
+                        + "WHERE (u.email = '" + loginId + "' OR s.admission_no = '" + loginId + "') "
+                        + "AND u.password = '" + password + "' "
+                        + "AND u.role_id = '3'"
+                );
+
+                if (rs.next()) {
+                    Session.roleId = rs.getInt("role_id");
+                    Session.userId = rs.getInt("user_id");
+                    Session.email = rs.getString("email");
+
+                    Session.studentId = rs.getInt("student_id");
+                    Session.classId = rs.getInt("class_id");
+                    Session.studentName = rs.getString("f_name") + " " + rs.getString("l_name");
+
+                    new StudentHomeScreen().setVisible(true);
+
+                    Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
+                    if (window != null) {
+                        window.dispose();
+                    }
+                } else {
+                    Notifications.getInstance().show(Notifications.Type.ERROR,
+                            Notifications.Location.TOP_RIGHT,
+                            2000,
+                            "Invalid Credentials. Please try again.");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_studentLoginBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
     private javax.swing.JTextField emailInput;
     private javax.swing.JButton exitBtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField passwordInput;
+    private javax.swing.JButton studentLoginBtn;
     private javax.swing.JLabel studentLogo;
     // End of variables declaration//GEN-END:variables
 }
