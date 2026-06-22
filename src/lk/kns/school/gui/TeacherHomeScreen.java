@@ -10,8 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import lk.kns.school.appIcon.Icon;
+import lk.kns.school.teacherSidePanels.ClassManagementPanel;
 import lk.kns.school.teacherSidePanels.DashboardPanel;
+import lk.kns.school.teacherSidePanels.ProfileSettingsPanel;
 import lk.kns.school.teacherSidePanels.StudentPanel;
+import lk.kns.school.teacherSidePanels.TeacherMarksPanel;
 
 public class TeacherHomeScreen extends javax.swing.JFrame {
 
@@ -19,6 +22,9 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
 
     private DashboardPanel dashboardPanel;
     private StudentPanel studentPanel;
+    private ClassManagementPanel classManagementPanel;
+    private TeacherMarksPanel teacherMarksPanel;
+    private ProfileSettingsPanel teacherProfileSettingsPanel;
     
 
     public TeacherHomeScreen() {
@@ -44,7 +50,6 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
         classBtn = new javax.swing.JButton();
         examBtn = new javax.swing.JButton();
         settingBtn = new javax.swing.JButton();
-        noticeBtn = new javax.swing.JButton();
         logoPanel = new javax.swing.JPanel();
         knsLogo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -148,7 +153,7 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
         studentBtn.setBackground(new java.awt.Color(60, 63, 65));
         studentBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         studentBtn.setForeground(new java.awt.Color(246, 246, 246));
-        studentBtn.setText(" Student Management");
+        studentBtn.setText("My Students");
         studentBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         studentBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studentBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -160,7 +165,7 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
         classBtn.setBackground(new java.awt.Color(60, 63, 65));
         classBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         classBtn.setForeground(new java.awt.Color(246, 246, 246));
-        classBtn.setText(" Class Management");
+        classBtn.setText("Classroom Operations");
         classBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         classBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         classBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -172,7 +177,7 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
         examBtn.setBackground(new java.awt.Color(60, 63, 65));
         examBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         examBtn.setForeground(new java.awt.Color(246, 246, 246));
-        examBtn.setText("Exam Results");
+        examBtn.setText("Enter Exam Marks");
         examBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         examBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         examBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -193,18 +198,6 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
             }
         });
 
-        noticeBtn.setBackground(new java.awt.Color(60, 63, 65));
-        noticeBtn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        noticeBtn.setForeground(new java.awt.Color(246, 246, 246));
-        noticeBtn.setText("Notice Board");
-        noticeBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        noticeBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        noticeBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                noticeBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout menuItemPanelLayout = new javax.swing.GroupLayout(menuItemPanel);
         menuItemPanel.setLayout(menuItemPanelLayout);
         menuItemPanelLayout.setHorizontalGroup(
@@ -217,8 +210,7 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
                     .addComponent(classBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dashboardBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(examBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(settingBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(noticeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(settingBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuItemPanelLayout.setVerticalGroup(
@@ -231,14 +223,12 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(classBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(noticeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(examBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(settingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logOutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         logoPanel.setBackground(new java.awt.Color(43, 43, 43));
@@ -312,7 +302,6 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
         dashboardBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/dashboard.svg", 20, 20));
         studentBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/student_1.svg", 20, 20));
         classBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/class.svg", 20, 20));
-        noticeBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/class.svg", 20, 20));
         examBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/exam.svg", 20, 20));
         settingBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/settings.svg", 20, 20));
         logOutBtn.setIcon(new FlatSVGIcon("lk/kns/school/image/logOut.svg", 20, 20));
@@ -320,7 +309,6 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
         dashboardBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         studentBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         classBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
-        noticeBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         examBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         settingBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
         logOutBtn.putClientProperty(FlatClientProperties.STYLE, "arc:30");
@@ -340,20 +328,20 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
 
         this.dashboardPanel = new DashboardPanel();
         this.studentPanel = new StudentPanel();
-//        this.classPanel = new ClassPanel();
-//        this.examPanel = new ExamPanel();
-//        this.settingsPanel = new SettingsPanel();
+        this.classManagementPanel = new ClassManagementPanel();
+        this.teacherMarksPanel = new TeacherMarksPanel();
+        this.teacherProfileSettingsPanel = new ProfileSettingsPanel();
 
         this.dashboardPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         this.studentPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-//        this.classPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-//        this.examPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        this.classManagementPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        this.teacherMarksPanel.putClientProperty(FlatClientProperties.STYLE, "arc:20");
 
         this.contentPanel.add(dashboardPanel, "dashboard_panel");
         this.contentPanel.add(studentPanel, "student_panel");
-//        this.contentPanel.add(classPanel, "class_panel");
-//        this.contentPanel.add(examPanel, "exam_panel");
-//        this.contentPanel.add(settingsPanel, "settings_panel");
+        this.contentPanel.add(classManagementPanel, "class_panel");
+        this.contentPanel.add(teacherMarksPanel, "exam_panel");
+        this.contentPanel.add(teacherProfileSettingsPanel, "settings_panel");
 
         SwingUtilities.updateComponentTreeUI(contentPanel);
     }
@@ -393,10 +381,6 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
     private void userBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userBtnActionPerformed
     }//GEN-LAST:event_userBtnActionPerformed
 
-    private void noticeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noticeBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_noticeBtnActionPerformed
-
     public static void main(String args[]) {
 
         FlatDarkLaf.setup();
@@ -421,7 +405,6 @@ public class TeacherHomeScreen extends javax.swing.JFrame {
     private javax.swing.JPanel logoPanel;
     private javax.swing.JPanel menuItemPanel;
     private javax.swing.JLabel messageLogo;
-    private javax.swing.JButton noticeBtn;
     private javax.swing.JLabel notifyLogo;
     private javax.swing.JButton settingBtn;
     private javax.swing.JButton studentBtn;

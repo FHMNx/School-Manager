@@ -26,7 +26,7 @@
                       <Component id="jLayeredPane6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="jLayeredPane5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="26" max="32767" attributes="0"/>
+                      <EmptySpace pref="18" max="32767" attributes="0"/>
                       <Component id="jLayeredPane7" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -68,7 +68,7 @@
                   <Component id="studentLogo" min="-2" pref="79" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="studentCount" alignment="0" max="32767" attributes="0"/>
+                      <Component id="myStudentCount" alignment="0" max="32767" attributes="0"/>
                       <Component id="jLabel2" alignment="0" pref="154" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="27" max="32767" attributes="0"/>
@@ -84,7 +84,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel2" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="studentCount" min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="myStudentCount" min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -104,10 +104,10 @@
               <Color blue="d6" green="d6" red="d9" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Total Students"/>
+            <Property name="text" type="java.lang.String" value="My Students"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="studentCount">
+        <Component class="javax.swing.JLabel" name="myStudentCount">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="30" style="1"/>
@@ -137,8 +137,8 @@
                   <Component id="clsLogo" min="-2" pref="79" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel10" alignment="0" pref="153" max="32767" attributes="0"/>
-                      <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel10" alignment="0" max="32767" attributes="0"/>
+                      <Component id="assignedClasses" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="28" max="32767" attributes="0"/>
               </Group>
@@ -153,7 +153,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel10" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabel11" min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="assignedClasses" min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -173,10 +173,10 @@
               <Color blue="d6" green="d6" red="d9" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Total Classes"/>
+            <Property name="text" type="java.lang.String" value="Assigned Classes"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel11">
+        <Component class="javax.swing.JLabel" name="assignedClasses">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="30" style="1"/>
@@ -213,7 +213,7 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="jLabel12" min="-2" pref="152" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="teachersCount" alignment="0" max="32767" attributes="0"/>
+                      <Component id="subjectTought" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
@@ -228,7 +228,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel12" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="teachersCount" min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="subjectTought" min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="57" max="32767" attributes="0"/>
@@ -248,10 +248,10 @@
               <Color blue="d6" green="d6" red="d9" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Total Teachers"/>
+            <Property name="text" type="java.lang.String" value="Subjects Taught"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="teachersCount">
+        <Component class="javax.swing.JLabel" name="subjectTought">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="30" style="1"/>
@@ -284,10 +284,10 @@
                   <Component id="subjectLogo" min="-2" pref="79" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel14" alignment="0" pref="151" max="32767" attributes="0"/>
-                      <Component id="jLabel15" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabel14" alignment="0" max="32767" attributes="0"/>
+                      <Component id="myAnnouncements" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="30" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -300,7 +300,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel14" min="-2" pref="24" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jLabel15" min="-2" pref="44" max="-2" attributes="0"/>
+                          <Component id="myAnnouncements" min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="57" max="32767" attributes="0"/>
@@ -320,10 +320,10 @@
               <Color blue="d6" green="d6" red="d9" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Total Subjects"/>
+            <Property name="text" type="java.lang.String" value="My Announcements"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel15">
+        <Component class="javax.swing.JLabel" name="myAnnouncements">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="30" style="1"/>

@@ -175,53 +175,47 @@ public class TeacherLoginPanel extends javax.swing.JPanel {
                     "please enter your password");
         } else {
             try {
-                ResultSet rs = MySQL.execute(
-                        "SELECT * FROM `user` "
+                ResultSet rs = MySQL.execute("SELECT * FROM `user` "
                         + "INNER JOIN `role` ON `user`.`role_id` = `role`.`role_id` "
-                        + "LEFT JOIN `teacher` ON `user`.`user_id` = `teacher`.`user_id` "
+                        + "INNER JOIN `teacher` ON `user`.`user_id` = `teacher`.`user_id` "
                         + "WHERE `user`.`email` = '" + email + "' "
                         + "AND `user`.`password` = '" + password + "' "
-                        + "AND (`user`.`role_id` = '2')"
+                        + "AND `user`.`role_id` = '2'"
                 );
 
                 if (rs.next()) {
-                    Session.roleId = rs.getInt("role.role_id");
-                    Session.userId = rs.getInt("user.user_id");
-                    Session.email = rs.getString("user.email");
+                    Session.roleId = rs.getInt("role_id");
+                    Session.userId = rs.getInt("user_id");
+                    Session.email = rs.getString("email");
+                    Session.teacherId = rs.getInt("teacher_id");
 
-                    if (Session.roleId == 2) {
-                        Session.teacherId = rs.getInt("teacher.teacher_id");
+                    try {
+                        ResultSet clsTrRs = MySQL.execute("SELECT `class_id` FROM `class_has_teacher` "
+                                + "WHERE `teacher_id` = '" + Session.teacherId + "'"
+                        );
 
-                        try {
-                            ResultSet clsTrRs = MySQL.execute(
-                                    "SELECT `class_has_teacher`.`class_id` "
-                                    + "FROM `class_has_teacher` "
-                                    + "INNER JOIN `class` ON `class_has_teacher`.`class_id` = `class`.`class_id` "
-                                    + "INNER JOIN `teacher` ON `class_has_teacher`.`teacher_id` = `teacher`.`teacher_id` "
-                                    + "WHERE `class_has_teacher`.`teacher_id` = '" + Session.teacherId + "'"
-                            );
+                        if (clsTrRs.next()) {
+                            Session.classId = clsTrRs.getInt("class_id");
+                            new TeacherHomeScreen().setVisible(true);
 
-                            if (clsTrRs.next()) {
-                                Session.classId = clsTrRs.getInt("class_id");
-                            } else {
-                                Session.classId = 0;
-                                Notifications.getInstance().show(Notifications.Type.INFO,
-                                        Notifications.Location.TOP_RIGHT,
-                                        2000,
-                                        "No class assigned to your account. Contact Admin.");
+                            Window window = SwingUtilities.getWindowAncestor(this);
+                            if (window != null) {
+                                window.dispose();
                             }
 
-                        } catch (SQLException e) {
-                            e.printStackTrace();
+                        } else {
+                            //if not a class teacher
+                            Session.classId = 0;
+                            Notifications.getInstance().show(Notifications.Type.ERROR,
+                                    Notifications.Location.TOP_RIGHT,
+                                    3000,
+                                    "Access Denied: Only assigned Class Teachers can log in.");
                         }
 
-                        new TeacherHomeScreen().setVisible(true);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
 
-                    Window window = SwingUtilities.getWindowAncestor(this);
-                    if (window != null) {
-                        window.dispose();
-                    }
                 } else {
                     Notifications.getInstance().show(Notifications.Type.ERROR,
                             Notifications.Location.TOP_RIGHT,
