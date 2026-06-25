@@ -61,51 +61,6 @@ public class MyResultsPanel extends javax.swing.JPanel {
         return "F";
     }
 
-    private void loadResults() {
-        String selectedTerm = termFilterCombo.getSelectedItem().toString();
-
-        if (selectedTerm.equals("Select a Term")) {
-            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT, 2000, "Please select a term to view results.");
-            return;
-        }
-
-        int termId = termMap.get(selectedTerm);
-
-        try {
-            String query = "SELECT s.subject_name, t.term_name, sr.marks "
-                    + "FROM `student_result` sr "
-                    + "INNER JOIN `subject` s ON sr.subject_id = s.subject_id "
-                    + "INNER JOIN `term` t ON sr.term_id = t.term_id "
-                    + "WHERE sr.student_id = '" + Session.studentId + "' AND sr.term_id = '" + termId + "'";
-
-            ResultSet rs = MySQL.execute(query);
-
-            DefaultTableModel dtm = (DefaultTableModel) resultsTable.getModel();
-            dtm.setRowCount(0);
-
-            int rowCount = 1;
-            while (rs.next()) {
-                Vector<String> v = new Vector<>();
-                v.add(String.valueOf(rowCount++));
-                v.add(rs.getString("subject_name"));
-                v.add(rs.getString("term_name"));
-
-                double marks = rs.getDouble("marks");
-                v.add(String.valueOf(marks));
-                v.add(calculateGrade(marks));
-
-                dtm.addRow(v);
-            }
-
-            if (dtm.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(this, "No results found for " + selectedTerm + ".", "No Data", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Database error loading results.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -126,6 +81,11 @@ public class MyResultsPanel extends javax.swing.JPanel {
         jLabel1.setText("MY ACADEMIC RESULTS");
 
         filterBtn.setText("View Results");
+        filterBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                filterBtnActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Select The Term");
 
@@ -189,6 +149,52 @@ public class MyResultsPanel extends javax.swing.JPanel {
                 .addContainerGap(129, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void filterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterBtnActionPerformed
+        String selectedTerm = termFilterCombo.getSelectedItem().toString();
+
+        if (selectedTerm.equals("Select a Term")) {
+            Notifications.getInstance().show(Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT, 2000, "Please select a term to view results.");
+            return;
+        }
+
+        int termId = termMap.get(selectedTerm);
+
+        try {
+            String query = "SELECT s.subject_name, t.term_name, sr.marks "
+                    + "FROM `student_result` sr "
+                    + "INNER JOIN `subject` s ON sr.subject_id = s.subject_id "
+                    + "INNER JOIN `term` t ON sr.term_id = t.term_id "
+                    + "WHERE sr.student_id = '" + Session.studentId + "' AND sr.term_id = '" + termId + "'";
+
+            ResultSet rs = MySQL.execute(query);
+
+            DefaultTableModel dtm = (DefaultTableModel) resultsTable.getModel();
+            dtm.setRowCount(0);
+
+            int rowCount = 1;
+            while (rs.next()) {
+                Vector<String> v = new Vector<>();
+                v.add(String.valueOf(rowCount++));
+                v.add(rs.getString("subject_name"));
+                v.add(rs.getString("term_name"));
+
+                double marks = rs.getDouble("marks");
+                v.add(String.valueOf(marks));
+                v.add(calculateGrade(marks));
+
+                dtm.addRow(v);
+            }
+
+            if (dtm.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "No results found for " + selectedTerm + ".", "No Data", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database error loading results.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_filterBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
