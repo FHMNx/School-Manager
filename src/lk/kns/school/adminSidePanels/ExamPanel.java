@@ -4,9 +4,9 @@ import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.time.Year;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,7 +18,15 @@ import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.adminDialog.deleteExamDialog;
 import lk.kns.school.validation.Validator;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 import raven.toast.Notifications;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
 
 public class ExamPanel extends javax.swing.JPanel {
 
@@ -83,7 +91,7 @@ public class ExamPanel extends javax.swing.JPanel {
         totalMarksLabel = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         averageLabel = new javax.swing.JLabel();
-        reportBtn = new javax.swing.JButton();
+        studentResultsReportBtn = new javax.swing.JButton();
         resultLabel = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -99,7 +107,7 @@ public class ExamPanel extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         JscrollPane = new javax.swing.JScrollPane();
         classResultsTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        classResultsReportBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(43, 43, 43));
 
@@ -293,7 +301,12 @@ public class ExamPanel extends javax.swing.JPanel {
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("Average :");
 
-        reportBtn.setText("Generate Report");
+        studentResultsReportBtn.setText("Generate Report");
+        studentResultsReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentResultsReportBtnActionPerformed(evt);
+            }
+        });
 
         resultLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         resultLabel.setForeground(new java.awt.Color(0, 153, 0));
@@ -309,9 +322,16 @@ public class ExamPanel extends javax.swing.JPanel {
                 "No", "Subject", "Marks"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -365,7 +385,7 @@ public class ExamPanel extends javax.swing.JPanel {
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(totalMarksLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(averageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)))
-                                    .addComponent(reportBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                    .addComponent(studentResultsReportBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
                                     .addComponent(resultLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(333, 333, 333)
@@ -404,7 +424,7 @@ public class ExamPanel extends javax.swing.JPanel {
                         .addGap(241, 241, 241)
                         .addComponent(resultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(reportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(studentResultsReportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(165, 165, 165))
         );
@@ -449,7 +469,12 @@ public class ExamPanel extends javax.swing.JPanel {
         });
         JscrollPane.setViewportView(classResultsTable);
 
-        jButton1.setText("Generate Report");
+        classResultsReportBtn.setText("Generate Report");
+        classResultsReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classResultsReportBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -473,7 +498,7 @@ public class ExamPanel extends javax.swing.JPanel {
                                     .addGap(33, 33, 33)
                                     .addComponent(loadClassResultsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(classResultsReportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -502,7 +527,7 @@ public class ExamPanel extends javax.swing.JPanel {
                 .addGap(39, 39, 39)
                 .addComponent(JscrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(classResultsReportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -742,6 +767,52 @@ public class ExamPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_loadClassResultsBtnActionPerformed
 
+    private void classResultsReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classResultsReportBtnActionPerformed
+        try {
+            InputStream filePath = getClass().getClassLoader().getResourceAsStream("report/class_results_table_report.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(filePath);
+
+            HashMap<String, Object> parameters = new HashMap<>();
+
+            parameters.put("CLASS", selectCls.getSelectedItem().toString());
+            parameters.put("TERM", selectTrm.getSelectedItem().toString());
+            parameters.put("YEAR", selectYear.getSelectedItem().toString());
+
+            JRTableModelDataSource jRTableModelDataSource = new JRTableModelDataSource(classResultsTable.getModel());
+            JasperPrint fillReport = JasperFillManager.fillReport(report, parameters, jRTableModelDataSource);
+
+            JasperViewer.viewReport(fillReport, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_classResultsReportBtnActionPerformed
+
+    private void studentResultsReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentResultsReportBtnActionPerformed
+        try {
+            InputStream filePath = getClass().getClassLoader().getResourceAsStream("report/student_results_table_report.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(filePath);
+
+            HashMap<String, Object> parameters = new HashMap<>();
+
+            parameters.put("ADMISSION", searchStudent.getText().trim());
+            parameters.put("CLASS", selectCls.getSelectedItem().toString());
+            parameters.put("TERM", selectTrm.getSelectedItem().toString());
+            parameters.put("YEAR", selectYear.getSelectedItem().toString());
+            parameters.put("TOTAL", totalMarksLabel.getText().trim());
+            parameters.put("AVERAGE", averageLabel.getText().trim());
+            parameters.put("STATUS", resultLabel.getText().trim());
+
+            JRTableModelDataSource jRTableModelDataSource = new JRTableModelDataSource(resultTable.getModel());
+            JasperPrint fillReport = JasperFillManager.fillReport(report, parameters, jRTableModelDataSource);
+
+            JasperViewer.viewReport(fillReport, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_studentResultsReportBtnActionPerformed
+
     private void init() {
         deleteLabel.setIcon(new FlatSVGIcon("lk/kns/school/image/delete.svg", 20, 20));
     }
@@ -885,6 +956,7 @@ public class ExamPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane JscrollPane;
     private javax.swing.JLabel averageLabel;
+    private javax.swing.JButton classResultsReportBtn;
     private javax.swing.JTable classResultsTable;
     private javax.swing.JComboBox<String> classSelect;
     private com.toedter.calendar.JDateChooser dateChoose;
@@ -892,7 +964,6 @@ public class ExamPanel extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField endTimeInput;
     private javax.swing.JTable examTable;
     private javax.swing.JLabel examTermLabel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -916,7 +987,6 @@ public class ExamPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton loadClassResultsBtn;
-    private javax.swing.JButton reportBtn;
     private javax.swing.JLabel resultLabel;
     private javax.swing.JTable resultTable;
     private javax.swing.JButton searchBtn;
@@ -929,6 +999,7 @@ public class ExamPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> selectYr;
     private javax.swing.JButton sheduleExmBtn;
     private javax.swing.JFormattedTextField startTimeInput;
+    private javax.swing.JButton studentResultsReportBtn;
     private javax.swing.JComboBox<String> subjectSelect;
     private javax.swing.JComboBox<String> termSelect;
     private javax.swing.JLabel totalMarksLabel;

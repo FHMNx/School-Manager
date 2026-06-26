@@ -1,6 +1,7 @@
 package lk.kns.school.adminSidePanels;
 
 import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -9,7 +10,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
-import lk.kns.school.validation.Validator;
 
 public class ClassInsightsPanel extends javax.swing.JPanel {
 
@@ -300,6 +300,11 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(studentTable);
 
         reportBtn.setText("Generate Report");
+        reportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -742,6 +747,10 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_subjectTeacherTableMouseClicked
+
+    private void reportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportBtnActionPerformed
+
+    }//GEN-LAST:event_reportBtnActionPerformed
 
     private void loadStudentByClass(int clsId) {
         try {

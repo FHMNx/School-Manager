@@ -4,10 +4,12 @@ import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import javax.swing.JFrame;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
@@ -43,7 +45,7 @@ public class StudentPanel extends javax.swing.JPanel {
 
         searchTextInput.putClientProperty(FlatClientProperties.STYLE, "arc:20");
         searchBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
-        reportBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
+        excelReportBtn.putClientProperty(FlatClientProperties.STYLE, "arc:20");
 
         searchTextInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "search by student name or admission number");
     }
@@ -60,7 +62,7 @@ public class StudentPanel extends javax.swing.JPanel {
         deleteLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         studentTable = new javax.swing.JTable();
-        reportBtn = new javax.swing.JButton();
+        excelReportBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(43, 43, 43));
 
@@ -127,8 +129,13 @@ public class StudentPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(studentTable);
 
-        reportBtn.setText("Generate Report");
-        reportBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        excelReportBtn.setText("Generate Report");
+        excelReportBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        excelReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                excelReportBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -151,7 +158,7 @@ public class StudentPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(deleteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(reportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(excelReportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(17, 17, 17))
         );
@@ -169,7 +176,7 @@ public class StudentPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(reportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(excelReportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -229,7 +236,7 @@ public class StudentPanel extends javax.swing.JPanel {
 
         });
     }
-    
+
     private void refreshLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshLabelMouseClicked
         loadStudentData();
     }//GEN-LAST:event_refreshLabelMouseClicked
@@ -308,14 +315,70 @@ public class StudentPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
+    private void excelReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excelReportBtnActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save Excel Report");
+        javax.swing.filechooser.FileNameExtensionFilter filter = new javax.swing.filechooser.FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+
+            if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                filePath += ".xlsx";
+            }
+
+            try {
+                // Create a new Workbook and Sheet
+                org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+                org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Student Details");
+
+                DefaultTableModel dtm = (DefaultTableModel) studentTable.getModel();
+
+                // Create the Header Row
+                org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
+                for (int i = 0; i < dtm.getColumnCount(); i++) {
+                    org.apache.poi.ss.usermodel.Cell cell = headerRow.createCell(i);
+                    cell.setCellValue(dtm.getColumnName(i));
+                }
+
+                // Extract Data from JTable to Excel Sheet
+                for (int i = 0; i < dtm.getRowCount(); i++) {
+                    org.apache.poi.ss.usermodel.Row row = sheet.createRow(i + 1);
+                    for (int j = 0; j < dtm.getColumnCount(); j++) {
+                        org.apache.poi.ss.usermodel.Cell cell = row.createCell(j);
+                        Object value = dtm.getValueAt(i, j);
+                        if (value != null) {
+                            cell.setCellValue(value.toString());
+                        }
+                    }
+                }
+
+                // Write the output to a file
+                try (java.io.FileOutputStream out = new java.io.FileOutputStream(filePath)) {
+                    workbook.write(out);
+                }
+                workbook.close();
+                JOptionPane.showMessageDialog(this, "Excel Report Generated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+    }//GEN-LAST:event_excelReportBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addLabel;
     private javax.swing.JLabel deleteLabel;
     private javax.swing.JLabel editLabel;
+    private javax.swing.JButton excelReportBtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel refreshLabel;
-    private javax.swing.JButton reportBtn;
     private javax.swing.JButton searchBtn;
     private javax.swing.JTextField searchTextInput;
     private javax.swing.JTable studentTable;

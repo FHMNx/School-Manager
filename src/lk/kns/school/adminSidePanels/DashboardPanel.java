@@ -224,6 +224,8 @@ public class DashboardPanel extends javax.swing.JPanel {
                 .addContainerGap(57, Short.MAX_VALUE))
         );
 
+        barChartPanel.setBackground(new java.awt.Color(67, 69, 74));
+
         javax.swing.GroupLayout barChartPanelLayout = new javax.swing.GroupLayout(barChartPanel);
         barChartPanel.setLayout(barChartPanelLayout);
         barChartPanelLayout.setHorizontalGroup(
