@@ -2,8 +2,16 @@ package lk.kns.school.adminSidePanels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import lk.kns.school.connection.MySQL;
@@ -31,7 +39,8 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         pieChartPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        backupBtn = new javax.swing.JButton();
+        restoreBackupBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(43, 43, 43));
 
@@ -71,10 +80,22 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
             .addGap(0, 490, Short.MAX_VALUE)
         );
 
-        jButton1.setBackground(new java.awt.Color(6, 84, 101));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Database Backup");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        backupBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backupBtn.setText("Database Backup");
+        backupBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        backupBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupBtnActionPerformed(evt);
+            }
+        });
+
+        restoreBackupBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        restoreBackupBtn.setText("Restore Database backup");
+        restoreBackupBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restoreBackupBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -91,7 +112,10 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
                                 .addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(backupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(restoreBackupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -132,10 +156,128 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(backupBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                            .addComponent(restoreBackupBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(46, 46, 46))))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupBtnActionPerformed
+        JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Select Folder to Save Backup");
+        fileChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            File folderToSave = fileChooser.getSelectedFile();
+            String selectedPath = folderToSave.getAbsolutePath();
+
+            new Thread(() -> {
+                databaseBackup(selectedPath);
+            }).start();
+        }
+    }//GEN-LAST:event_backupBtnActionPerformed
+
+    private void restoreBackupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoreBackupBtnActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select SQL Backup File to Restore");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        int result = fileChooser.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "WARNING: This will overwrite your CURRENT database with the data from this file.\n"
+                    + "Any recent data will be LOST. Do you want to continue?",
+                    "Confirm Restore", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                restoreBackup(selectedFile.getAbsolutePath());
+            }
+        }
+    }//GEN-LAST:event_restoreBackupBtnActionPerformed
+
+    private void restoreBackup(String sqlFilePath) {
+        String mysqlPath = "C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe";
+        String database = "school_manager";
+        String host = "localhost";
+        String port = "3306";
+        String username = "root";
+        String password = "FHMNx35888#";
+
+        try {
+            String cleanPath = sqlFilePath.replace("\\", "/");
+
+            List<String> command = Arrays.asList(
+                    mysqlPath,
+                    "-h", host,
+                    "-P", port,
+                    "-u", username,
+                    "-p" + password,
+                    database,
+                    "-e", "source " + cleanPath
+            );
+
+            ProcessBuilder builder = new ProcessBuilder(command);
+            builder.redirectError(ProcessBuilder.Redirect.INHERIT);
+
+            Process process = builder.start();
+            int result = process.waitFor();
+
+            if (result == 0) {
+                JOptionPane.showMessageDialog(this, "Restore completed successfully! Please restart the app", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Restore failed. Check the terminal.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void databaseBackup(String targetFolder) {
+        String dumpPath = "C:/Program Files/MySQL/MySQL Server 8.0/bin/mysqldump.exe";
+        String database = "school_manager";
+        String host = "localhost";
+        String port = "3306";
+        String username = "root";
+        String password = "FHMNx35888#";
+
+        try {
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String backupFileName = targetFolder + File.separator + database + "_" + timestamp + ".sql";
+
+            List<String> command = Arrays.asList(
+                    dumpPath,
+                    "-h", host,
+                    "-P", port,
+                    "-u", username,
+                    "-p" + password,
+                    database
+            );
+
+            ProcessBuilder builder = new ProcessBuilder(command);
+
+            builder.redirectOutput(new File(backupFileName));
+            builder.redirectError(ProcessBuilder.Redirect.INHERIT);
+
+            Process process = builder.start();
+            int result = process.waitFor();
+
+            if (result == 0) {
+                JOptionPane.showMessageDialog(this, "Backup saved successfully!\nLocation: " + backupFileName, "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to create backup. Check terminal for details.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private DefaultPieDataset loadSystemCounts() {
         DefaultPieDataset dataset = new DefaultPieDataset();
@@ -193,7 +335,7 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
 
         // Create a ChartPanel with fixed size
         ChartPanel chartPanel = new ChartPanel(pieChart);
-        chartPanel.setPreferredSize(new java.awt.Dimension(560,540));
+        chartPanel.setPreferredSize(new java.awt.Dimension(560, 540));
 
         pieChartPanel.removeAll();
         pieChartPanel.setLayout(new BorderLayout());
@@ -204,7 +346,7 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton backupBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -212,5 +354,6 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel pieChartPanel;
+    private javax.swing.JButton restoreBackupBtn;
     // End of variables declaration//GEN-END:variables
 }

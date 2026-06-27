@@ -24,3 +24,8 @@ hs_err_pid*
 replay_pid*
 /build/
 /dist/
+
+# Database connection logs
+jdbc_connection_*.sql
+
+project_structure.txt
