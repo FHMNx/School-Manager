@@ -367,7 +367,6 @@ public class TeacherPanel extends javax.swing.JPanel {
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            
             }
         }
     }//GEN-LAST:event_getExcelReportActionPerformed

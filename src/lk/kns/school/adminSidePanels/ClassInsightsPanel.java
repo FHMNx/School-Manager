@@ -2,6 +2,7 @@ package lk.kns.school.adminSidePanels;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -10,6 +11,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class ClassInsightsPanel extends javax.swing.JPanel {
 
@@ -748,8 +756,43 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_subjectTeacherTableMouseClicked
 
-    private void reportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportBtnActionPerformed
+    //CLASS OVERVIEW
 
+    private void reportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportBtnActionPerformed
+        try {
+            InputStream filePath = getClass().getClassLoader().getResourceAsStream("report/class_overview_report.jrxml");
+            JasperReport report = JasperCompileManager.compileReport(filePath);
+
+            // Parameters
+            HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("CLASS", classSelect.getSelectedItem().toString());
+            parameters.put("TEACHER_NAME", teacherNameInput.getText());
+            parameters.put("TEACHER_MOBILE", teacherMobileInput.getText());
+            parameters.put("TEACHER_NIC", teacherNicInput.getText());
+            parameters.put("TEACHER_EMAIL", teacherEmailInput.getText());
+            parameters.put("TEACHER_STATUS", statusBtn.getText());
+
+            DefaultTableModel model = (DefaultTableModel) studentTable.getModel();
+            DefaultTableModel reportModel = new DefaultTableModel();
+            reportModel.setColumnIdentifiers(new Object[]{"No", "Full Name", "Admission No", "Contact No", "Class"});
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                reportModel.addRow(new Object[]{
+                    model.getValueAt(i, 0),
+                    model.getValueAt(i, 2),
+                    model.getValueAt(i, 3),
+                    model.getValueAt(i, 4),
+                    model.getValueAt(i, 5)
+                });
+            }
+
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(reportModel);
+            JasperPrint fillReport = JasperFillManager.fillReport(report, parameters, dataSource);
+            JasperViewer.viewReport(fillReport, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_reportBtnActionPerformed
 
     private void loadStudentByClass(int clsId) {

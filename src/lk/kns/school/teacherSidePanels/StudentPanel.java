@@ -2,9 +2,12 @@ package lk.kns.school.teacherSidePanels;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.io.File;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.Vector;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.util.Session;
@@ -54,14 +57,14 @@ public class StudentPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "User ID", "Student ID", "First Name", "Last Name", "Admission No", "Email", "Mobile", "Class", "Status"
+                "No", "First Name", "Last Name", "Admission No", "Email", "Mobile", "Class", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -76,6 +79,11 @@ public class StudentPanel extends javax.swing.JPanel {
 
         reportBtn.setText("Generate Report");
         reportBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        reportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportBtnActionPerformed(evt);
+            }
+        });
 
         gradeLabel.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
         gradeLabel.setForeground(new java.awt.Color(170, 170, 160));
@@ -128,14 +136,14 @@ public class StudentPanel extends javax.swing.JPanel {
 
         searchTextInput.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "search by student name or admission number");
     }
-    
-    private void loadClassName(){
+
+    private void loadClassName() {
         try {
-            ResultSet rs = MySQL.execute("SELECT `class_name` FROM `class` WHERE `class_id` = '"+Session.classId+"'");
-            if(rs.next()){
+            ResultSet rs = MySQL.execute("SELECT `class_name` FROM `class` WHERE `class_id` = '" + Session.classId + "'");
+            if (rs.next()) {
                 gradeLabel.setText(rs.getString("class_name"));
             }
-                
+
         } catch (SQLException e) {
         }
     }
@@ -157,8 +165,7 @@ public class StudentPanel extends javax.swing.JPanel {
             while (rs.next()) {
                 Vector<String> v = new Vector();
                 v.add(String.valueOf(rowCount));
-                v.add(rs.getString("user.user_id"));
-                v.add(rs.getString("student_id"));
+
                 v.add(rs.getString("f_name"));
                 v.add(rs.getString("l_name"));
                 v.add(rs.getString("admission_no"));
@@ -169,7 +176,6 @@ public class StudentPanel extends javax.swing.JPanel {
 
                 dtm.addRow(v);
                 rowCount++;
-
             }
 
         } catch (SQLException e) {
@@ -189,9 +195,9 @@ public class StudentPanel extends javax.swing.JPanel {
             String query;
             if (searchText.isEmpty()) {
                 query = "SELECT * FROM `student` INNER JOIN `user` ON `student`.`user_id` = `user`.`user_id` "
-                    + "INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id`"
-                    + "INNER JOIN `status` ON `student`.`status_id` = `status`.`status_id` "
-                    + "WHERE `student`.`class_id` = '" + Session.classId + "'";
+                        + "INNER JOIN `class` ON `student`.`class_id` = `class`.`class_id`"
+                        + "INNER JOIN `status` ON `student`.`status_id` = `status`.`status_id` "
+                        + "WHERE `student`.`class_id` = '" + Session.classId + "'";
             } else {
                 query = "SELECT * FROM `user` "
                         + "INNER JOIN `student` ON `student`.`user_id` = `user`.`user_id` "
@@ -210,8 +216,7 @@ public class StudentPanel extends javax.swing.JPanel {
             while (rs.next()) {
                 Vector<String> v = new Vector();
                 v.add(String.valueOf(rowCount));
-                v.add(rs.getString("user.user_id"));
-                v.add(rs.getString("student.student_id"));
+
                 v.add(rs.getString("f_name"));
                 v.add(rs.getString("l_name"));
                 v.add(rs.getString("admission_no"));
@@ -228,6 +233,61 @@ public class StudentPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void reportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportBtnActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save Excel Report");
+        javax.swing.filechooser.FileNameExtensionFilter filter = new javax.swing.filechooser.FileNameExtensionFilter("Excel Files (*.xlsx)", "xlsx");
+        fileChooser.setFileFilter(filter);
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            String filePath = fileToSave.getAbsolutePath();
+
+            if (!filePath.toLowerCase().endsWith(".xlsx")) {
+                filePath += ".xlsx";
+            }
+
+            try {
+                // Create a new Workbook and Sheet
+                org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+                org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Student Details");
+
+                DefaultTableModel dtm = (DefaultTableModel) studentTable.getModel();
+
+                // Create the Header Row
+                org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
+                for (int i = 0; i < dtm.getColumnCount(); i++) {
+                    org.apache.poi.ss.usermodel.Cell cell = headerRow.createCell(i);
+                    cell.setCellValue(dtm.getColumnName(i));
+                }
+
+                // Extract Data from JTable to Excel Sheet
+                for (int i = 0; i < dtm.getRowCount(); i++) {
+                    org.apache.poi.ss.usermodel.Row row = sheet.createRow(i + 1);
+                    for (int j = 0; j < dtm.getColumnCount(); j++) {
+                        org.apache.poi.ss.usermodel.Cell cell = row.createCell(j);
+                        Object value = dtm.getValueAt(i, j);
+                        if (value != null) {
+                            cell.setCellValue(value.toString());
+                        }
+                    }
+                }
+
+                // Write the output to a file
+                try (java.io.FileOutputStream out = new java.io.FileOutputStream(filePath)) {
+                    workbook.write(out);
+                }
+                workbook.close();
+                JOptionPane.showMessageDialog(this, "Excel Report Generated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_reportBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

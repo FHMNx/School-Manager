@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 6.21.5  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="class_overview_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5e3fbf3a-a426-4175-88a7-ccc064e12e42">
+	<parameter name="CLASS" class="java.lang.String"/>
+	<parameter name="TEACHER_NAME" class="java.lang.String"/>
+	<parameter name="TEACHER_MOBILE" class="java.lang.String"/>
+	<parameter name="TEACHER_NIC" class="java.lang.String"/>
+	<parameter name="TEACHER_EMAIL" class="java.lang.String"/>
+	<parameter name="TEACHER_STATUS" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="COLUMN_0" class="java.lang.String"/>
+	<field name="COLUMN_1" class="java.lang.String"/>
+	<field name="COLUMN_2" class="java.lang.String"/>
+	<field name="COLUMN_3" class="java.lang.String"/>
+	<field name="COLUMN_4" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="393" splitType="Stretch">
+			<staticText>
+				<reportElement x="122" y="0" width="310" height="30" uuid="2dd78a3e-2534-4a18-bbd6-18db974051cd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comprehensive Class Overview]]></text>
+			</staticText>
+			<image>
+				<reportElement x="237" y="40" width="80" height="70" uuid="de172432-9e3f-4da0-a6d5-f9a90c9dc213"/>
+				<box leftPadding="6"/>
+				<imageExpression><![CDATA["C:/Users/Fahman/OneDrive/Pictures/Saved Pictures/knslogo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="130" width="80" height="30" uuid="b0ffd762-9d69-45de-88d1-807512dc25b3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Class               :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="170" width="80" height="30" uuid="fa7649e0-13d2-4bcb-a017-9952d8563a53"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Class Teacher :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="210" width="80" height="30" uuid="6f705e66-f746-4364-b76c-2441a983d7b5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Teacher Mobile :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="250" width="80" height="30" uuid="0fd6b909-bbc3-4dc4-a08d-1a514dce5e15"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Teacher NIC    :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="290" width="80" height="30" uuid="535c348e-1da8-4782-82e3-a544f4a42905"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Teacher Email  :]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="450" y="340" width="100" height="30" uuid="081f2529-4d5c-46f5-b121-4d4c1e2a3818"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="330" width="80" height="30" uuid="a430cc19-8380-4e95-b94f-71ac72cbbadc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Teacher Status :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="130" width="100" height="30" uuid="9615c1af-6e15-42fd-9105-76ad2a29df73"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{CLASS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="170" width="100" height="30" uuid="695e9894-2211-497e-b415-8954dd3bca7f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{TEACHER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="210" width="100" height="30" uuid="77fc05f4-cd2f-4c90-aa9a-f2f5b91d6223"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{TEACHER_MOBILE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="250" width="100" height="30" uuid="91c37edf-80e3-4915-bb1c-ae5b1fe3e320"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{TEACHER_NIC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="290" width="100" height="30" uuid="0304f4ac-7d68-418a-bc5a-27c5087a6f9c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{TEACHER_EMAIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="330" width="100" height="30" uuid="38e2b70e-1e25-4324-9437-8a6b360ff3af"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{TEACHER_STATUS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="20" y="0" width="40" height="30" forecolor="#611918" backcolor="#E0DEDE" uuid="577e44c7-f9f1-4ab5-8a6d-4672d5882de3"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="60" y="0" width="100" height="30" forecolor="#611918" backcolor="#E0DEDE" uuid="1aac73f9-66b0-47b5-9f61-aa64a15753f5"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Full Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="160" y="0" width="137" height="30" forecolor="#611918" backcolor="#E0DEDE" uuid="9bb79ad1-670d-46ef-aa9b-e26f5a896672"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Admission Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="297" y="0" width="123" height="30" forecolor="#611918" backcolor="#E0DEDE" uuid="4b43feb3-4d36-4b3b-a877-b7c4180e53f8"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contact Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="420" y="0" width="100" height="30" forecolor="#611918" backcolor="#E0DEDE" uuid="6c850ea8-b487-4f0a-8e9f-bcce343bb6fc"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#611918"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Class]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="20" y="0" width="40" height="30" backcolor="#F5F0F0" uuid="28bf538a-5edf-4fc1-b784-18eb0b1e4b90">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6703ba43-20e9-4a44-a56f-0658b85f2c3b"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_0}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="60" y="0" width="100" height="30" backcolor="#F5F0F0" uuid="0c545350-863a-4d6b-bf3b-8839ab2b0b4c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bedf6388-0f88-4dac-b361-6a8b493050bc"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="160" y="0" width="137" height="30" backcolor="#F5F0F0" uuid="9f1a5d80-7055-4879-9d77-09a032a23cbb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9cebe07d-e27e-469b-b398-ae42e27af74d"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="297" y="0" width="123" height="30" backcolor="#F5F0F0" uuid="72f7937b-8946-4a36-a301-a5c754f49438">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4966568b-6e60-431e-a180-778b344f15da"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="420" y="0" width="100" height="30" backcolor="#F5F0F0" uuid="47e80adb-810b-452b-9324-c0fceeb3b910">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5ec37487-1e01-409a-99e6-62329c952513"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_4}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="4" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="112" y="20" width="330" height="30" forecolor="#5C1B1A" uuid="bdc22712-a79e-44a9-a7bb-303cb74eb1ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[This is an official computer-generated document of Kekunagolla National School. No signature required]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
