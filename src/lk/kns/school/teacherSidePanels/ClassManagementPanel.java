@@ -10,8 +10,12 @@ import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.util.Session;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClassManagementPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(ClassManagementPanel.class.getName());
 
     public ClassManagementPanel() {
         initComponents();
@@ -225,7 +229,7 @@ public class ClassManagementPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "No students found in your class.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading students. ", e);
         }
     }//GEN-LAST:event_loadStudentBtnActionPerformed
 
@@ -261,8 +265,9 @@ public class ClassManagementPanel extends javax.swing.JPanel {
             }
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Attendance saved successfully!");
+            LOGGER.info("Attendance saved successfully!");
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Attendance saved failed. ", e);
         }
     }//GEN-LAST:event_saveAttentanceBtnActionPerformed
 
@@ -282,11 +287,12 @@ public class ClassManagementPanel extends javax.swing.JPanel {
                     + Session.teacherId + "', '" + Session.classId + "', '" + title + "', '" + message + "', '" + todayDate + "')");
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Announcement published to class!");
+            LOGGER.info("Announcement published to class!");
             noticeTitleInput.setText("");
             noticeMessageInput.setText("");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "error while publish announcements. ", e);
         }
     }//GEN-LAST:event_publishNoticeBtnActionPerformed
 

@@ -11,8 +11,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.util.Session;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StudentPanel extends javax.swing.JPanel {
+    
+    private static final Logger LOGGER = Logger.getLogger(StudentPanel.class.getName());
 
     public StudentPanel() {
         initComponents();
@@ -145,6 +149,7 @@ public class StudentPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error loading class name. ", e);
         }
     }
 
@@ -179,7 +184,7 @@ public class StudentPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading student data. ", e);
         }
     }
 
@@ -230,7 +235,7 @@ public class StudentPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "Error searching data. ", e);
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
@@ -282,8 +287,9 @@ public class StudentPanel extends javax.swing.JPanel {
                 }
                 workbook.close();
                 JOptionPane.showMessageDialog(this, "Excel Report Generated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                LOGGER.info("Excel Report Generated Successfully!");
             } catch (Exception e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Error generating report:. ", e);
                 JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }

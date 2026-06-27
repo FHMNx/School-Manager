@@ -16,8 +16,12 @@ import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.util.Session;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExamAdmissionsPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(ExamAdmissionsPanel.class.getName());
 
     public ExamAdmissionsPanel() {
         initComponents();
@@ -56,7 +60,7 @@ public class ExamAdmissionsPanel extends javax.swing.JPanel {
                 dtm.addRow(v);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load exams", e);
         }
     }
 
@@ -183,7 +187,7 @@ public class ExamAdmissionsPanel extends javax.swing.JPanel {
             );
 
         } catch (WriterException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error generating QR Code:", e);
             JOptionPane.showMessageDialog(this, "Error generating QR Code: " + e.getMessage(), "Generation Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_generatePassBtnActionPerformed

@@ -14,9 +14,12 @@ import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import lk.kns.school.adminSidePanels.TeacherPanel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class editTeacherDialog extends javax.swing.JDialog {
 
+    private static final Logger LOGGER = Logger.getLogger(editTeacherDialog.class.getName());
     private final TeacherPanel parntPanel;
     private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
     private int userId;
@@ -325,7 +328,7 @@ public class editTeacherDialog extends javax.swing.JDialog {
             statusSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load status list into ComboBox", e);
         }
     }
 
@@ -398,11 +401,12 @@ public class editTeacherDialog extends javax.swing.JDialog {
                     + " `mobile` = '" + mobile + "',`empType_id` = '" + empTypeId + "' , `status_id` = '" + status + "' WHERE `teacher_id` = '" + teacherId + "'");
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher account updated successfully");
+            LOGGER.info("Teacher account updated successfully : " + email);
             parntPanel.loadTeacherTable();
             this.dispose();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Teacher account update failed : " + email, e);
         }
     }//GEN-LAST:event_updateBtnActionPerformed
 

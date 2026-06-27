@@ -1,7 +1,6 @@
 package lk.kns.school.adminSidePanels;
 
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -18,9 +17,12 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClassInsightsPanel extends javax.swing.JPanel {
 
+    private static final Logger LOGGER = Logger.getLogger(ClassInsightsPanel.class.getName());
     private HashMap<String, Integer> classMap = new HashMap<>();
     private HashMap<String, Integer> subjectMap = new HashMap<>();
     private HashMap<String, Integer> teacherMap = new HashMap<>();
@@ -442,7 +444,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             classSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load class list into ComboBox", e);
         }
     }
 
@@ -463,7 +465,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             subjectCombo.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load subject list into ComboBox", e);
         }
     }
 
@@ -485,7 +487,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             teacherSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load teacher list into ComboBox", e);
         }
     }
 
@@ -504,7 +506,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             clsSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load class list into ComboBox", e);
         }
     }
 
@@ -533,7 +535,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load subjectTeacherTable", e);
         }
     }
 
@@ -560,7 +562,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load ClassTeacherTable", e);
         }
     }
 
@@ -579,7 +581,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             teacherSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load teacher list into ComboBox", e);
         }
     }
 
@@ -598,7 +600,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             classSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load class list into ComboBox", e);
         }
     }
 
@@ -613,7 +615,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                     loadStudentByClass(id);
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Failed to load class result", e);
             }
         }
     }//GEN-LAST:event_classSelectActionPerformed
@@ -635,13 +637,14 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
         try {
             MySQL.execute("INSERT INTO `subject_has_teacher` (`class_id` , `subject_id` , `teacher_id`)VALUES('" + clsId + "' , '" + subjectId + "' , '" + teacherId + "')");
             JOptionPane.showMessageDialog(this, "Data inserted successfully");
+            LOGGER.info("Data inserted successfully for classId : " + clsId);
             loadsubjectTeacherTable();
 
             classCombo.setSelectedIndex(0);
             subjectCombo.setSelectedIndex(0);
             teacherCombo.setSelectedIndex(0);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Data insertion failed for classId : " + clsId, e);
         }
     }//GEN-LAST:event_addBtnActionPerformed
 
@@ -676,12 +679,13 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
 
             MySQL.execute("INSERT INTO `class_has_teacher` (`class_id` , `teacher_id`)VALUES('" + clsId + "' , '" + teacherId + "')");
             JOptionPane.showMessageDialog(this, "class teacher appointed successfully");
+            LOGGER.info("class teacher appointed successfully for classId :" + clsId);
             loadClassTeacherTable();
 
             clsSelect.setSelectedIndex(0);
             teacherSelect.setSelectedIndex(0);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "class teacher appointing failed ", e);
         }
     }//GEN-LAST:event_appointBtnActionPerformed
 
@@ -713,8 +717,9 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                     model.removeRow(selectedRow);
 
                     JOptionPane.showMessageDialog(this, "Record deleted successfully!", "Deleted", JOptionPane.INFORMATION_MESSAGE);
+                    LOGGER.info("class teacher record deleted successfully!");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOGGER.log(Level.SEVERE, "Error deleting record. ", e);
                     JOptionPane.showMessageDialog(this, "Error deleting record.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -748,8 +753,9 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
                     model.removeRow(selectedRow);
 
                     JOptionPane.showMessageDialog(this, "Record deleted successfully!", "Deleted", JOptionPane.INFORMATION_MESSAGE);
+                    LOGGER.info("subject has teacher record deleted successfully!");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LOGGER.log(Level.SEVERE, "Error deleting record. ", e);
                     JOptionPane.showMessageDialog(this, "Error deleting record: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -791,7 +797,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             JasperViewer.viewReport(fillReport, false);
 
         } catch (JRException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "eroor while generate report" , e);
         }
     }//GEN-LAST:event_reportBtnActionPerformed
 
@@ -842,7 +848,7 @@ public class ClassInsightsPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "Error loading students by class ", e);
         }
     }
 

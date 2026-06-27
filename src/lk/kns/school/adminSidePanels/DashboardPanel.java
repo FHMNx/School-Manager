@@ -15,8 +15,13 @@ import javax.swing.UIManager;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class DashboardPanel extends javax.swing.JPanel {
 
+    private static final Logger LOGGER = Logger.getLogger(DashboardPanel.class.getName());
+    
     public DashboardPanel() {
         initComponents();
         init();
@@ -292,7 +297,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                 dataset.addValue(count, "Students", cls);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loadBarDataset ", ex);
         }
         return dataset;
     }
@@ -366,7 +371,7 @@ public class DashboardPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loadDashboardData ", e);
         }
     }
 

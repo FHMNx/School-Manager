@@ -15,8 +15,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.util.Session;
 import lk.kns.school.validation.Validator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProfileSettingsPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(ProfileSettingsPanel.class.getName());
 
     public ProfileSettingsPanel() {
         initComponents();
@@ -186,7 +190,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
                 emailInput.setText(rs.getString("email"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading TeacherData. ", e);
         }
     }
 
@@ -210,7 +214,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
             teacherImage.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 142, 142));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading ProfileImage. ", e);
             teacherImage.setIcon(new FlatSVGIcon("lk/kns/school/image/user.svg", 142, 142));
         }
     }
@@ -253,12 +257,13 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
 
                 setProfileImage(destinationFile.getAbsolutePath());
                 JOptionPane.showMessageDialog(this, "Profile image updated successfully!");
+                LOGGER.info("Profile image updated successfully!");
 
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Error copying image: ", e);
                 JOptionPane.showMessageDialog(this, "Error copying image: " + e.getMessage());
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Database error: ", e);
                 JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
             }
         }
@@ -293,6 +298,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
                 MySQL.execute("UPDATE `teacher` SET `password` = '" + confirmPassword + "' WHERE `user_id` = '" + Session.userId + "'");
 
                 JOptionPane.showMessageDialog(this, "Teacher password updated successfully!");
+                LOGGER.info("Teacher password updated successfully!");
 
                 currentPasswordInput.setText("");
                 newPasswordInput.setText("");
@@ -300,7 +306,7 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database error: ", e);
             JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
         }
     }//GEN-LAST:event_passwordBtnActionPerformed
@@ -322,10 +328,11 @@ public class ProfileSettingsPanel extends javax.swing.JPanel {
             MySQL.execute("UPDATE `teacher` SET `f_name` = '" + fname + "', `l_name` = '" + lname + "', `email` = '" + email + "' WHERE `user_id` = '" + Session.userId + "'");
 
             JOptionPane.showMessageDialog(this, "Teacher data updated successfully");
+            LOGGER.info("Teacher data updated successfully");
             Session.email = email; // Update the session email if they change it
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "Database error: ", e);
         }
     }//GEN-LAST:event_updateBtnActionPerformed
 

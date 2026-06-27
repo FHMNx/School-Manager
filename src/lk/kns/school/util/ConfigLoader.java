@@ -3,18 +3,20 @@ package lk.kns.school.util;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ConfigLoader {
 
+    private static final Logger LOGGER = Logger.getLogger(ConfigLoader.class.getName());
     private static final Properties props = new Properties();
 
     static {
         try (FileInputStream fis = new FileInputStream("config.properties")) {
             props.load(fis);
-            System.out.println("Config loaded successfully.");
+            LOGGER.info("Config loaded successfully.");
         } catch (IOException e) {
-            System.err.println("Error: Could not find or load config.properties file!");
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error: Could not find or load config.properties file!", e);
         }
     }
 

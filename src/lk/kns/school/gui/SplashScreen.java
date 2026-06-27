@@ -4,9 +4,12 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import lk.kns.school.appIcon.Icon;
+import lk.kns.school.util.LogConfig;
+import java.util.logging.Logger;
 
 public class SplashScreen extends javax.swing.JFrame {
-    
+
+    private static final Logger LOGGER = Logger.getLogger(SplashScreen.class.getName());
     private static SplashScreen splashscreen;
 
     public SplashScreen() {
@@ -14,41 +17,41 @@ public class SplashScreen extends javax.swing.JFrame {
         init();
         loadAnimation();
     }
-    
-    private void init(){
+
+    private void init() {
         ImageIcon icon = new ImageIcon(getClass().getResource("/lk/kns/school/image/knslogo.png"));
         Image image = icon.getImage().getScaledInstance(137, 137, Image.SCALE_SMOOTH);
         schoolLogo.setIcon(new ImageIcon(image));
     }
-    
-    private void loadAnimation(){
+
+    private void loadAnimation() {
         Icon.applyIcon(this);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i <= 100; i++) {
                     jProgressBar1.setValue(i);
-                    
-                    if(i < 30){
+
+                    if (i < 30) {
                         progressLabel.setText("Starting module...");
-                    }else if(i > 30 && i < 75){
+                    } else if (i > 30 && i < 75) {
                         progressLabel.setText("Copying sytem files...");
-                    }else if(i > 80){
+                    } else if (i > 80) {
                         progressLabel.setText("Process completed...");
                     }
-                    
-                    try{
+
+                    try {
                         Thread.sleep(55);
-                    }catch(InterruptedException e){
-                    }                   
+                    } catch (InterruptedException e) {
+                    }
                 }
-                
+
                 new LoginScreen().setVisible(true);
                 splashscreen.dispose();
             }
         });
-                t.start();
-                
+        t.start();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -202,6 +205,9 @@ public class SplashScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
+        LogConfig.setup();
+        LOGGER.info("Application is starting up...");
+
         FlatDarkLaf.setup();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

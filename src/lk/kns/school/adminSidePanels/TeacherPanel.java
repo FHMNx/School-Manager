@@ -16,8 +16,12 @@ import lk.kns.school.connection.MySQL;
 import lk.kns.school.adminDialog.addTeacherDialog;
 import lk.kns.school.adminDialog.deleteTeacherDialog;
 import lk.kns.school.adminDialog.editTeacherDialog;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TeacherPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(TeacherPanel.class.getName());
 
     private int selectedUserId;
     private int selectedTeacherId;
@@ -211,7 +215,7 @@ public class TeacherPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "loadTeacherTable failed." + e);
         }
     }
 
@@ -312,7 +316,7 @@ public class TeacherPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "search process failed." + e);
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
@@ -331,21 +335,21 @@ public class TeacherPanel extends javax.swing.JPanel {
             if (!filePath.toLowerCase().endsWith(".xlsx")) {
                 filePath += ".xlsx";
             }
-            
+
             try {
                 // Create a new Workbook and Sheet
                 org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
                 org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Teacher Details");
-                
+
                 DefaultTableModel dtm = (DefaultTableModel) teacherTable.getModel();
-                
+
                 // Create the Header Row
                 org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
                 for (int i = 0; i < dtm.getColumnCount(); i++) {
                     org.apache.poi.ss.usermodel.Cell cell = headerRow.createCell(i);
                     cell.setCellValue(dtm.getColumnName(i));
                 }
-                
+
                 // Extract Data from JTable to Excel Sheet
                 for (int i = 0; i < dtm.getRowCount(); i++) {
                     org.apache.poi.ss.usermodel.Row row = sheet.createRow(i + 1);
@@ -357,15 +361,16 @@ public class TeacherPanel extends javax.swing.JPanel {
                         }
                     }
                 }
-                
+
                 // Write the output to a file
                 try (java.io.FileOutputStream out = new java.io.FileOutputStream(filePath)) {
                     workbook.write(out);
                 }
                 workbook.close();
                 JOptionPane.showMessageDialog(this, "Excel Report Generated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                LOGGER.info("Excel Report Generated Successfully!");
             } catch (Exception e) {
-                e.printStackTrace();
+               LOGGER.log(Level.SEVERE, "Error generating report:" + e);
                 JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }

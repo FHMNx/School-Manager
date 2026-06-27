@@ -14,8 +14,12 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DashboardPanel extends javax.swing.JPanel {
+    
+    private static final Logger LOGGER = Logger.getLogger(DashboardPanel.class.getName());
 
     public DashboardPanel() {
         initComponents();
@@ -55,7 +59,7 @@ private DefaultCategoryDataset loadLineDataset() {
                 dataset.addValue(count, "Students Present", date);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading LineDataset. ", e);
         }
 
         return dataset;
@@ -146,7 +150,7 @@ private void initLineChart() {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading students. ", e);
         }
     }
 

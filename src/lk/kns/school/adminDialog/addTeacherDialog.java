@@ -13,9 +13,12 @@ import lk.kns.school.adminSidePanels.TeacherPanel;
 import lk.kns.school.validation.Validator;
 import raven.toast.Notifications;
 import lk.kns.school.connection.MySQL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class addTeacherDialog extends javax.swing.JDialog {
 
+    private static final Logger LOGGER = Logger.getLogger(addTeacherDialog.class.getName());
     private TeacherPanel parntPanel;
     private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
 
@@ -318,11 +321,12 @@ public class addTeacherDialog extends javax.swing.JDialog {
                     + "VALUES ('" + fname + "','" + lname + "','" + email + "','" + password + "','" + nic + "','" + mobile + "' ,'" + empTypeId + "' , '" + userId + "' ,'" + statusId + "')");
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher created successfully");
+            LOGGER.info("Successfully added new Teacher: " + email);
             parntPanel.loadTeacherTable();
             this.dispose();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database error while adding teacher: " + email, e);
         }
     }//GEN-LAST:event_createBtnActionPerformed
 

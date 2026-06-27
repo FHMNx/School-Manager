@@ -8,8 +8,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.util.Session;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NoticeBoardPanel extends javax.swing.JPanel {
+    
+    private static final Logger LOGGER = Logger.getLogger(NoticeBoardPanel.class.getName());
 
     public NoticeBoardPanel() {
         initComponents();
@@ -62,7 +66,7 @@ public class NoticeBoardPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "Failed to load notices", e);
         }
     }
 

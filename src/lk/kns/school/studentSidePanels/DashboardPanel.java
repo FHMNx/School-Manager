@@ -13,8 +13,12 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DashboardPanel extends javax.swing.JPanel {
+    
+    private static final Logger LOGGER = Logger.getLogger(DashboardPanel.class.getName());
 
     public DashboardPanel() {
         initComponents();
@@ -53,7 +57,7 @@ public class DashboardPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load DashboardData", e);
         }
     }
 
@@ -82,7 +86,7 @@ public class DashboardPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "error loading pie chart ", e);
         }
 
         // Create the Pie Chart

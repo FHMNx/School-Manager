@@ -13,8 +13,12 @@ import javax.swing.SwingUtilities;
 import lk.kns.school.gui.AdminHomeScreen;
 import lk.kns.school.util.Session;
 import lk.kns.school.validation.Validator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AdminLoginPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(AdminLoginPanel.class.getName());
 
     public AdminLoginPanel() {
         initComponents();
@@ -192,7 +196,7 @@ public class AdminLoginPanel extends javax.swing.JPanel {
                             "Invalid User.Please try again later");
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+               LOGGER.log(Level.SEVERE, "Admin Login Failed ", e);
             }
         }
     }//GEN-LAST:event_loginBtnActionPerformed

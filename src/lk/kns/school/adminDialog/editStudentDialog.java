@@ -11,9 +11,12 @@ import lk.kns.school.adminSidePanels.StudentPanel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.validation.Validator;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class editStudentDialog extends javax.swing.JDialog {
 
+    private static final Logger LOGGER = Logger.getLogger(editStudentDialog.class.getName());
     private StudentPanel parentPanel;
     HashMap<String, Integer> classMap = new HashMap<>();
     HashMap<String, Integer> statusMap = new HashMap<>();
@@ -270,7 +273,7 @@ public class editStudentDialog extends javax.swing.JDialog {
             classSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load class list into ComboBox", e);
         }
     }
 
@@ -292,7 +295,7 @@ public class editStudentDialog extends javax.swing.JDialog {
             statusSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load status list into ComboBox", e);
         }
     }
 
@@ -375,11 +378,12 @@ public class editStudentDialog extends javax.swing.JDialog {
                     + " `mobile` = '" + mobile + "', `class_id` = '" + cls + "' , `status_id` = '" + status + "' WHERE `student_id` = '" + studentId + "'");
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "student account updated successfully");
+            LOGGER.info("student account updated successfully" + email);
             parentPanel.loadStudentData();
             this.dispose();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "student account updated failed " + email, e);
         }
     }//GEN-LAST:event_updateBtnActionPerformed
 

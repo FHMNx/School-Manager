@@ -9,9 +9,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import lk.kns.school.adminSidePanels.TeacherPanel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class deleteTeacherDialog extends javax.swing.JDialog {
 
+    private static final Logger LOGGER = Logger.getLogger(deleteTeacherDialog.class.getName());
     private final TeacherPanel parentPanel;
     private final ArrayList<JCheckBox> empCheckBox = new ArrayList();
     private int userId;
@@ -312,11 +315,12 @@ public class deleteTeacherDialog extends javax.swing.JDialog {
                 MySQL.execute("DELETE FROM `user` WHERE `user`.`user_id` = '" + userId + "'");
 
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Teacher account deleted successfully");
+                LOGGER.info("Teacher account deleted successfully. teacher id : " + teacherId);
                 parentPanel.loadTeacherTable();
                 this.dispose();
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Something went wrong while deleting teacher id : " + teacherId, e);
                 Notifications.getInstance().show(
                         Notifications.Type.ERROR,
                         Notifications.Location.TOP_RIGHT,

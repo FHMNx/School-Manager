@@ -10,9 +10,12 @@ import lk.kns.school.adminSidePanels.StudentPanel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.validation.Validator;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class addStudentDialog extends javax.swing.JDialog {
 
+    private static final Logger LOGGER = Logger.getLogger(addStudentDialog.class.getName());
     private StudentPanel parentPanel;
 
     public addStudentDialog(java.awt.Frame parent, boolean modal, StudentPanel panel) {
@@ -214,7 +217,7 @@ public class addStudentDialog extends javax.swing.JDialog {
             classSelect.setModel(dcm);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load class list into ComboBox", e);
         }
     }
 
@@ -288,11 +291,12 @@ public class addStudentDialog extends javax.swing.JDialog {
                     + "VALUES ('" + fname + "','" + lname + "','" + admission + "','" + email + "','" + password + "','" + mobile + "','" + userId + "' , '" + statusId + "' ,'" + cls + "')");
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Student account created successfully");
+            LOGGER.info("Successfully added new student: " + email);
             parentPanel.loadStudentData();
             this.dispose();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database error while adding student: " + email, e);
         }
     }//GEN-LAST:event_createBtnActionPerformed
 

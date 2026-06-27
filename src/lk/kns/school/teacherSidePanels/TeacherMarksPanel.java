@@ -12,8 +12,12 @@ import javax.swing.table.DefaultTableModel;
 import lk.kns.school.connection.MySQL;
 import lk.kns.school.util.Session;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TeacherMarksPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(TeacherMarksPanel.class.getName());
 
     private HashMap<String, Integer> classMap = new HashMap<>();
     private HashMap<String, Integer> subjectMap = new HashMap<>();
@@ -157,7 +161,7 @@ public class TeacherMarksPanel extends javax.swing.JPanel {
             selectClass.setModel(new DefaultComboBoxModel<>(v));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading class. ", e);
         }
     }
 
@@ -180,7 +184,7 @@ public class TeacherMarksPanel extends javax.swing.JPanel {
             selectSubject.setModel(new DefaultComboBoxModel<>(v));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading subject. ", e);
         }
     }
 
@@ -203,7 +207,7 @@ public class TeacherMarksPanel extends javax.swing.JPanel {
             selectTerm.setModel(new DefaultComboBoxModel<>(v));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading term. ", e);
         }
     }
 
@@ -255,7 +259,7 @@ public class TeacherMarksPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading students. ", e);
         }
     }//GEN-LAST:event_loadStudentsBtnActionPerformed
 
@@ -307,9 +311,9 @@ public class TeacherMarksPanel extends javax.swing.JPanel {
             }
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Marks successfully saved!");
-
+            LOGGER.info("Marks successfully saved!");
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database Error while saving marks. ", e);
             JOptionPane.showMessageDialog(this, "Database Error while saving marks.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_saveMarksBtnActionPerformed

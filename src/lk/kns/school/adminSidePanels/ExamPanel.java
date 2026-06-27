@@ -24,11 +24,15 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 
 public class ExamPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(ExamPanel.class.getName());
 
     HashMap<String, Integer> classMap = new HashMap();
     HashMap<String, Integer> subjectMap = new HashMap();
@@ -611,6 +615,7 @@ public class ExamPanel extends javax.swing.JPanel {
                     + clsId + "', '" + subjectId + "', '" + termId + "')");
 
             Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Exam scheduled successfully");
+            LOGGER.info("Exam scheduled successfully");
             loadExamTable();
 
             classSelect.setSelectedIndex(0);
@@ -622,7 +627,7 @@ public class ExamPanel extends javax.swing.JPanel {
             venueInput.setText("");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Exam scheduling failed", e);
         }
 
     }//GEN-LAST:event_sheduleExmBtnActionPerformed
@@ -698,7 +703,7 @@ public class ExamPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "search process filaed", e);
         }
 
     }//GEN-LAST:event_searchBtnActionPerformed
@@ -763,7 +768,7 @@ public class ExamPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "loadClassResults process filaed", e);
         }
     }//GEN-LAST:event_loadClassResultsBtnActionPerformed
 
@@ -784,7 +789,7 @@ public class ExamPanel extends javax.swing.JPanel {
             JasperViewer.viewReport(fillReport, false);
 
         } catch (JRException e) {
-            e.printStackTrace();
+             LOGGER.log(Level.SEVERE, "ClassResults report generate process failed", e);
         }
     }//GEN-LAST:event_classResultsReportBtnActionPerformed
 
@@ -809,7 +814,7 @@ public class ExamPanel extends javax.swing.JPanel {
             JasperViewer.viewReport(fillReport, false);
 
         } catch (JRException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "Student Results report generate process failed", e);
         }
     }//GEN-LAST:event_studentResultsReportBtnActionPerformed
 
@@ -844,7 +849,7 @@ public class ExamPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "loadExamTable process failed", e);
         }
     }
 
@@ -869,7 +874,7 @@ public class ExamPanel extends javax.swing.JPanel {
             this.selectCls.setModel(new DefaultComboBoxModel<>(v));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "Failed to load class list into ComboBox", e);
         }
     }
 
@@ -892,7 +897,7 @@ public class ExamPanel extends javax.swing.JPanel {
             subjectSelect.setModel(new DefaultComboBoxModel<>(v));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "Failed to load subject list into ComboBox", e);
         }
     }
 
@@ -917,7 +922,7 @@ public class ExamPanel extends javax.swing.JPanel {
             this.selectTrm.setModel(new DefaultComboBoxModel<>(v));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load term list into ComboBox", e);
         }
     }
 

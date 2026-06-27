@@ -19,8 +19,12 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MyResultsPanel extends javax.swing.JPanel {
+    
+    private static final Logger LOGGER = Logger.getLogger(MyResultsPanel.class.getName());
 
     private HashMap<String, Integer> termMap = new HashMap<>();
 
@@ -45,7 +49,7 @@ public class MyResultsPanel extends javax.swing.JPanel {
             termFilterCombo1.setModel(new DefaultComboBoxModel<>(v));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load terms list into ComboBox", e);
         }
     }
 
@@ -275,7 +279,7 @@ public class MyResultsPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database error loading results. ", e);
             JOptionPane.showMessageDialog(this, "Database error loading results.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_filterBtnActionPerformed
@@ -299,7 +303,7 @@ public class MyResultsPanel extends javax.swing.JPanel {
             JasperViewer.viewReport(fillReport, false);
 
         } catch (JRException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "report generate failed. ", e);
         }
     }//GEN-LAST:event_downloadReportBtnActionPerformed
 

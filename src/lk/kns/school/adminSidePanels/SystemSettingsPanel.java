@@ -20,8 +20,12 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.DefaultPieDataset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SystemSettingsPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(SystemSettingsPanel.class.getName());
 
     public SystemSettingsPanel() {
         initComponents();
@@ -229,11 +233,13 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
 
             if (result == 0) {
                 JOptionPane.showMessageDialog(this, "Restore completed successfully! Please restart the app", "Success", JOptionPane.INFORMATION_MESSAGE);
+                LOGGER.info("Database Restore completed successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Restore failed. Check the terminal.", "Error", JOptionPane.ERROR_MESSAGE);
+                LOGGER.log(Level.SEVERE, "Database Restore failed.");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database Restore failed." + e);
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -269,12 +275,14 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
 
             if (result == 0) {
                 JOptionPane.showMessageDialog(this, "Backup saved successfully!\nLocation: " + backupFileName, "Success", JOptionPane.INFORMATION_MESSAGE);
+                LOGGER.info("Database backup completed successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to create backup. Check terminal for details.", "Error", JOptionPane.ERROR_MESSAGE);
+                LOGGER.log(Level.SEVERE, "Database backup failed.");
             }
 
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Database backup failed. " + e);
             JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -307,7 +315,7 @@ public class SystemSettingsPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loadSystemCounts " + e);
         }
         return dataset;
     }

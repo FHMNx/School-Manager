@@ -11,8 +11,12 @@ import lk.kns.school.connection.MySQL;
 import lk.kns.school.util.Session;
 import raven.toast.Notifications;
 import lk.kns.school.gui.StudentHomeScreen;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StudentLoginPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(StudentLoginPanel.class.getName());
 
     public StudentLoginPanel() {
         initComponents();
@@ -206,7 +210,7 @@ public class StudentLoginPanel extends javax.swing.JPanel {
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Student Login Failed ", e);
             }
         }
     }//GEN-LAST:event_studentLoginBtnActionPerformed

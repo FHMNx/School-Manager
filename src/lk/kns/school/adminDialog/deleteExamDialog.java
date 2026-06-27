@@ -7,9 +7,12 @@ import javax.swing.JOptionPane;
 import lk.kns.school.adminSidePanels.ExamPanel;
 import lk.kns.school.connection.MySQL;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class deleteExamDialog extends javax.swing.JDialog {
 
+    private static final Logger LOGGER = Logger.getLogger(deleteExamDialog.class.getName());
     private int examId;
     private ExamPanel parentPanel;
 
@@ -253,11 +256,12 @@ public class deleteExamDialog extends javax.swing.JDialog {
                 MySQL.execute("DELETE FROM `exam` WHERE `exam_id` = '" + examId + "'");
 
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "exam deleted successfully");
+                LOGGER.info("exam deleted successfully : " + examId);
                 parentPanel.loadExamTable();
                 this.dispose();
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Something went wrong while deleting exam id : " + examId, e);
                 Notifications.getInstance().show(
                         Notifications.Type.ERROR,
                         Notifications.Location.TOP_RIGHT,

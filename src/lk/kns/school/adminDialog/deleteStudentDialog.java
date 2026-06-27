@@ -8,9 +8,12 @@ import javax.swing.JOptionPane;
 import lk.kns.school.adminSidePanels.StudentPanel;
 import lk.kns.school.connection.MySQL;
 import raven.toast.Notifications;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class deleteStudentDialog extends javax.swing.JDialog {
 
+    private static final Logger LOGGER = Logger.getLogger(deleteStudentDialog.class.getName());
     private StudentPanel parentPanel;
     private int userId;
     private int studentId;
@@ -289,14 +292,15 @@ public class deleteStudentDialog extends javax.swing.JDialog {
             try {
                 MySQL.execute("DELETE FROM `student` WHERE `student_id` = '" + studentId + "'");
 
-                 MySQL.execute("DELETE FROM `user` WHERE `user_id` = '" + userId + "'");
+                MySQL.execute("DELETE FROM `user` WHERE `user_id` = '" + userId + "'");
 
                 Notifications.getInstance().show(Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT, 2000, "Student account deleted successfully");
+                LOGGER.info("Student account deleted successfully: studentId : " + studentId);
                 parentPanel.loadStudentData();
                 this.dispose();
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Something went wrong while deleting.studentId : " + studentId, e);
                 Notifications.getInstance().show(
                         Notifications.Type.ERROR,
                         Notifications.Location.TOP_RIGHT,

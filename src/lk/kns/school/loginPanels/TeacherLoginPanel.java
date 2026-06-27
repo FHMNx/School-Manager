@@ -12,8 +12,12 @@ import java.sql.SQLException;
 import javax.swing.SwingUtilities;
 import lk.kns.school.gui.TeacherHomeScreen;
 import lk.kns.school.util.Session;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TeacherLoginPanel extends javax.swing.JPanel {
+    
+    private static final Logger LOGGER = Logger.getLogger(TeacherLoginPanel.class.getName());
 
     public TeacherLoginPanel() {
         initComponents();
@@ -213,7 +217,7 @@ public class TeacherLoginPanel extends javax.swing.JPanel {
                         }
 
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                       LOGGER.log(Level.SEVERE, "Invalid Teacher Access ", e);
                     }
 
                 } else {
@@ -224,7 +228,7 @@ public class TeacherLoginPanel extends javax.swing.JPanel {
                 }
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Teacher Login Failed ", e);
             }
         }
     }//GEN-LAST:event_loginBtnActionPerformed

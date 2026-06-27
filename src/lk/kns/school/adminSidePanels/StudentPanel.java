@@ -16,8 +16,12 @@ import lk.kns.school.connection.MySQL;
 import lk.kns.school.adminDialog.addStudentDialog;
 import lk.kns.school.adminDialog.deleteStudentDialog;
 import lk.kns.school.adminDialog.editStudentDialog;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StudentPanel extends javax.swing.JPanel {
+
+    private static final Logger LOGGER = Logger.getLogger(StudentPanel.class.getName());
 
     private int selectedUserId;
     private int selectedStudentId;
@@ -211,7 +215,7 @@ public class StudentPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+           LOGGER.log(Level.SEVERE, "Failed to load students ", e);
         }
     }
 
@@ -311,7 +315,7 @@ public class StudentPanel extends javax.swing.JPanel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "error occuered while searching", e);
         }
     }//GEN-LAST:event_searchBtnActionPerformed
 
@@ -363,8 +367,9 @@ public class StudentPanel extends javax.swing.JPanel {
                 }
                 workbook.close();
                 JOptionPane.showMessageDialog(this, "Excel Report Generated Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                LOGGER.info("Excel Report Generated Successfully!");
             } catch (Exception e) {
-                e.printStackTrace();
+                 LOGGER.log(Level.SEVERE, "error occuered while generating report:", e);
                 JOptionPane.showMessageDialog(this, "Error generating report: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
             }
